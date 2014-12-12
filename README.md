@@ -4,7 +4,7 @@ opentie のバックエンド
 
 ## 何
 
-学園祭実行委員会と参加者をつなぐソフトウェア。
+学園祭実行委員会と (企画) 参加者をつなぐソフトウェア。[orange-tie](https://login.sohosai.tsukuba.ac.jp/) や [駒場祭委員会ウェブシステム](https://www.komabasai.net/65/system/) の FLOSS 実装みたいなもの。
 
 ## 設計
 
