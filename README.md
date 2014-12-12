@@ -1,4 +1,4 @@
-# opentie app
+# opentie-app
 
 opentie のバックエンド
 
