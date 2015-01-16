@@ -40,7 +40,9 @@ group :development, :test do
   gem 'better_errors'
 
   # test
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'guard'
+  gem 'guard-rspec'
 end
 
