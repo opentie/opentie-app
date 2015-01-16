@@ -1,6 +1,6 @@
 class DeviseCreateGroups < ActiveRecord::Migration
   def change
-    create_table(:groups) do |t|
+    create_table(:groups, id: :uuid) do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -30,12 +30,17 @@ class DeviseCreateGroups < ActiveRecord::Migration
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+      # Group Information
+      t.string   :name, null: false
+      t.boolean  :is_jitsui, default: false, null: false
 
       t.timestamps
     end
 
     add_index :groups, :email,                unique: true
     add_index :groups, :reset_password_token, unique: true
+    add_column :groups, :persona_id, :uuid, null: false
+    add_column :groups, :project_id, :uuid
     # add_index :groups, :confirmation_token,   unique: true
     # add_index :groups, :unlock_token,         unique: true
   end
