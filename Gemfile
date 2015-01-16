@@ -11,7 +11,7 @@ gem 'grape'
 # account authentication
 gem 'devise'
 # account authorization
-gem 'cancan'
+gem 'cancancan'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
