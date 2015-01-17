@@ -1,6 +1,11 @@
-# -*- encoding: utf-8 -*-
-require 'spec_helper'
+require 'rails_helper'
 
-describe API do
+RSpec.describe API do
+  let(:article) { FactoryGirl.create(:article, user: user) }
+  describe 'GET /api/v1/page' do
+    let(:method) { 'get' }
+    let(:url)    { '/api/v1/page' }
 
+    it_behaves_like('200 Success')
+  end  
 end
