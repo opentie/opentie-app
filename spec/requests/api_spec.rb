@@ -6,6 +6,6 @@ RSpec.describe API do
     let(:method) { 'get' }
     let(:url)    { '/api/v1/page' }
 
-    it_behaves_like('200 Success')
+    it_behaves_like('200')
   end  
 end
