@@ -217,9 +217,6 @@ GEM
       redis-actionpack (~> 4)
       redis-activesupport (~> 4)
       redis-store (~> 1.1.0)
-    redis-session-store (0.8.0)
-      actionpack (>= 3, < 5)
-      redis
     redis-store (1.1.4)
       redis (>= 2.2)
     responders (2.0.2)
@@ -301,7 +298,6 @@ DEPENDENCIES
   rails (= 4.2.0)
   redis
   redis-rails
-  redis-session-store
   rspec-rails
   spring
   spring-commands-rspec
