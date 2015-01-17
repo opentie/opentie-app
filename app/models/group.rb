@@ -3,4 +3,7 @@ class Group
 
   belongs_to :persona, inverse_of: :groups
   has_one :project, inverse_of: :group
+
+  field :name, type: String
+  field :is_jitsui, type: Boolean
 end
