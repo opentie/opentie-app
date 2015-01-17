@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe API do
-  let(:article) { FactoryGirl.create(:article, user: user) }
   describe 'GET /api/v1/page' do
-    let(:method) { 'get' }
-    let(:url)    { '/api/v1/page' }
+    before do
+      get '/api/v1/page?hoge=30&fuga=60'
+    end
 
-    it_behaves_like('200')
+    it 'return 200 OK?' do
+      expect(response).to be_success
+      expect(response.status).to eq(200)
+    end
   end  
 end
