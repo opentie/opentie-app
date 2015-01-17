@@ -2,5 +2,10 @@
 require 'rails_helper'
 
 RSpec.describe Group, :type => :model do
-  pending '未だ踏まれず'
+  #pending '未だ踏まれず'
+
+  it 'can be save.' do
+    group = FactoryGirl.build(:group_factory)
+    expect(group.save).to eq true
+  end
 end

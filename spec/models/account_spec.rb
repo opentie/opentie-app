@@ -2,5 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe Account, :type => :model do
-  pending '未だ踏まれず'
+  it 'can be save.' do
+    pending 'column 足りず'
+    account = FactoryGirl.build(:account_factory)
+    expect(account.save).to eq true
+  end
 end
