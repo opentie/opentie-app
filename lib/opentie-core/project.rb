@@ -1,5 +1,6 @@
 module OpentieCore
-  module Project
-    
+  class Project < Group
+    def available_requests
+    end
   end
 end
