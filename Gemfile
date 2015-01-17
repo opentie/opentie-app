@@ -30,9 +30,6 @@ group :development, :test do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
 
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
   # debugger
   gem 'pry-rails'
   gem 'pry-byebug'
@@ -40,10 +37,13 @@ group :development, :test do
   gem 'better_errors'
 
   # test
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'guard'
   gem 'guard-rspec'
+  gem 'spring-commands-rspec'
   gem 'mongoid-rspec'
 end
 

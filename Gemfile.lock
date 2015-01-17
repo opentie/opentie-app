@@ -224,6 +224,8 @@ GEM
     shellany (0.0.1)
     slop (3.6.0)
     spring (1.2.0)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -274,4 +276,5 @@ DEPENDENCIES
   rails (= 4.2.0)
   rspec-rails
   spring
+  spring-commands-rspec
   web-console (~> 2.0)
