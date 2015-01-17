@@ -16,8 +16,8 @@ module API
         end
       end
       
-      desc "GET /api/v1/register/callback"
-      get :callback do
+      desc "GET /api/v1/register/call_back"
+      get :call_back do
         begin 
           # get Shibboleth callback value.
           # create new Account and redirect new project page.
@@ -27,182 +27,195 @@ module API
         end
       end
     end
-    resource :dash_board
-    desc "GET /api/v1/dash_board"
-    params do
-      requires :user_data1, type: String
-      requires :user_data2, type: String
-    end
-    get do
-      begin
-        # authenticate!
-        {
-          user_res: ["hoge", "fuga", "piyo"]
-        }.to_json
-      rescue
-        error!('400 BadRequest', 400)
-      end
-    end
-  end
-
-  
-  # connect Project
-  resource :projects do
-    desc "GET /api/v1/projects"
-    get do
-      begin
-        # authenticate!
-        Project.all.each.map do |project|
-          project.to_json
+    
+    resource :dash_board do
+      desc "GET /api/v1/dash_board"
+      get do
+        begin
+          # authenticate!
+          {
+            status: 200,
+            user_res: ["hoge", "fuga", "piyo"]
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
         end
-      rescue
-        error!('400 BadRequest', 400)
       end
     end
 
-    desc "GET /api/v1/projects/:id"
-    params do
-      requires :id, type: String
-    end
-    get ':id' do
-      # authenticate!
-      begin
-        Project.find(:id).to_json
-      rescue
-        error!('400 BadRequest', 400)
-      end
-    end
-
-    desc "POST /api/v1/projects/create"
-    params do
-      requires :name, type: String
-      # etc...
-    end
-    post :create do
-      begin 
-        # authenticate!
-        # Project.new
-        status 200
-      rescue
-        error!('400 BadRequest', 400)
-      end
-    end
-
-    desc "POST /api/v1/projects/update"
-    params do
-      requires :name, type: String
-      # etc...
-    end
-    post :update do
-      begin
-        # save performer
-        # Project resave!
-        status 200
-      rescue
-        error!('400 BadRequest', 400)
-      end
-    end
-  end
-
-
-  # connect Group
-  resource :groups do
-    desc "GET /api/v1/groups"
-    get do
-      begin
-        # authenticate!
-        Group.all.each.map do |group|
-          group.to_json
+    
+    # connect Project
+    resource :projects do
+      desc "GET /api/v1/projects"
+      get do
+        begin
+          # authenticate!
+          projects = Project.all.each.map do |project|
+            project
+          end
+          {
+            status: 200,
+            project: projects
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
         end
-      rescue
-        error!('400 BadRequest', 400)
       end
-    end
 
-    desc "GET /api/v1/groups/:id"
-    params do
-      requires :id, type: String
-    end
-    get ':id' do
-      begin
-        # authenticate!
-        Group.find(:id).to_json
-      rescue
-        error!('400 BadRequest', 400)
+      desc "GET /api/v1/projects/:id"
+      params do
+        requires :id, type: String
       end
-    end
-
-    desc "POST /api/v1/groups/create"
-    params do
-      requires :is_jitsui, type: Boolean
-      # other
-    end
-    post :create do
-      begin
+      get ':id' do
         # authenticate!
-        status 200
-      rescue
-        error!('400 BadRequest', 400)
-      end
-    end
-  end
-
-  
-  # connect Acount
-  resource :accounts do
-    desc "GET /api/v1/accounts"
-    get do
-      begin
-        # authenticate!
-        Account.all.each.map do |account|
-          account.to_json
+        begin
+          {
+            status: 200,
+            project: Project.find(params[:id].to_s)
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
         end
-      rescue
-        error!('400 BadRequest', 400)
       end
-    end
 
-    desc "GET /api/v1/accounts/:id"
-    params do
-      requires :id, type: String
-    end
-    get ':id' do
-      begin
-        # authenticate!
-        Account.find(:id).to_json
-      rescue
-        error!('404 BadRequest', 400)
+      desc "POST /api/v1/projects"
+      params do
+        requires :name, type: String
+        # etc...
       end
-    end
-  end
-
-
-  # connect Persona
-  resource :personas do
-    desc "GET /api/v1/personas"
-    get do
-      begin 
-        # authenticate!
-        Persona.all.each.map do |persona|
-          persona.to_json
+      post do
+        begin 
+          # authenticate!
+          # Project.new
+          # if project is exist, seems update project
+          status 200
+        rescue
+          error!('400 BadRequest', 400)
         end
-      rescue
-        error!('400 BadRequest', 400)
       end
     end
 
-    desc "GET /api/v1/personas/:id"
-    params do
-      requires :id, type: String
+
+    # connect Group
+    resource :groups do
+      desc "GET /api/v1/groups"
+      get do
+        begin
+          # authenticate!
+          groups = Group.all.each.map do |group|
+            group.to_json
+          end
+          {
+            status: 200,
+            group: groups
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
+        end
+      end
+
+      desc "GET /api/v1/groups/:id"
+      params do
+        requires :id, type: String
+      end
+      get ':id' do
+        begin
+          # authenticate!
+          {
+            status: 200,
+            group: Group.find(params[:id].to_s)
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
+        end
+      end
+
+      desc "POST /api/v1/groups"
+      params do
+        requires :is_jitsui, type: Boolean
+        # other
+      end
+      post do
+        begin
+          # authenticate!
+          # if project is exist, seems update project
+          status 200
+        rescue
+          error!('400 BadRequest', 400)
+        end
+      end
     end
-    get ':id' do
-      begin
-        Persona.find(:id).to_json
-      rescue
-        # authenticate!
-        error!('400 BadRequest', 400)
+
+    
+    # connect Acount
+    resource :accounts do
+      desc "GET /api/v1/accounts"
+      get do
+        begin
+          # authenticate!
+          accounts = Account.all.each.map do |account|
+            account
+          end
+          {
+            status: 200,
+            account: accounts 
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
+        end
+      end
+
+      desc "GET /api/v1/accounts/:id"
+      params do
+        requires :id, type: String
+      end
+      get ':id' do
+        begin
+          # authenticate!
+          {
+            status: 200,
+            account: Account.find(params[:id].to_s)
+          }.to_json
+        rescue
+          error!('404 BadRequest', 400)
+        end
+      end
+    end
+
+
+    # connect Persona
+    resource :personas do
+      desc "GET /api/v1/personas"
+      get do
+        begin 
+          # authenticate!
+          personas = Persona.all.each.map do |persona|
+            persona
+          end
+          {
+            status: 200,
+            persona: personas 
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
+        end
+      end
+
+      desc "GET /api/v1/personas/:id"
+      params do
+        requires :id, type: String
+      end
+      get ':id' do
+        begin
+          # authenticate!
+          {
+            status: 200,
+            persona: Persona.find(params[:id].to_s)
+          }.to_json
+        rescue
+          error!('400 BadRequest', 400)
+        end
       end
     end
   end
 end
-
