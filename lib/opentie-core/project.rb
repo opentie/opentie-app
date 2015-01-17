@@ -1,5 +1,5 @@
 module OpentieCore
-  class Project
+  module Project
     
   end
 end
