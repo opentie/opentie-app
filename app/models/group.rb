@@ -6,4 +6,5 @@ class Group
 
   field :name, type: String
   field :is_jitsui, type: Boolean
+  field :role, type: String
 end
