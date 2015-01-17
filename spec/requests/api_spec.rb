@@ -48,6 +48,7 @@ RSpec.describe API do
 
   describe 'GET /api/v1/projects/:id' do
     before do
+      FactoryGirl.create(:project_factory)
       test_id = Project.all.first[:_id].to_s
       get "/api/v1/projects/#{test_id}"
     end
@@ -83,6 +84,7 @@ RSpec.describe API do
 
   describe 'GET /api/v1/groups/:id' do
     before do
+      FactoryGirl.create(:group_factory)
       test_id = Group.all.first[:_id].to_s
       get "/api/v1/groups/#{test_id}"
     end
