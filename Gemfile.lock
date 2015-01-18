@@ -152,6 +152,8 @@ GEM
     notiffany (0.0.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    opentie-core (0.0.2)
+      mongoid
     optionable (0.2.0)
     origin (2.1.1)
     orm_adapter (0.5.0)
@@ -275,6 +277,7 @@ DEPENDENCIES
   mongoid (~> 4.0.0)
   mongoid-rspec
   mongoid-tree
+  opentie-core
   pry-byebug
   pry-doc
   pry-rails
