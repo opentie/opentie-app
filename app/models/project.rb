@@ -1,4 +1,4 @@
-require 'opentie-core'
+require 'opentie/core'
 
-class Project < OpentieCore::Project
+class Project < Opentie::Core::Project
 end

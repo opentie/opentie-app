@@ -1,4 +1,4 @@
-require 'opentie-core'
+require 'opentie/core'
 
-class Bureau < OpentieCore::Bureau
+class Bureau < Opentie::Core::Bureau
 end
