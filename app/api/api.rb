@@ -36,7 +36,7 @@ module API
           {
             status: 200,
             user_res: ["hoge", "fuga", "piyo"]
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
@@ -50,13 +50,11 @@ module API
       get do
         begin
           # authenticate!
-          projects = Project.all.each.map do |project|
-            project
-          end
+          projects = Project.all.each.map{ |project| project }
           {
             status: 200,
             project: projects
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
@@ -72,7 +70,7 @@ module API
           {
             status: 200,
             project: Project.find(params[:id].to_s)
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
@@ -97,24 +95,22 @@ module API
 
 
     # connect Group
-    resource :groups do
-      desc "GET /api/v1/groups"
+    resource :bureaus do
+      desc "GET /api/v1/bureaus"
       get do
         begin
           # authenticate!
-          groups = Group.all.each.map do |group|
-            group.to_json
-          end
+          bureaus = Bureau.all.each.map { |bureau| bureau }
           {
             status: 200,
-            group: groups
-          }.to_json
+            bureau: bureaus
+          }
         rescue
           error!('400 BadRequest', 400)
         end
       end
 
-      desc "GET /api/v1/groups/:id"
+      desc "GET /api/v1/bureaus/:id"
       params do
         requires :id, type: String
       end
@@ -123,22 +119,17 @@ module API
           # authenticate!
           {
             status: 200,
-            group: Group.find(params[:id].to_s)
-          }.to_json
+            group: Bureau.find(params[:id].to_s)
+          }
         rescue
           error!('400 BadRequest', 400)
         end
       end
 
-      desc "POST /api/v1/groups"
-      params do
-        requires :is_jitsui, type: Boolean
-        # other
-      end
+      desc "POST /api/v1/bureaus"
       post do
         begin
           # authenticate!
-          # if project is exist, seems update project
           status 200
         rescue
           error!('400 BadRequest', 400)
@@ -153,13 +144,11 @@ module API
       get do
         begin
           # authenticate!
-          accounts = Account.all.each.map do |account|
-            account
-          end
+          accounts = Account.all.each.map{ |account| account}
           {
             status: 200,
             account: accounts 
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
@@ -175,7 +164,7 @@ module API
           {
             status: 200,
             account: Account.find(params[:id].to_s)
-          }.to_json
+          }
         rescue
           error!('404 BadRequest', 400)
         end
@@ -189,13 +178,11 @@ module API
       get do
         begin 
           # authenticate!
-          personas = Persona.all.each.map do |persona|
-            persona
-          end
+          personas = Persona.all.each.map{ |persona| persona }
           {
             status: 200,
             persona: personas 
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
@@ -211,7 +198,7 @@ module API
           {
             status: 200,
             persona: Persona.find(params[:id].to_s)
-          }.to_json
+          }
         rescue
           error!('400 BadRequest', 400)
         end
