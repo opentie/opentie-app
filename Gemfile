@@ -29,7 +29,7 @@ gem 'redis'
 gem 'redis-rails'
 
 # tie core
-gem "opentie-core"
+gem 'opentie-core', require: 'opentie/core'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
