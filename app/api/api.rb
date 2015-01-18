@@ -3,6 +3,12 @@ module API
   class API < Grape::API
     version 'v1', using: :path, vendor: 'api'
     format :json
+
+    helpers do
+      def session
+        env[Rack::Session::Abstract::ENV_SESSION_KEY]
+      end
+    end
     
     # Register
     resource :register do
