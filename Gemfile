@@ -13,6 +13,8 @@ gem 'rails', '4.2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# gem 'lucky-star'
+
 # API router
 gem 'grape'
 # account authentication
