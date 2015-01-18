@@ -94,7 +94,7 @@ module API
     end
 
 
-    # connect Group
+    # connect Bureau
     resource :bureaus do
       desc "GET /api/v1/bureaus"
       get do
