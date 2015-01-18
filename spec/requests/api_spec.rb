@@ -61,19 +61,7 @@ RSpec.describe API do
   
   describe 'POST /api/v1/projects' do
     before do
-      post '/api/v1/projects'
-    end
-
-    it 'return 200 OK?' do
-      pending 'Can not create projects yet.'
-      expect(response).to be_success
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'GET /api/v1/groups' do
-    before do
-      get '/api/v1/groups'
+      post '/api/v1/projects', name: 'name'
     end
 
     it 'return 200 OK?' do
@@ -82,11 +70,9 @@ RSpec.describe API do
     end
   end
 
-  describe 'GET /api/v1/groups/:id' do
+  describe 'GET /api/v1/bureaus' do
     before do
-      FactoryGirl.create(:group_factory)
-      test_id = Group.all.first[:_id].to_s
-      get "/api/v1/groups/#{test_id}"
+      get '/api/v1/bureaus'
     end
 
     it 'return 200 OK?' do
@@ -95,13 +81,25 @@ RSpec.describe API do
     end
   end
 
-  describe 'POST /api/v1/groups' do
+  describe 'GET /api/v1/bureaus/:id' do
     before do
-      post '/api/v1/groups'
+      FactoryGirl.create(:bureau_factory)
+      test_id = Bureau.all.first[:_id].to_s
+      get "/api/v1/bureaus/#{test_id}"
     end
 
     it 'return 200 OK?' do
-      pending '未実装'
+      expect(response).to be_success
+      expect(response.status).to eq(200)
+    end
+  end
+
+  describe 'POST /api/v1/bureaus' do
+    before do
+      post '/api/v1/bureaus'
+    end
+
+    it 'return 200 OK?' do
       expect(response).to be_success
       expect(response.status).to eq(200)
     end
@@ -125,7 +123,7 @@ RSpec.describe API do
     end
 
     it 'return 200 OK?' do
-      pending 'できない。だってDevise accountだもん'
+      pending 'Devise のcolumn作るのやだ'
       expect(response).to be_success
       expect(response.status).to eq(200)
     end
@@ -149,7 +147,7 @@ RSpec.describe API do
     end
 
     it 'return 200 OK?' do
-      pending 'できない。だってDevise accountだもん'
+      pending 'Devise のcolumn作るのやだ'
       expect(response).to be_success
       expect(response.status).to eq(200)
     end

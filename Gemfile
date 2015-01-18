@@ -21,8 +21,12 @@ gem 'devise'
 gem 'cancancan'
 
 # OR Mapper (for MongoDB)
-gem "mongoid", "~> 4.0.0"
-gem "mongoid-tree"
+gem 'mongoid', '~> 4.0.0'
+gem 'mongoid-tree'
+
+# Session store ( Redis )
+gem 'redis'
+gem 'redis-rails'
 
 # tie core
 gem "opentie-core"
