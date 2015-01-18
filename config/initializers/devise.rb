@@ -19,7 +19,18 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/mongoid'
+  #require 'devise/orm/mongoid'
+
+  #====================
+  # Lucky * Star
+  #====================
+  module DeviseInjector
+    extend ActiveSupport::Concern
+    module ClassMethods
+      include Devise::Models
+    end
+  end
+  Opentie::Core::Account.send :include, DeviseInjector
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

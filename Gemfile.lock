@@ -152,7 +152,7 @@ GEM
     notiffany (0.0.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    opentie-core (0.0.4)
+    opentie-core (0.0.5)
       mongoid
     optionable (0.2.0)
     origin (2.1.1)
