@@ -24,7 +24,6 @@ gem 'cancancan'
 
 # open id omniauth
 gem 'omniauth'
-gem 'omniauth-openid'
 gem 'omniauth-openid-connect'
 
 # OR Mapper (for MongoDB)
