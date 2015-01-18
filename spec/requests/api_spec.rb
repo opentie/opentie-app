@@ -71,42 +71,6 @@ RSpec.describe API do
     end
   end
 
-  describe 'GET /api/v1/groups' do
-    before do
-      get '/api/v1/groups'
-    end
-
-    it 'return 200 OK?' do
-      expect(response).to be_success
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'GET /api/v1/groups/:id' do
-    before do
-      FactoryGirl.create(:group_factory)
-      test_id = Group.all.first[:_id].to_s
-      get "/api/v1/groups/#{test_id}"
-    end
-
-    it 'return 200 OK?' do
-      expect(response).to be_success
-      expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'POST /api/v1/groups' do
-    before do
-      post '/api/v1/groups'
-    end
-
-    it 'return 200 OK?' do
-      pending '未実装'
-      expect(response).to be_success
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe 'GET /api/v1/accounts' do
     before do
       get '/api/v1/accounts'
