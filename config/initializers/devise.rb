@@ -21,17 +21,6 @@ Devise.setup do |config|
   # available as additional gems.
   #require 'devise/orm/mongoid'
 
-  #====================
-  # Lucky * Star
-  #====================
-  module DeviseInjector
-    extend ActiveSupport::Concern
-    module ClassMethods
-      include Devise::Models
-    end
-  end
-  Opentie::Core::Account.send :include, DeviseInjector
-
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
   # just :email. You can configure it to use [:username, :subdomain], so for

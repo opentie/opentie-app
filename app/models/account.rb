@@ -1,4 +1,6 @@
 class Account < Opentie::Core::Account
+  include DeviseInjector
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
