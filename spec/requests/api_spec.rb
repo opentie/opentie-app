@@ -2,9 +2,9 @@
 require 'rails_helper'
 
 RSpec.describe API do
-  describe 'GET /api/v1/register' do
+  describe 'GET /api/v1/login' do
     before do
-      get '/api/v1/register'
+      get '/api/v1/login'
     end
 
     it 'return 200 OK?' do
@@ -13,9 +13,9 @@ RSpec.describe API do
     end
   end
 
-  describe 'GET /api/v1/register/call_back' do
+  describe 'GET /api/v1/login/call_back' do
     before do
-      get '/api/v1/register/call_back'
+      get '/api/v1/login/call_back'
     end
 
     it 'return 200 OK?' do

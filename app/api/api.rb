@@ -11,8 +11,8 @@ module API
     end
     
     # Register
-    resource :register do
-      desc "GET /api/v1/register"
+    resource :login do
+      desc "GET /api/v1/login"
       get do
         begin
           # to Shibboleth
@@ -22,7 +22,7 @@ module API
         end
       end
       
-      desc "GET /api/v1/register/call_back"
+      desc "GET /api/v1/login/call_back"
       get :call_back do
         begin 
           # get Shibboleth callback value.
