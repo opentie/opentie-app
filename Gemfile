@@ -22,6 +22,11 @@ gem 'devise'
 # account authorization
 gem 'cancancan'
 
+# open id omniauth
+gem 'omniauth'
+gem 'omniauth-openid'
+gem 'omniauth-openid-connect'
+
 # OR Mapper (for MongoDB)
 gem 'mongoid', '~> 4.0.0'
 gem 'mongoid-tree'
