@@ -1,8 +1,4 @@
-class Account
-  include Mongoid::Document
-
-  belongs_to :persona, inverse_of: :accounts
-  
+class Account < Opentie::Core::Account
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -27,8 +23,8 @@ class Account
   field :last_sign_in_ip,    type: String
 
   field :name, type: String
-  field :code, type: String  
-  
+  field :code, type: String
+
   ## Confirmable
   # field :confirmation_token,   type: String
   # field :confirmed_at,         type: Time
