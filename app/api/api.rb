@@ -4,6 +4,10 @@ module API
     version 'v1', using: :path, vendor: 'api'
     format :json
 
+    rescue_from :all do |e|
+      Rack::Response.new([ "InternalServerError" ], 500, { "Content-type" => "text/error" }).finish
+    end
+
     helpers do
       def session
         env[Rack::Session::Abstract::ENV_SESSION_KEY]
@@ -14,38 +18,24 @@ module API
     resource :login do
       desc "GET /api/v1/login"
       get do
-        begin
-          # to Shibboleth
-          status 200
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # to Shibboleth
+        status 200
       end
       
       desc "GET /api/v1/login/call_back"
       get :call_back do
-        begin 
-          # get Shibboleth callback value.
-          # create new Account and redirect new project page.
-          status 200
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        status 200
       end
     end
     
     resource :dash_board do
       desc "GET /api/v1/dash_board"
       get do
-        begin
-          # authenticate!
-          {
-            status: 200,
-            user_res: ["hoge", "fuga", "piyo"]
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        {
+          status: 200,
+          user_res: ["hoge", "fuga", "piyo"]
+        }
       end
     end
 
@@ -54,16 +44,12 @@ module API
     resource :projects do
       desc "GET /api/v1/projects"
       get do
-        begin
-          # authenticate!
-          projects = Project.all.each.map{ |project| project }
-          {
-            status: 200,
-            project: projects
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        projects = Project.all.each.map{ |project| project }
+        {
+          status: 200,
+          project: projects
+        }
       end
 
       desc "GET /api/v1/projects/:id"
@@ -72,14 +58,10 @@ module API
       end
       get ':id' do
         # authenticate!
-        begin
-          {
-            status: 200,
-            project: Project.find(params[:id].to_s)
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        {
+          status: 200,
+          project: Project.find(params[:id].to_s)
+        }
       end
 
       desc "POST /api/v1/projects"
@@ -88,32 +70,20 @@ module API
         # etc...
       end
       post do
-        begin 
-          # authenticate!
-          # Project.new
-          # if project is exist, seems update project
-          status 200
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        status 200
       end
     end
-
 
     # connect Bureau
     resource :bureaus do
       desc "GET /api/v1/bureaus"
       get do
-        begin
-          # authenticate!
-          bureaus = Bureau.all.each.map { |bureau| bureau }
-          {
-            status: 200,
-            bureau: bureaus
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        bureaus = Bureau.all.each.map { |bureau| bureau }
+        {
+          status: 200,
+          bureau: bureaus
+        }
       end
 
       desc "GET /api/v1/bureaus/:id"
@@ -121,25 +91,16 @@ module API
         requires :id, type: String
       end
       get ':id' do
-        begin
-          # authenticate!
-          {
-            status: 200,
-            group: Bureau.find(params[:id].to_s)
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        {
+          status: 200,
+          group: Bureau.find(params[:id].to_s)
+        }
       end
 
       desc "POST /api/v1/bureaus"
       post do
-        begin
-          # authenticate!
-          status 200
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        status 200
       end
     end
 
@@ -148,16 +109,12 @@ module API
     resource :accounts do
       desc "GET /api/v1/accounts"
       get do
-        begin
-          # authenticate!
-          accounts = Account.all.each.map{ |account| account}
-          {
-            status: 200,
-            account: accounts 
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        accounts = Account.all.each.map{ |account| account}
+        {
+          status: 200,
+          account: accounts 
+        }
       end
 
       desc "GET /api/v1/accounts/:id"
@@ -165,15 +122,11 @@ module API
         requires :id, type: String
       end
       get ':id' do
-        begin
-          # authenticate!
-          {
-            status: 200,
-            account: Account.find(params[:id].to_s)
-          }
-        rescue
-          error!('404 BadRequest', 400)
-        end
+        # authenticate!
+        {
+          status: 200,
+          account: Account.find(params[:id].to_s)
+        }
       end
     end
 
@@ -182,16 +135,12 @@ module API
     resource :personas do
       desc "GET /api/v1/personas"
       get do
-        begin 
-          # authenticate!
-          personas = Persona.all.each.map{ |persona| persona }
-          {
-            status: 200,
-            persona: personas 
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        personas = Persona.all.each.map{ |persona| persona }
+        {
+          status: 200,
+          persona: personas 
+        }
       end
 
       desc "GET /api/v1/personas/:id"
@@ -199,15 +148,11 @@ module API
         requires :id, type: String
       end
       get ':id' do
-        begin
-          # authenticate!
-          {
-            status: 200,
-            persona: Persona.find(params[:id].to_s)
-          }
-        rescue
-          error!('400 BadRequest', 400)
-        end
+        # authenticate!
+        {
+          status: 200,
+          persona: Persona.find(params[:id].to_s)
+        }
       end
     end
   end
