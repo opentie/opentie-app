@@ -37,12 +37,9 @@ module V1
     resource :login do
       desc "GET /api/v1/login/"
       get do
-        #connecter =  OpenidConnecter.new {}
-        #{
-        #  status: 200,
-        #  url: connecter.get_redirect_url
-        #}
-        status 200
+        connecter = OpenidConnecter.new({})
+        return_param = connecter.get_redirect_url
+        redirect return_param[1]["location"]
       end
 
       desc "GET /api/v1/login/call_back/"
