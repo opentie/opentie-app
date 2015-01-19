@@ -1,5 +1,4 @@
 class Account
-  include Mongoid::Document
   include Opentie::Core::Account
   include DeviseInjector
 

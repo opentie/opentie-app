@@ -1,5 +1,4 @@
 class Persona
-  include Mongoid::Document
   include Opentie::Core::Persona
   
   has_many :accounts, inverse_of: :persona
