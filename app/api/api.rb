@@ -1,11 +1,17 @@
 # -*- encoding: utf-8 -*-
+require 'openid_connecter'
+
 module API
   class API < Grape::API
     version 'v1', using: :path, vendor: 'api'
     format :json
 
     rescue_from :all do |e|
-      Rack::Response.new([ "InternalServerError" ], 500, { "Content-type" => "text/error" }).finish
+      Rack::Response.new(
+        [ "InternalServerError" ],
+        500,
+        { "Content-type" => "text/error" }
+      ).finish
     end
 
     helpers do
@@ -18,7 +24,11 @@ module API
     resource :login do
       desc "GET /api/v1/login"
       get do
-        # to Shibboleth
+        #connecter =  OpenidConnecter.new {}
+        #{
+        #  status: 200,
+        #  url: connecter.get_redirect_url
+        #}
         status 200
       end
       
