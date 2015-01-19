@@ -180,8 +180,8 @@ GEM
       validate_email
       validate_url
       webfinger (>= 0.0.2)
-    opentie-core (0.0.5)
-      mongoid
+    opentie-core (0.0.6)
+      activesupport
     optionable (0.2.0)
     origin (2.1.1)
     orm_adapter (0.5.0)
