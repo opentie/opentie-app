@@ -1,4 +1,6 @@
 # coding: utf-8
+require 'openid_connecter'
+
 module V1
   class Base < Grape::API
     format :json
@@ -39,11 +41,17 @@ module V1
       get do
         connecter = OpenidConnecter.new({})
         return_param = connecter.get_redirect_url
-        redirect return_param[1]["location"]
+        status 302
+        {
+          params: return_param[1]
+        }
       end
 
-      desc "GET /api/v1/login/call_back/"
-      get :call_back do
+      desc "POST /api/v1/login/call_back/"
+      params do
+        
+      end
+      post :call_back do
         status 200
       end
     end

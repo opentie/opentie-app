@@ -7,20 +7,17 @@ RSpec.describe API do
       get '/api/v1/login/'
     end
 
-    it 'return 200 OK?' do
-      pending "まだまだ修行中"
-      expect(response).to be_success
-      expect(response.status).to eq(200)
+    it 'return 302 Redirect?' do
+      expect(response.status).to eq(302)
     end
   end
 
-  describe 'GET /api/v1/login/call_back/' do
+  describe 'POST /api/v1/login/call_back/' do
     before do
-      get '/api/v1/login/call_back/'
+      post '/api/v1/login/call_back/'
     end
 
     it 'return 200 OK?' do
-      #pending "こーるばっっっっっっく"
       expect(response).to be_success
       expect(response.status).to eq(200)
     end
