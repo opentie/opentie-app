@@ -61,13 +61,12 @@ RSpec.describe API do
 
   describe 'GET /api/v1/request_types/sample_request/:id.json' do
     before do
-      #FactoryGirl.create(:sample_request_factory)
-      #test_id = SampleRequest.all.first[:_id].to_s
-      #get "/api/v1/request_types/sample_request/#{test_id}.json"
+      FactoryGirl.create(:sample_request_factory)
+      test_id = SampleRequest.all.first[:_id].to_s
+      get "/api/v1/request_types/sample_request/#{test_id}.json"
     end
 
     it 'return 200 OK?' do
-      pending "core bug"
       expect(response).to be_success
       expect(response.status).to eq(200)
     end

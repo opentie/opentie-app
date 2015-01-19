@@ -72,7 +72,7 @@ module V1
         params do
           requires :id, type: String
         end
-        get do
+        get ":id" do
           {
             status: 200,
             request: SampleRequest.find(params[:id].to_s)
