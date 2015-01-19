@@ -1,6 +1,10 @@
-class Account < Opentie::Core::Account
+class Account
+  include Mongoid::Document
+  include Opentie::Core::Account
   include DeviseInjector
 
+  belongs_to :persona, inverse_of: :accounts
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

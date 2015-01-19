@@ -29,6 +29,7 @@ gem 'omniauth-openid-connect'
 # OR Mapper (for MongoDB)
 gem 'mongoid', '~> 4.0.0'
 gem 'mongoid-tree'
+gem 'mongoid-enum'
 
 # Session store ( Redis )
 gem 'redis'

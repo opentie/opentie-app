@@ -1,6 +1,7 @@
-class Persona
+class Persona < Opentie::Core::Persona
   include Mongoid::Document
-
+  
   has_many :accounts, inverse_of: :persona
-  has_many :groups, inverse_of: :persona
+  has_many :projects, inverse_of: :persona
+  has_many :bureaus, inverse_of: :persona
 end
