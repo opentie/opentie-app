@@ -8,6 +8,7 @@ RSpec.describe API do
     end
 
     it 'return 200 OK?' do
+      pending "まだまだ修行中"
       expect(response).to be_success
       expect(response.status).to eq(200)
     end
@@ -19,6 +20,7 @@ RSpec.describe API do
     end
 
     it 'return 200 OK?' do
+      #pending "こーるばっっっっっっく"
       expect(response).to be_success
       expect(response.status).to eq(200)
     end
