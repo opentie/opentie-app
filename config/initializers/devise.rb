@@ -1,6 +1,22 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  # Setup openid-connect
+
+  config.omniauth :openid_connect, {
+                    name: :my_provider,
+                    scope: [:openid, :email, :profile, :address],
+                    response_type: :code,
+                    client_options: {
+                      port: 443,
+                      scheme: "https",
+                      host: "myprovider.com",
+                      identifier: OPENID["OP_CLIENT_ID"],
+                      secret: OPENID["OP_SECRET_KEY"],
+                      redirect_uri: "http://myapp.com/users/auth/openid_connect/callback",
+                    },
+                  }
+  
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
