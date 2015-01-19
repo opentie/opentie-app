@@ -29,13 +29,13 @@ module V1
 
       params :attributes do
         # public argment
-        # "use :attributes"
+        # if you want to use this. you must write "use :attributes".
       end
     end
 
-    # Register
+    # login
     resource :login do
-      desc "GET /api/v1/login.json"
+      desc "GET /api/v1/login/"
       get do
         #connecter =  OpenidConnecter.new {}
         #{
@@ -45,14 +45,58 @@ module V1
         status 200
       end
 
-      desc "GET /api/v1/login/call_back"
+      desc "GET /api/v1/login/call_back/"
       get :call_back do
         status 200
       end
     end
 
+    # Request
+    resource :request_types do
+      desc "GET /api/v1/request_types/"
+      params do
+        
+      end
+      get do
+        status 200
+      end
+
+      # ===== sample request set =====
+      resource :sample_request do
+        desc "GET /api/v1/request_types/sample_request.json"
+        params do
+          
+        end
+        get do
+          status 200
+        end
+
+        desc "GET /api/v1/request_types/sample_request/:id.json"
+        params do
+          requires :id, type: String
+        end
+        get do
+          {
+            status: 200,
+            request: SampleRequest.find(params[:id].to_s)
+          }
+        end
+      end
+      resource "sample_request.form" do
+        params do
+
+        end
+        get do
+          status 200
+        end
+      end
+      # =============================
+      
+    end
+
+    # dash_board
     resource :dash_board do
-      desc "GET /api/v1/dash_board"
+      desc "GET /api/v1/dash_board/"
       get do
         # authenticate!
         {
