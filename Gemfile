@@ -27,9 +27,7 @@ gem 'omniauth'
 gem 'omniauth-openid-connect'
 
 # OR Mapper (for MongoDB)
-gem 'mongoid', '~> 4.0.0'
-gem 'mongoid-tree'
-gem 'mongoid-enum'
+gem 'pg'
 
 # Session store ( Redis )
 gem 'redis'
@@ -59,7 +57,6 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'spring-commands-rspec'
-  gem 'mongoid-rspec'
   gem 'database_cleaner'
 end
 
