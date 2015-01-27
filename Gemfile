@@ -26,15 +26,13 @@ gem 'cancancan'
 gem 'omniauth'
 gem 'omniauth-openid-connect'
 
-# OR Mapper (for MongoDB)
+# OR Mapper
 gem 'pg'
+gem 'activerecord'
 
 # Session store ( Redis )
 gem 'redis'
 gem 'redis-rails'
-
-# tie core
-gem 'opentie-core', require: 'opentie/core'
 
 gem 'activeldap'
 

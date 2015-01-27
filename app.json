@@ -1,0 +1,11 @@
+{
+  "name": "opentie-app",
+  "description": "Opentie Application",
+  "website": "https://github.com/opentie/opentie-app",
+  "repository": "https://github.com/opentie/opentie-app",
+  "success_url": "/",
+  "addons": [
+    "redistogo",
+    "heroku-postgresql"
+  ]
+}
