@@ -1,0 +1,4 @@
+database:
+  override:
+    - mv config/database.ci.yml config/database.yml
+    - bundle exec rake db:create db:migrate db:seed --trace

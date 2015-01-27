@@ -1,0 +1,10 @@
+default: &default
+  adapter: postgres
+  encoding: utf8
+  pool: 5
+  username: ubuntu
+  password:
+
+test:
+  <<: *default
+  database: circir_test
