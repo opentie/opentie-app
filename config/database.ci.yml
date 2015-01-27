@@ -7,4 +7,4 @@ default: &default
 
 test:
   <<: *default
-  database: circir_test
+  database: circie_test
