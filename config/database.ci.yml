@@ -1,5 +1,5 @@
 default: &default
-  adapter: postgres
+  adapter: postgresql
   encoding: utf8
   pool: 5
   username: ubuntu
