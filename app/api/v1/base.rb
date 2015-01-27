@@ -76,13 +76,21 @@ module V1
           status 200
         end
 
+        desc "POST /api/v1/request_types/sample_request.json"
+        params do
+
+        end
+        post do
+          status 200
+        end
+
         desc "GET /api/v1/request_types/sample_request/:id.json"
         params do
           requires :id, type: String
         end
         get ":id" do
+          status 200
           {
-            status: 200,
             request: SampleRequest.find(params[:id].to_s)
           }
         end
@@ -103,9 +111,8 @@ module V1
     resource :dash_board do
       desc "GET /api/v1/dash_board/"
       get do
-        # authenticate!
+        status 200
         {
-          status: 200,
           user_res: ["hoge", "fuga", "piyo"]
         }
       end
@@ -115,10 +122,9 @@ module V1
     resource :projects do
       desc "GET /api/v1/projects"
       get do
-        # authenticate!
         projects = Project.all.each.map{ |project| project }
+        status 200
         {
-          status: 200,
           project: projects
         }
       end
@@ -128,9 +134,8 @@ module V1
         requires :id, type: String
       end
       get ':id' do
-        # authenticate!
+        status 200
         {
-          status: 200,
           project: Project.find(params[:id].to_s)
         }
       end
@@ -151,8 +156,8 @@ module V1
       get do
         # authenticate!
         bureaus = Bureau.all.each.map { |bureau| bureau }
+        status 200
         {
-          status: 200,
           bureau: bureaus
         }
       end
@@ -162,14 +167,16 @@ module V1
         requires :id, type: String
       end
       get ':id' do
-        # authenticate!
+        status 200
         {
-          status: 200,
           group: Bureau.find(params[:id].to_s)
         }
       end
 
       desc "POST /api/v1/bureaus"
+      params do
+        
+      end
       post do
         status 200
       end
@@ -182,8 +189,8 @@ module V1
       get do
         # authenticate!
         accounts = Account.all.each.map{ |account| account}
+        status 200
         {
-          status: 200,
           account: accounts
         }
       end
@@ -193,9 +200,8 @@ module V1
         requires :id, type: String
       end
       get ':id' do
-        # authenticate!
+        status 200
         {
-          status: 200,
           account: Account.find(params[:id].to_s)
         }
       end
@@ -208,8 +214,8 @@ module V1
       get do
         # authenticate!
         personas = Persona.all.each.map{ |persona| persona }
+        status 200
         {
-          status: 200,
           persona: personas
         }
       end
@@ -220,8 +226,8 @@ module V1
       end
       get ':id' do
         # authenticate!
+        status 200
         {
-          status: 200,
           persona: Persona.find(params[:id].to_s)
         }
       end
