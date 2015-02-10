@@ -15,4 +15,4 @@ opentie のバックエンド
 
 バックエンドは JSON を吐く API サーバーとして動く。DB は PostgreSQL を使いたい。
 
-![design.jpg](https://github.com/opentie/opentie-app/wiki/DSC1550.jpg)
+![design.jpg](https://github.com/opentie/opentie-app/wiki/DSC_1550.jpg)
