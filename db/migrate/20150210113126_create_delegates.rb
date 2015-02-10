@@ -1,4 +1,4 @@
-class CreateDelegate < ActiveRecord::Migration
+class CreateDelegates < ActiveRecord::Migration
   def change
     create_table :delegates, id: :uuid do |t|
       t.uuid :project_id

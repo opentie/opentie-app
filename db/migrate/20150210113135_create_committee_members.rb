@@ -1,4 +1,4 @@
-class CreateCommitteeMember < ActiveRecord::Migration
+class CreateCommitteeMembers < ActiveRecord::Migration
   def change
     create_table :committee_member, id: :uuid do |t|
       t.uuid :breau_id
