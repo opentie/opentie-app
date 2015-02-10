@@ -34,5 +34,7 @@ module OpentieApp
     config.generators do |g|
       g.orm :active_record
     end
+
+    config.assets.enabled = false
   end
 end
