@@ -2,7 +2,7 @@
 require 'openid_connecter'
 
 module V1
-  class Base < Grape::API
+  class BaseController < Grape::API
     format :json
     default_format :json
 
