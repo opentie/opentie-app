@@ -4,8 +4,8 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :projects
   accepts_nested_attributes_for :delegates
 
-  has_many :committee_members, dependent: :destroy
-  has_many :bureaus, through: :committee_members
-  accepts_nested_attributes_for :bureaus
-  accepts_nested_attributes_for :committee_members
+  has_many :roles, dependent: :destroy
+  has_many :divisions, through: :roles
+  accepts_nested_attributes_for :divisions
+  accepts_nested_attributes_for :roles
 end

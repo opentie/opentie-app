@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210113135) do
+ActiveRecord::Schema.define(version: 20150210144721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+  enable_extension "hstore"
 
   create_table "accounts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.json     "payload"
+    t.hstore   "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -58,20 +59,6 @@ ActiveRecord::Schema.define(version: 20150210113135) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "bureaus", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "committee_members", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid     "bureau_id"
-    t.uuid     "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "committee_members", ["bureau_id", "account_id"], name: "index_committee_members_on_bureau_id_and_account_id", unique: true, using: :btree
-
   create_table "delegates", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "project_id"
     t.uuid     "account_id"
@@ -81,19 +68,47 @@ ActiveRecord::Schema.define(version: 20150210113135) do
 
   add_index "delegates", ["project_id", "account_id"], name: "index_delegates_on_project_id_and_account_id", unique: true, using: :btree
 
-  create_table "message_bodies", force: :cascade do |t|
+  create_table "divisions", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.hstore   "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "message_payloads", force: :cascade do |t|
+  create_table "projects", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
+    t.hstore   "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "projects", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "request_schemata", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "division_id"
+    t.json     "payload"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
+
+  add_index "request_schemata", ["division_id"], name: "index_request_schemata_on_division_id", using: :btree
+
+  create_table "requests", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "request_schema_id"
+    t.uuid     "delegate_id"
+    t.json     "payload"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "requests", ["delegate_id"], name: "index_requests_on_delegate_id", using: :btree
+  add_index "requests", ["request_schema_id"], name: "index_requests_on_request_schema_id", using: :btree
+
+  create_table "roles", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "division_id"
+    t.uuid     "account_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "roles", ["division_id", "account_id"], name: "index_roles_on_division_id_and_account_id", unique: true, using: :btree
 
 end

@@ -14,14 +14,14 @@ ActiveAdmin.register Account do
   #   permitted
   # end
 
-  permit_params :name, :email, project_ids: [], bureau_ids: []
+  permit_params :name, :email, project_ids: [], division_ids: []
 
   form do |f|
     f.inputs do
       f.input :name
       f.input :email
       f.input :projects, as: :select, include_blank: false
-      f.input :bureaus, as: :select, include_blank: false
+      f.input :divisions, as: :select, include_blank: false
     end
     f.actions
   end
@@ -38,9 +38,9 @@ ActiveAdmin.register Account do
         project.name
       end.sort.join ', '
     end
-    column :bureaus do |account|
-      account.bureaus.map do |bureau|
-        bureau.name
+    column :divisions do |account|
+      account.divisions.map do |division|
+        division.name
       end.sort.join ', '
     end
     column :created_at
@@ -52,14 +52,14 @@ ActiveAdmin.register Account do
     attributes_table do
       row :id
       row :name
-      column :projects do |account|
+      row :projects do |account|
         account.projects.map do |project|
           project.name
         end.sort.join ', '
       end
-      column :bureaus do |account|
-        account.bureaus.map do |bureau|
-          bureau.name
+      row :divisions do |account|
+        account.divisions.map do |division|
+          division.name
         end.sort.join ', '
       end
       row :created_at
