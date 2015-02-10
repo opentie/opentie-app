@@ -18,3 +18,4 @@
 
 # openid keys
 /config/openid.yml
+/public/assets
