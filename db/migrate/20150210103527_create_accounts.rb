@@ -3,6 +3,7 @@ class CreateAccounts < ActiveRecord::Migration
     create_table :accounts, id: :uuid do |t|
       t.string :name
       t.string :email
+      t.json :payload
 
       t.timestamps null: false
     end

@@ -1,4 +1,4 @@
 class CommitteeMember < ActiveRecord::Base
   belongs_to :account
-  belongs_to :breau
+  belongs_to :bureau
 end

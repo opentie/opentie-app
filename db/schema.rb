@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150210113135) do
   create_table "accounts", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
+    t.json     "payload"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -62,14 +63,14 @@ ActiveRecord::Schema.define(version: 20150210113135) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "committee_member", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid     "breau_id"
+  create_table "committee_members", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid     "bureau_id"
     t.uuid     "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "committee_member", ["breau_id", "account_id"], name: "index_committee_member_on_breau_id_and_account_id", unique: true, using: :btree
+  add_index "committee_members", ["bureau_id", "account_id"], name: "index_committee_members_on_bureau_id_and_account_id", unique: true, using: :btree
 
   create_table "delegates", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "project_id"
