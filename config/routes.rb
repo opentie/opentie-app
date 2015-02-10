@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-#  devise_for :accounts
+  #devise_for :accounts
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
 
   # API routing
-  mount API::API => '/'
+  mount ::API => '/'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

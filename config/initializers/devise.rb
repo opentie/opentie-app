@@ -1,26 +1,10 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # Setup openid-connect
-
-  config.omniauth :openid_connect, {
-                    name: :my_provider,
-                    scope: [:openid, :email, :profile, :address],
-                    response_type: :code,
-                    client_options: {
-                      port: 443,
-                      scheme: "https",
-                      host: "myprovider.com",
-                      identifier: OPENID["OP_CLIENT_ID"],
-                      secret: OPENID["OP_SECRET_KEY"],
-                      redirect_uri: "http://myapp.com/users/auth/openid_connect/callback",
-                    },
-                  }
-  
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  # config.secret_key = 'cae2a8671b9ee44ac598d4b7f1fc008c9308d98389376fb954232b75c86ec0403b15db05ba6498e02e0b36b987e7600350efcd896f050adff70f7e7518eb0813'
+  # config.secret_key = 'e6066e2e29ecf410433e08d684c3b4e0298bd5de1057ff16949962173ed0c221e217e1cf5b470b5697cc69fc058832bf0118cef8b8497fa832acb6d1a5cf2c09'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -35,7 +19,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  #require 'devise/orm/mongoid'
+  require 'devise/orm/active_record'
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -113,7 +97,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = 'ee3e10a5e2049b8204e606646d480b7e38961ee283ce19670c5d70069095518552bee8763de172960994955f78847e49c2c1fb728eac74b53e545d7e0bf197c0'
+  # config.pepper = '609be124cabb7e8e32bc6ba03ff805cd56fb937486290407b3861870f51b9b6740db0e570c82b16fda438369c58d6d8d158b71d1ed9e4f596ac3cac1a2ec6d5d'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
