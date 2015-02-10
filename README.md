@@ -1,5 +1,7 @@
 # opentie app
 [![Circle CI](https://circleci.com/gh/opentie/opentie-app/tree/master.svg?style=svg)](https://circleci.com/gh/opentie/opentie-app/tree/master)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 
 opentie のバックエンド
 
