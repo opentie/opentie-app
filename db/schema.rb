@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211054737) do
+ActiveRecord::Schema.define(version: 20150211120945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,9 @@ ActiveRecord::Schema.define(version: 20150211054737) do
   create_table "delegates", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "project_id"
     t.uuid     "account_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "priority",   default: 0, null: false
   end
 
   add_index "delegates", ["project_id", "account_id"], name: "index_delegates_on_project_id_and_account_id", unique: true, using: :btree
@@ -71,6 +72,12 @@ ActiveRecord::Schema.define(version: 20150211054737) do
   create_table "divisions", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.string   "name"
     t.hstore   "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "global_settings", force: :cascade do |t|
+    t.json     "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

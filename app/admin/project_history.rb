@@ -1,4 +1,6 @@
 ActiveAdmin.register ProjectHistory do
+  actions :index
+
   index do
     selectable_column
     column :id
