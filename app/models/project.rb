@@ -6,24 +6,17 @@ class Project < ActiveRecord::Base
   has_many :project_histories
   
   store_accessor :payload
+  
+  validates_length_of :delegates, minimum: 1
 
   after_save do
-    histories = []
     if changes.include? :name
-      ProjectHistory.create({
-                              project: self,
-                              field: :name,
-                              value: changes[:name].last
-                            })
+      ProjectHistory.create(project: self, field: :name, value: changes[:name].last)
+                            
     end
     if changes.include? :payload
-      # TODO: diff
       diff(changes[:payload].last, changes[:payload].first).each { |key, value|
-        ProjectHistory.create({
-                                project: self,
-                                field: key,
-                                value: value
-                              })
+        ProjectHistory.create(project: self, field: key, value: value)
       }
     end
   end
