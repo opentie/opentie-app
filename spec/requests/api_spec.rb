@@ -7,8 +7,8 @@ RSpec.describe API do
       get '/api/v1/login/'
     end
 
-    it 'return 302 Redirect?' do
-      expect(response.status).to eq(302)
+    it 'return 200 Redirect?' do
+      expect(response.status).to eq(200)
     end
   end
 
