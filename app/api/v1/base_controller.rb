@@ -57,54 +57,14 @@ module V1
     end
 
     # Request
-    resource :request_types do
-      desc "GET /api/v1/request_types/"
+    resource :requests do
+      desc "GET /api/v1/requests/"
       params do
         
       end
       get do
         status 200
       end
-
-      # ===== sample request set =====
-      resource :sample_request do
-        desc "GET /api/v1/request_types/sample_request.json"
-        params do
-          
-        end
-        get do
-          status 200
-        end
-
-        desc "POST /api/v1/request_types/sample_request.json"
-        params do
-
-        end
-        post do
-          status 200
-        end
-
-        desc "GET /api/v1/request_types/sample_request/:id.json"
-        params do
-          requires :id, type: String
-        end
-        get ":id" do
-          status 200
-          {
-            request: SampleRequest.find(params[:id].to_s)
-          }
-        end
-      end
-      resource "sample_request.form" do
-        params do
-
-        end
-        get do
-          status 200
-        end
-      end
-      # =============================
-      
     end
 
     # dash_board
@@ -122,7 +82,7 @@ module V1
     resource :projects do
       desc "GET /api/v1/projects"
       get do
-        projects = Project.all.each.map{ |project| project }
+        projects =  Project.all.each.map{ |project| project }
         status 200
         {
           project: projects
@@ -136,7 +96,7 @@ module V1
       get ':id' do
         status 200
         {
-          project: Project.find(params[:id].to_s)
+          #project: Project.find(params[:id].to_s)
         }
       end
 
@@ -150,39 +110,7 @@ module V1
       end
     end
 
-    # connect Bureau
-    resource :bureaus do
-      desc "GET /api/v1/bureaus"
-      get do
-        # authenticate!
-        bureaus = Bureau.all.each.map { |bureau| bureau }
-        status 200
-        {
-          bureau: bureaus
-        }
-      end
-
-      desc "GET /api/v1/bureaus/:id"
-      params do
-        requires :id, type: String
-      end
-      get ':id' do
-        status 200
-        {
-          group: Bureau.find(params[:id].to_s)
-        }
-      end
-
-      desc "POST /api/v1/bureaus"
-      params do
-        
-      end
-      post do
-        status 200
-      end
-    end
-
-
+    
     # connect Acount
     resource :accounts do
       desc "GET /api/v1/accounts"
@@ -203,32 +131,6 @@ module V1
         status 200
         {
           account: Account.find(params[:id].to_s)
-        }
-      end
-    end
-
-
-    # connect Persona
-    resource :personas do
-      desc "GET /api/v1/personas"
-      get do
-        # authenticate!
-        personas = Persona.all.each.map{ |persona| persona }
-        status 200
-        {
-          persona: personas
-        }
-      end
-
-      desc "GET /api/v1/personas/:id"
-      params do
-        requires :id, type: String
-      end
-      get ':id' do
-        # authenticate!
-        status 200
-        {
-          persona: Persona.find(params[:id].to_s)
         }
       end
     end
