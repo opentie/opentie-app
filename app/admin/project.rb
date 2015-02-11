@@ -1,24 +1,10 @@
 ActiveAdmin.register Project do
-
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
-
-  permit_params :name, account_ids: []
+  permit_params :name, :payload, account_ids: []
 
   form do |f|
     f.inputs do
       f.input :name
+      f.input :payload, as: :string
       f.input :accounts, as: :select, include_blank: false
     end
     f.actions
@@ -30,6 +16,7 @@ ActiveAdmin.register Project do
       link_to project.id, admin_project_path(project)
     end
     column :name
+    column :payload
     column :accounts do |account|
       account.accounts.map do |account|
         account.name
@@ -44,6 +31,7 @@ ActiveAdmin.register Project do
     attributes_table do
       row :id
       row :name
+      row :payload
       row :accounts do |account|
         account.accounts.map do |account|
           account.name
