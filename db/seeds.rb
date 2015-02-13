@@ -39,6 +39,7 @@ unless Rails.env.production?
   puts "create GlobalSetting"
   %w(global14 setting15).each do |name|
     GlobalSetting.create(
+      name: name,
       value: { name: name }
     )
   end

@@ -76,7 +76,8 @@ ActiveRecord::Schema.define(version: 20150211120945) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "global_settings", force: :cascade do |t|
+  create_table "global_settings", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "name"
     t.json     "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
