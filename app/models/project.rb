@@ -6,21 +6,6 @@ class Project < ActiveRecord::Base
   has_many :project_histories
 
   store_accessor :payload
-  
-  validates_each :delegates do |record, attr, value|
-    min_length = GlobalSetting.get 'project_schema.delegates_count_min'
-    max_length = GlobalSetting.get 'project_schema.delegates_count_max'
-
-    unless value.count >= min_length
-      record.errors.add(attr, I18n.t("activerecord.errors.messages.less_than_or_equal_to",
-                                     count: min_length))
-    end
-
-    unless value.count <= max_length
-      record.errors.add(attr, I18n.t("activerecord.errors.messages.greater_than_or_equal_to",
-                                     count: max_length))
-    end
-  end
 
   after_save do
     if changes.include? :name
@@ -33,6 +18,19 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def complete?
+    min_length = GlobalSetting.get 'project_schema.delegates_count_min'
+    max_length = GlobalSetting.get 'project_schema.delegates_count_max'
+    value = self.delegates.count
+
+    unless (min_length..max_length).cover? value
+      logger.warn "Number of delegate is out of range: #{value}"
+      false
+    else
+      true
+    end    
+  end
+  
   private
   def diff(h1, h2)
     h1 ||= {}

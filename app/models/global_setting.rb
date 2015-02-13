@@ -1,7 +1,7 @@
 class GlobalSetting < ActiveRecord::Base
   DEFAULTS = {
-    'project_schema.delegates_count_min': 1,
-    'project_schema.delegates_count_max': 1
+    'project_schema.delegates_count_min': 2,
+    'project_schema.delegates_count_max': 2
   }
 
   def self.get(key)

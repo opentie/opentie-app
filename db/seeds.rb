@@ -17,16 +17,16 @@ unless Rails.env.production?
     )
   end
 
-  puts "create ProjectHistory"
-  Project.all.each do |project|
-    3.times do |i|
-      ProjectHistory.create(
-        project_id: project.id,
-        field: "test_field",
-        value: "value#{i}"
-      )
-    end
-  end
+#  puts "create ProjectHistory"
+#  Project.all.each do |project|
+#    3.times do |i|
+#      ProjectHistory.create(
+#        project_id: project.id,
+#        field: "test_field",
+#        value: "value#{i}"
+#      )
+#    end
+#  end
 
   puts "create Division"
   %w(jsys sok dan).each do |name|
@@ -43,15 +43,7 @@ unless Rails.env.production?
       value: { name: name }
     )
   end
-
-  puts "create Divisoion"
-  %w(jsys sok dan).each do |name|
-    Division.create(
-      name: name,
-      payload: { people: 15 }
-    )
-  end
-
+  
   puts "create RequestSchemata"
   Division.all.each do |division|
     5.times do |i|
