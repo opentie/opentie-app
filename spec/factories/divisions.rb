@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :project do
-    payload { hoge: "fuga" }
+  factory :division do
     name "test_name"
+    payload { hoge: "fuga" }
   end
 end
