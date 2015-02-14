@@ -12,8 +12,14 @@ class AddDeviseToAccounts < ActiveRecord::Migration
       ## Rememberable
       t.datetime :remember_created_at
 
-      ## Authenticate
-      t.string :authentication_token
+      ## Trackable
+      t.integer  :sign_in_count, default: 0, null: false
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.inet     :current_sign_in_ip
+      t.inet     :last_sign_in_ip
+
+      t.string   :remember_token
 
       # Uncomment below if timestamps were not included in your original model.
       # t.timestamps
@@ -21,6 +27,8 @@ class AddDeviseToAccounts < ActiveRecord::Migration
 
     add_index :accounts, :email,                unique: true
     add_index :accounts, :reset_password_token, unique: true
+    # add_index :accounts, :confirmation_token,   unique: true
+    # add_index :accounts, :unlock_token,         unique: true
   end
 
   def self.down
@@ -29,6 +37,11 @@ class AddDeviseToAccounts < ActiveRecord::Migration
     remove_column :accounts, :reset_password_token
     remove_column :accounts, :reset_password_sent_at
     remove_column :accounts, :remember_created_at
-    remove_column :accounts, :authentication_token
+    remove_column :accounts, :sign_in_count
+    remove_column :accounts, :current_sign_in_at
+    remove_column :accounts, :last_sign_in_at
+    remove_column :accounts, :current_sign_in_ip
+    remove_column :accounts, :last_sign_in_ip
+    remove_column :accounts, :remember_token
   end
 end
