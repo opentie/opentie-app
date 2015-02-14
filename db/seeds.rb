@@ -2,11 +2,12 @@
 unless Rails.env.production?
   puts "create Account"
   %w(ayanel yui marei yuka ayana).each do |name|
-    Account.create(
+    Account.new(
       name: name,
       email: "#{name}@example.jp",
+      password: "password",
       payload: { hoge: "fuga"}
-    )
+    ).save!
   end
 
   puts "create Project"
