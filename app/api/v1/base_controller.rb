@@ -52,7 +52,6 @@ module V1
     resource :login do
       desc "GET /api/v1/login/"
       get do
-        binding.pry
         status 200
       end
 
