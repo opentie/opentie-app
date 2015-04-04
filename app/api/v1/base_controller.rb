@@ -1,53 +1,6 @@
 # coding: utf-8
 module V1
   class BaseController < Grape::API
-    format :json
-    default_format :json
-
-    # */hoge.json
-    content_type :json, 'application/json'
-    
-    prefix :api
-    version 'v1', using: :path
-
-    #rescue_from ActiveRecord::RecordNotFound do |e|
-    #  rack_response(message:  e.message, status: 404)
-    #end
-
-    rescue_from Grape::Exceptions::ValidationErrors do |e|
-      rack_response e.to_json, 400
-    end
-
-    rescue_from :all do |e|
-      error_response(message: "Internal server error", status: 500)
-    end
-
-    helpers do
-      def session
-        env[Rack::Session::Abstract::ENV_SESSION_KEY]
-      end
-
-      def authenticated
-        !current_user.nil?
-      end
-
-      def authenticate!(account)
-        remember_token = Account.ensure_session_token
-        session[:token] = remember_token
-        account.update_attribute(:remember_token, remember_token)
-      end
-
-      def current_user
-        return nil if session[:token].blank?
-        Account.find_by(remember_token: session[:token])
-      end
-      
-      params :attributes do
-        # public argment
-        # if you want to use this. you must write "use :attributes".
-      end
-    end
-
     # login
     resource :login do
       desc "GET /api/v1/login/"
