@@ -11,7 +11,7 @@ module V1
       post do
         account = Account.find_by(email: params[:email])
         error!({ message: "passwords don't match" }, status: 401) unless account.authenticate(params[:password])
-        authenticate!
+        authenticate!(account)
         status 200
       end
 

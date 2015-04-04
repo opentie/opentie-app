@@ -9,7 +9,7 @@ module API::Auth
 
   def authenticate!(account)
     account.ensure_session_token!
-    session[:token] = account.remember_token
+    session[:token] = account.session_token
   end
 
   def current_user
