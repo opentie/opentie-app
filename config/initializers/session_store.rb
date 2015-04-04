@@ -4,5 +4,5 @@
 Rails.application.config.session_store(
   :redis_store,
   :servers => "redis://localhost:6379/1",
-  :expire_in => 60 * 60 * 24 * 7 * 2
+  :expire_after => 1.minutes
 )

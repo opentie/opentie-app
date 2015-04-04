@@ -3,7 +3,7 @@ module API::Auth
     env[Rack::Session::Abstract::ENV_SESSION_KEY]
   end
 
-  def authenticated
+  def authenticated?
     !current_user.nil?
   end
 

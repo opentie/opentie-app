@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 class Account < ActiveRecord::Base
   has_secure_password
-  
-  attr_accessor :email, :session_token
 
   has_many :delegates, dependent: :destroy
   has_many :projects, through: :delegates
