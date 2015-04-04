@@ -4,7 +4,14 @@ module V1
     # login
     resource :login do
       desc "GET /api/v1/login/"
-      get do
+      params do
+        requires :email, type: String
+        requires :password, type: String
+      end
+      post do
+        account = Account.find_by(email: params[:email])
+        error!({ message: "passwords don't match" }, status: 401) unless account.authenticate(params[:password])
+        authenticate!
         status 200
       end
 
