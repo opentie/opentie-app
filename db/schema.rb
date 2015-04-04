@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 20150404092949) do
     t.datetime "updated_at",                   null: false
   end
 
+  add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["session_token"], name: "index_accounts_on_session_token", unique: true, using: :btree
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
