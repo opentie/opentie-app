@@ -8,13 +8,12 @@ module API::Auth
   end
 
   def authenticate!(account)
-    remember_token = Account.ensure_session_token
-    session[:token] = remember_token
-    account.update_attribute(:remember_token, remember_token)
+    account.ensure_session_token!
+    session[:token] = account.remember_token
   end
 
   def current_user
     return nil if session[:token].blank?
-    Account.find_by(remember_token: session[:token])
+    Account.where(session_token: session[:token]).first
   end
 end
