@@ -19,6 +19,7 @@ gem 'rails', '4.2.0'
 gem 'grape'
 # account authentication
 gem 'devise'
+gem 'bcrypt-ruby', '3.1.2'
 # account authorization
 gem 'cancancan'
 
