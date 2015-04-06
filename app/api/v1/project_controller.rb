@@ -9,7 +9,7 @@ class API::V1::ProjectController < Grape::API
       Project.find(id: params[:id].to_i)
     end      
 
-    route_params :project_id do
+    route_param :project_id do
       resource :requests do
         desc 'GET /api/v1/projects/:id/requests/'
         params do
@@ -20,7 +20,7 @@ class API::V1::ProjectController < Grape::API
 
         desc 'GET /api/v1/projects/:id/requests/:id/'
         params do
-          require :id, type: Integer, desc: 'request_id'
+          requires :id, type: Integer, desc: 'request_id'
         end
         get '/:id' do
           
@@ -37,7 +37,7 @@ class API::V1::ProjectController < Grape::API
 
         desc 'GET /api/v1/projects/:id/request_schemata/:id/'
         params do
-          require :id, type: Integer, desc: 'project_schema_id'
+          requires :id, type: Integer, desc: 'project_schema_id'
         end
         get '/:id' do
 

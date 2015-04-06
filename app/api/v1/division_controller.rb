@@ -6,10 +6,10 @@ class API::V1::DivisionController < Grape::API
       requires :id, type: Integer, desc: 'division_id'
     end
     get '/:id' do
-      Division.find(id: params[:id],.to_i)
+      Division.find(id: params[:id].to_i)
     end
 
-    route_params :division_id do
+    route_param :division_id do
       resource :projects do
         desc 'GET /api/v1/divisions/:id/projects/'
         params do
@@ -26,7 +26,7 @@ class API::V1::DivisionController < Grape::API
 
         end
 
-        route_params :project_id do
+        route_param :project_id do
           resource :requests do
             desc 'GET /api/v1/divisions/:id/projects/:id/requests/'
             params do
@@ -62,7 +62,7 @@ class API::V1::DivisionController < Grape::API
           
         end
         
-        route_params :request_schema_id do
+        route_param :request_schema_id do
           resource :requests do
             desc 'GET /api/v1/divisions/:id/request_schemata/:id/requests/'
             params do
