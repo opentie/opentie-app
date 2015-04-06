@@ -1,30 +1,6 @@
 # coding: utf-8
 module V1
   class BaseController < Grape::API
-    # login
-    resource :login do
-      desc "GET /api/v1/login/"
-      params do
-        requires :email, type: String
-        requires :password, type: String
-      end
-
-      post do
-        account = Account.find_by(email: params[:email])
-        error!({ message: "passwords don't match" }, 400) unless account.authenticate(params[:password])
-        authenticate!(account)
-        status 200
-      end
-
-      desc "POST /api/v1/login/call_back/"
-      params do
-        
-      end
-      post :call_back do
-        status 200
-      end
-    end
-
     # Request
     resource :requests do
       desc "GET /api/v1/requests/"
