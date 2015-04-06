@@ -3,10 +3,10 @@ class API::V1::DivisionController < Grape::API
   resource :divisions do
     desc 'GET /api/v1/divisions/:id'
     params do
-      requires :id, type: Integer, desc: 'division_id'
+      requires :id, type: Stirng, desc: 'division_id'
     end
     get '/:id' do
-      Division.find(id: params[:id].to_i)
+      Division.find(params[:id])
     end
 
     route_param :division_id do
@@ -20,7 +20,7 @@ class API::V1::DivisionController < Grape::API
 
         desc 'GET /api/v1/divisions/:id/projects/:id/'
         params do
-          requires :id, type: Integer, desc: 'projest_id'
+          requires :id, type: String, desc: 'projest_id'
         end
         get '/:id' do
 
@@ -37,7 +37,7 @@ class API::V1::DivisionController < Grape::API
 
             desc 'GET /api/v1/divisions/:id/projects/:id/requests/:id/'
             params do
-              requires :id, type: Integer, desc: 'request_id'
+              requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
 
@@ -56,7 +56,7 @@ class API::V1::DivisionController < Grape::API
 
         desc 'GET /api/v1/divisoins/:id/request_schemata/:id/'
         params do
-          requires :id, type: Integer, desc: 'request_schema_id'
+          requires :id, type: String, desc: 'request_schema_id'
         end
         get '/:id' do
           
@@ -73,7 +73,7 @@ class API::V1::DivisionController < Grape::API
 
             desc 'GET /api/v1/divisions/:id/request_schemata/:id/requests/:id/'
             params do
-              requires :id, type: Integer, desc: 'request_id'
+              requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
 
