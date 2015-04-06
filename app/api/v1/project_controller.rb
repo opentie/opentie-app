@@ -1,6 +1,10 @@
 class API::V1::ProjectController < Grape::API
   
   resource :projects do
+    before do
+      error!('401 Unauthorized', 401) unless authenticated?
+    end
+
     desc 'GET /api/v1/projects/:id/'
     params do
       requires :id, type: String, desc: 'project_id'
