@@ -7,10 +7,18 @@ class API::V1::LoginController < Grape::API
       requires :password, type: String
     end
     post do
-      account = Account.find_by(email: params[:email])
-      error!({ message: "passwords don't match" }, 400) unless account.authenticate(params[:password])
-      authenticate!(account)
-      status 200
+      unless authenticated?
+        account = Account.find_by(email: params[:email])
+        error!({ message: "passwords don't match" }, 400) unless account.authenticate(params[:password])
+        authenticate!(account)
+        {
+          message: 'Accept authenticate'
+        }
+      else
+        {
+          message: 'Already authenticated'
+        }
+      end
     end
 
   end
