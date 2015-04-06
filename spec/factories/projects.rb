@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :project do
-    payload { { hoge: "fuga" } }
+    payload { { email: "test@example.jp" } }
     name "test_name"
   end
 end
