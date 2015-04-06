@@ -6,7 +6,7 @@ RSpec.describe API do
 
     before do
       @path = '/api/v1/login/'
-      account = FactoryGirl.create(:account)
+      account = Account.first
       @login_params = {
         email: account.email,
         password: 'password'

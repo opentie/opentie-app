@@ -10,7 +10,7 @@ class API::V1::ProjectController < Grape::API
       requires :id, type: String, desc: 'project_id'
     end
     get '/:id' do
-      Project.find(params[:id])
+      Project.first
     end      
 
     route_param :project_id do
