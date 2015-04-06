@@ -3,7 +3,7 @@ class API::V1::DivisionController < Grape::API
   resource :divisions do
     desc 'GET /api/v1/divisions/:id'
     params do
-      requires :id, type: Stirng, desc: 'division_id'
+      requires :id, type: String, desc: 'division_id'
     end
     get '/:id' do
       Division.find(params[:id])
