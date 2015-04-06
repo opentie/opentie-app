@@ -18,17 +18,10 @@ RSpec.configure do |config|
 
   # db cleaner
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    #DatabaseCleaner[:mongoid].clean_with(:truncation)
+    DatabaseCleaner.strategy = :transaction
+    require Rails.root.join("db", "seeds")
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
