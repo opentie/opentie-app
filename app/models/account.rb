@@ -12,6 +12,23 @@ class Account < ActiveRecord::Base
   accepts_nested_attributes_for :divisions
   accepts_nested_attributes_for :roles
 
+  validates :name, {
+    presence: true,
+    length: { in: 1..20 }
+  }
+  validates :email, {
+    presence: true,
+    uniqueness: true,
+  }
+  validates :password, {
+    presence: true,
+    length: { minimum: 8 }
+  }
+  validates :password_confirmation, {
+    presence: true,
+    length: { minimum: 8 }
+  }
+
   def ensure_session_token!
     self.update_attribute(:session_token, generate_session_token)
   end
