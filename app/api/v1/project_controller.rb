@@ -14,7 +14,7 @@ class API::V1::ProjectController < Grape::API
       Project.find(params[:id])
     end
 
-    desc 'GET /api/v1/projects/new'
+    desc 'GET /api/v1/projects/:id/new/'
     params do
     end
     get '/new' do
@@ -28,13 +28,20 @@ class API::V1::ProjectController < Grape::API
       # create
     end
 
-    desc 'PUT /api/v1/projects/:id/edit'
+    desc 'get /api/v1/projects/:id/edit/'
     params do
     end
-    put '/:id/edit' do
+    get '/:id/edit' do
       # edit
     end
 
+    desc 'PUT /api/v1/projects/:id/'
+    params do
+    end
+    put '/:id' do
+      # update
+    end
+    
     route_param :project_id do
       resource :request_schemata do
         desc 'GET /api/v1/projects/:id/request_schemata/'
@@ -51,50 +58,51 @@ class API::V1::ProjectController < Grape::API
         get '/:id' do
           # show
         end
-        
-        resource :request do
-          desc 'GET /api/v1/projects/:id/request_schemata/:id/request/'
-          params do
-          end
-          get '/' do
-            # show
-          end
+        route_param :request_schema_id do
+          resource :request do
+            desc 'GET /api/v1/projects/:id/request_schemata/:id/request/'
+            params do
+            end
+            get '/' do
+              # show
+            end
 
-          desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new'
-          params do
-          end
-          get '/new' do
-            # new
-          end
+            desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new/'
+            params do
+            end
+            get '/new' do
+              # new
+            end
 
-          desc 'POST /api/v1/projects/:id/request_schemata/:id/request/'
-          params do
-          end
-          post '/' do
-            # create
-          end
+            desc 'POST /api/v1/projects/:id/request_schemata/:id/request/'
+            params do
+            end
+            post '/' do
+              # create
+            end
 
-          desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'
-          params do
-          end
-          get '/edit' do
-            # edit
-          end
+            desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit/'
+            params do
+            end
+            get '/edit' do
+              # edit
+            end
 
-          desc 'PUT /api/v1/projects/:id/request_schemata/:id/request/'
-          params do
-          end
-          put '/' do
-           # update
-          end
+            desc 'PUT /api/v1/projects/:id/request_schemata/:id/request/'
+            params do
+            end
+            put '/' do
+              # update
+            end
 
-          desc 'DELETE /api/v1/projects/:id/request_schemata/:id/request/'
-          params do
+            desc 'DELETE /api/v1/projects/:id/request_schemata/:id/request/'
+            params do
+            end
+            delete '/' do
+              # delete
+            end
+            
           end
-          delete '/' do
-            # delete
-          end
-          
         end
       end
     end
