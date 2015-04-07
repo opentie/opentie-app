@@ -45,7 +45,7 @@ unless Rails.env.production?
                 division_id: division.id
                 )
   end
-  
+    
   puts "create GlobalSetting"
   %w(global14 setting15).each do |name|
     GlobalSetting.create(
