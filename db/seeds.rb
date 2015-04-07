@@ -19,17 +19,6 @@ unless Rails.env.production?
                    )
   end
 
-  #  puts "create ProjectHistory"
-  #  Project.all.each do |project|
-  #    3.times do |i|
-  #      ProjectHistory.create(
-  #        project_id: project.id,
-  #        field: "test_field",
-  #        value: "value#{i}"
-  #      )
-  #    end
-  #  end
-
   puts "create Division"
   %w(jsys sok dan).each do |name|
     Division.create(
@@ -40,10 +29,12 @@ unless Rails.env.production?
 
   puts "create Roles"
   Division.all.each do |division|
-    Role.create(
-                account_id: Account.all.sample.id,
-                division_id: division.id
-                )
+    Account.all.each do |account|
+      Role.create(
+                  account_id: account.id,
+                  division_id: division.id
+                  )
+    end
   end
     
   puts "create GlobalSetting"
@@ -66,19 +57,23 @@ unless Rails.env.production?
 
   puts "create Delegate"
   Project.all.each do |project|
-    Delegate.create(
-                    project_id: project.id,
-                    account_id: Account.all.sample.id,
-                    priority: 0
-                    )
+    Account.all.each do |account|
+      Delegate.create(
+                      project_id: project.id,
+                      account_id: account.id,
+                      priority: 0
+                      )
+    end
   end
 
   puts "create Request"
   Delegate.all.each do |delegate|
-    Request.create(
-                   request_schema_id: RequestSchema.all.sample.id,
-                   delegate_id: delegate.id,
-                   payload: { num: 5 }
-                   )
+    RequestSchema.all.each do |schema|
+      Request.create(
+                     request_schema_id: schema.id,
+                     delegate_id: delegate.id,
+                     payload: { num: 5 }
+                     )
+    end
   end  
 end
