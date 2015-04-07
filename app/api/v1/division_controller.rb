@@ -1,6 +1,9 @@
 class API::V1::DivisionController < Grape::API
   
   resource :divisions do
+    before do
+      error!('401 Unauthorized', 401) unless authenticated?
+    end
     
     desc 'GET /api/v1/divisions/:id'
     params do
