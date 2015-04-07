@@ -1,19 +1,28 @@
 module API::Auth
+  
   def session
     env[Rack::Session::Abstract::ENV_SESSION_KEY]
   end
-
+  
   def authenticated?
     !current_user.nil?
   end
 
   def authenticate!(account)
-    account.ensure_session_token!
-    session[:token] = account.session_token
+    session[:account_id] = account.id
+    session[:expires_at] = Time.zone.now + 1.minutes
   end
 
   def current_user
-    return nil if session[:token].blank?
-    Account.where(session_token: session[:token]).first
+    unless available?
+      session.destroy
+      return nil
+    end
+    Account.find_by(id: session[:account_id])
+  end
+
+  def available?
+    return if session[:expires_at].nil?
+    session[:expires_at] > Time.zone.now
   end
 end
