@@ -29,16 +29,4 @@ class Account < ActiveRecord::Base
     length: { minimum: 8 }
   }
 
-  def ensure_session_token!
-    self.update_attribute(:session_token, generate_session_token)
-  end
- 
-  private
-  
-  def generate_session_token
-    loop do
-      token = Devise.friendly_token
-      return token unless Account.where(session_token: token).first
-    end
-  end
 end
