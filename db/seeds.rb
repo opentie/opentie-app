@@ -37,6 +37,14 @@ unless Rails.env.production?
                     payload: { people: 15 }
                     )
   end
+
+  puts "create Roles"
+  Division.all.each do |division|
+    Role.create(
+                account_id: Account.all.sample.id,
+                division_id: division.id
+                )
+  end
   
   puts "create GlobalSetting"
   %w(global14 setting15).each do |name|
