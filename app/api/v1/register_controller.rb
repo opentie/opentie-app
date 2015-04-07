@@ -1,7 +1,7 @@
 class API::V1::RegisterController < Grape::API
   resource :register do
     before do
-      redirect '/' unless authenticated?
+      redirect '/' if authenticated?
     end
     
     desc 'GET /api/v1/register/new'
