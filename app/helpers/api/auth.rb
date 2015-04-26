@@ -10,7 +10,7 @@ module API::Auth
 
   def authenticate!(account)
     session[:account_id] = account.id
-    session[:expires_at] = Time.zone.now + 1.minutes
+    session[:expires_at] = Time.zone.now + 60.minutes
   end
 
   def current_user
