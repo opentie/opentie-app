@@ -26,4 +26,5 @@ class API::V1 < Grape::API
   mount ProjectController
   mount DivisionController
   mount LoginController
+  mount DashboardController
 end
