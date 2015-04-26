@@ -42,7 +42,6 @@ class API::V1::DivisionController < Grape::API
             get '/' do
               Request.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
-                .joins(:request_schema)
             end
 
             desc 'GET /api/v1/divisions/:id/projects/:id/requests/:id'
