@@ -9,7 +9,7 @@ class API::V1::DashboardController < Grape::API
     end
     get do 
       {
-        divisions: current_user.delegates,
+        divisions: current_user.divisions,
         projects: current_user.projects
       }
     end
