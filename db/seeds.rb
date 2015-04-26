@@ -1,10 +1,11 @@
 
 # coding: utf-8
 unless Rails.env.production?
+
+  puts "create Account"
   ActiveRecord::Base.transaction do
-    puts "create Account"
     accounts = []
-    100.times do
+    50.times do
       name = "account_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       Account.create(
         name: name,
@@ -15,10 +16,12 @@ unless Rails.env.production?
       )
     end
     #Account.import accounts
+  end
 
-    puts "create Project"
+  puts "create Project"
+  ActiveRecord::Base.transaction do
     projects = []
-    50.times do
+    10.times do
       name = "project_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       projects << Project.create(
         name: name,
@@ -26,10 +29,12 @@ unless Rails.env.production?
       )
     end
     #Project.import projects
+  end
 
-    puts "create Division"
+  puts "create Division"
+  ActiveRecord::Base.transaction do
     divisions = []
-    50.times do
+    5.times do
       name = "division_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       Division.create(
         name: name,
@@ -37,8 +42,10 @@ unless Rails.env.production?
       )
     end
     #Division.import divisions
-    
-    puts "create Roles"
+  end
+  
+  puts "create Roles"
+  ActiveRecord::Base.transaction do
     roles = []
     Division.all.each do |division|
       Account.all.each do |account|
@@ -49,8 +56,10 @@ unless Rails.env.production?
       end
     end
     #Role.imoport roles
-    
-    puts "create GlobalSetting"
+  end
+  
+  puts "create GlobalSetting"
+  ActiveRecord::Base.transaction do
     global_settings = [] 
     %w(global14 setting15).each do |name|
       GlobalSetting.create(
@@ -59,11 +68,13 @@ unless Rails.env.production?
       )
     end
     #GlobalSetting.import global_settings
-    
-    puts "create RequestSchemata"
+  end
+  
+  puts "create RequestSchemata"
+  ActiveRecord::Base.transaction do
     schemata = []
     Division.all.each do |division|
-      20.times do |i|
+      10.times do |i|
         RequestSchema.create(
           division_id: division.id,
           payload: { num: i, setting: "div_setting" }
@@ -71,21 +82,28 @@ unless Rails.env.production?
       end
     end
     #RequestSchema.import schemata
+  end
 
-    puts "create Delegate"
+  puts "create Delegate"
+  ActiveRecord::Base.transaction do
     delegates = []
+    priority_count = 0
     Project.all.each do |project|
       Account.all.each do |account|
         Delegate.create(
           project_id: project.id,
           account_id: account.id,
-          priority: 0
+          priority: priority_count
         )
+        priority_count += 1
       end
     end
     #Delegate.import delegates
+  end
 
-    puts "create Request"
+
+  puts "create Request"
+  ActiveRecord::Base.transaction do
     requests = []
     Delegate.all.each do |delegate|
       RequestSchema.all.each do |schema|
@@ -97,6 +115,6 @@ unless Rails.env.production?
       end
     end
     #Request.import requests
-
   end
 end
+
