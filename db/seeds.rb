@@ -5,7 +5,7 @@ unless Rails.env.production?
   puts "create Account"
   ActiveRecord::Base.transaction do
     accounts = []
-    50.times do
+    20.times do
       name = "account_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       Account.create(
         name: name,
@@ -74,7 +74,7 @@ unless Rails.env.production?
   ActiveRecord::Base.transaction do
     schemata = []
     Division.all.each do |division|
-      10.times do |i|
+      3.times do |i|
         RequestSchema.create(
           division_id: division.id,
           payload: { num: i, setting: "div_setting" }
