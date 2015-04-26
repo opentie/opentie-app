@@ -30,7 +30,8 @@ module OpentieApp
     # config.i18n.default_locale = :de
     config.paths.add "app/api", glob: "**/*.rb"
     config.autoload_paths += Dir["#{Rails.root}/app*"]
-
+    config.autoload_paths += Dir["#{Rails.root}/app/controllers/concerns/*"]
+    config.autoload_paths += Dir["#{Rails.root}/app/models/concerns/*"]
     config.generators do |g|
       g.orm :active_record
     end
