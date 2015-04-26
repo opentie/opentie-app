@@ -48,6 +48,8 @@ GEM
       activemodel (= 4.2.0)
       activesupport (= 4.2.0)
       arel (~> 6.0)
+    activerecord-import (0.7.0)
+      activerecord (>= 3.0)
     activesupport (4.2.0)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
@@ -387,6 +389,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin!
   activerecord
+  activerecord-import
   bcrypt-ruby (= 3.1.2)
   better_errors
   byebug

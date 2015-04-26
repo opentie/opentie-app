@@ -30,6 +30,7 @@ gem 'omniauth-openid-connect'
 # OR Mapper
 gem 'pg'
 gem 'activerecord'
+gem 'activerecord-import'
 
 # Session store ( Redis )
 gem 'redis'
