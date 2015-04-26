@@ -13,76 +13,157 @@ RSpec.describe API do
 
       @division = Division.first
       @project = Project.first
-      @request = @project.delegates.first.requests.first
+      # Use @request_, because @request used by rack 
+      @request_ = @project.delegates.first.requests.first
       @request_schema = @division.request_schemata.first
       @schema_request = @request_schema.requests.first
     end
 
-    # index
+    # show
     it 'GET /api/v1/divisions/:id' do
       get "/api/v1/divisions/#{@division.id}"
+      
       json = JSON.parse(response.body)
-      eq_division = Division.find(@division.id)
-      expect(json['id']).to eq(eq_division.id)
+      division = Division.where(id: json['id']).first
+
+      expect(division).not_to eq(nil)
+      expect(json['id']).to eq(@division.id)
       expect(response.status).to eq(200)
+
+      get "/api/v1/divisions/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
 
     # index
     it 'GET /api/v1/divisions/:id/projects' do
       get "/api/v1/divisions/:#{@division.id}/projects"
+      
+      json = JSON.parse(response.body)
+      
+      json.each do |project|
+        p = Project.find_by(id: project['id'])
+        expect(p).not_to eq(nil)
+      end
+      
+      expect(json.size).to eq(Project.all.size)
       expect(response.status).to eq(200)
     end
     
     # show
     it 'GET /api/v1/divisions/:id/projects/:id' do
       get "/api/v1/divisions/:#{@division.id}/projects/#{@project.id}"
+      
+      json = JSON.parse(response.body)
+      project = Project.where(id: json['id']).first
+      
+      expect(project).not_to eq(nil)
+      expect(json['id']).to eq(@project.id)
       expect(response.status).to eq(200)
+
+      get "/api/v1/divisions/:#{@division.id}/projects/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
 
     # index
     it 'GET /api/v1/divisions/:id/projects/:id/requests' do
       get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests"
+      
+      json = JSON.parse(response.body)
+      
+      json.each do |request|
+        expect(Request.find_by(id: request['id'])).not_to eq(nil)
+        expect(Delegate.find_by(id: request['delegate_id']).project_id).to eq(@project.id) 
+      end
+      
       expect(response.status).to eq(200)
     end
 
     # show
     it 'GET /api/v1/divisions/:id/projects/:id/requests/:id' do
-      get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/#{@request.id}"
-      expect(response.status).to eq(200)
-    end
-    
+      get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/#{@request_.id}"
+      
+      json = JSON.parse(response.body)
+      request = Request.find_by(id: json['id'])
 
+      expect(request).not_to eq(nil)
+      expect(json['id']).to eq(@request_.id)
+      expect(response.status).to eq(200)
+
+      get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/hogehogehoge123123"
+      expect(response.status).to eq(404)
+    end
+
+    
     # index
     it 'GET /api/v1/divisions/:id/request_schemata' do
       get "/api/v1/divisions/#{@division.id}/request_schemata"
+
+      json = JSON.parse(response.body)
+      
+      json.each do |schema|
+        expect(RequestSchema.find_by(id: schema['id'])).not_to eq(nil)
+        expect(RequestSchema.find_by(id: schema['id']).division_id).to eq(@division.id)
+      end
+
       expect(response.status).to eq(200)
     end
 
     # show
     it 'GET /api/v1/divisions/:id/request_schemata/:id' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}"
+      
+      json = JSON.parse(response.body)
+      schema = RequestSchema.find_by(id: json['id'])
+      
+      expect(schema).not_to eq(nil)
+      expect(json['id']).to eq(@request_schema.id)
       expect(response.status).to eq(200)
+      
+      get "/api/v1/divisions/#{@division.id}/request_schemata/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
 
     # index
     it 'GET /api/v1/divisions/:id/request_schemata/:id/requests' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests"
+      json = JSON.parse(response.body)
+
+      json.each do |request|
+        expect(Request.find_by(id: request['id'])).not_to eq(nil)
+        expect(Request.find_by(id: request['id']).request_schema_id).to eq(@request_schema.id)
+      end
+
       expect(response.status).to eq(200)
     end
 
     # show
     it 'GET /api/v1/divisions/:id/request_schemata/:id/requests/:id' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests/#{@schema_request.id}"
+      json = JSON.parse(response.body)
+      request = Request.find_by(id: json['id'])
+
+      expect(request).not_to eq(nil)
+      expect(json['id']).to eq(@schema_request.id)
       expect(response.status).to eq(200)
+
+      get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
     
     # show
     it 'GET /api/v1/divisions/:id/request_histories' do
       get "/api/v1/divisions/#{@division.id}/project_histories"
+      
+      json = JSON.parse(response.body)
+      
+      json.each do |history|
+        expect(ProjectHistory.find_by(id: history['id'])).not_to eq(nil)
+      end
+      
       expect(response.status).to eq(200)
     end
   end
