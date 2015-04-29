@@ -18,18 +18,27 @@ class API::V1::DivisionController < Grape::API
       raise ActiveRecord::RecordNotFound if division.nil?
       members = division.accounts
       {
-        body: division.attributes.merge({members: members})
+        division: division.attributes.merge({members: members})
       }
     end
 
     route_param :division_id do
       resource :projects do
+        before do
+          @division = Division.find_by(id: params[:division_id])
+          raise ActiveRecord::RecordNotFound if @division.nil?
+        end
+
+        after_validation do
+          add_response({division: @division})
+        end
+
         desc 'GET /api/v1/divisions/:id/projects'
         params do
         end
         get '/' do
           {
-            body: Project.all
+            projects: Project.all
           }
         end
 
@@ -41,12 +50,21 @@ class API::V1::DivisionController < Grape::API
           project = Project.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if project.nil?
           {
-            body: project.attributes
+            project: project.attributes
           }
         end
 
         route_param :project_id do
           resource :requests do
+            before do
+              @project = Project.find_by(id: params[:project_id])
+              raise ActiveRecord::RecordNotFound if @project.nil?
+            end
+
+            after_validation do
+              add_response({project: @project})
+            end
+
             desc 'GET /api/v1/divisions/:id/projects/:id/requests'
             params do
             end
@@ -54,7 +72,7 @@ class API::V1::DivisionController < Grape::API
               requests = Request.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
               {
-                body: requests
+                requests: requests
               }
             end
 
@@ -66,7 +84,7 @@ class API::V1::DivisionController < Grape::API
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
-                body: request.attributes
+                request: request.attributes
               }
             end
           end
@@ -74,13 +92,22 @@ class API::V1::DivisionController < Grape::API
       end
 
       resource :request_schemata do
+        before do
+          @division = Division.find_by(id: params[:division_id])
+          raise ActiveRecord::RecordNotFound if @division.nil?
+        end
+
+        after_validation do
+          add_response({division: @division})
+        end
+
         desc 'GET /api/v1/divisions/:id/request_schemata'
         params do
         end
         get '/' do
           schemata = RequestSchema.where(division_id: params[:divison_id])
           {
-            body: schemata
+            request_schemata: schemata
           }
         end
 
@@ -92,19 +119,28 @@ class API::V1::DivisionController < Grape::API
           schema = RequestSchema.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if schema.nil?
           {
-            body: schema.attributes
+            request_schema: schema.attributes
           }
         end
         
         route_param :request_schema_id do
           resource :requests do
+            before do
+              @request_schema = RequestSchema.find_by(id: params[:request_schema_id])
+              raise ActiveRecord::RecordNotFound if @request_schema.nil?
+            end
+
+            after_validation do
+              add_response({request_schema: @request_schema})
+            end
+
             desc 'GET /api/v1/divisions/:id/request_schemata/:id/requests'
             params do
             end
             get '/' do
               requests = Request.where(request_schema_id: params[:request_schema_id])
               {
-                body: requests
+                requests: requests
               }
             end
 
@@ -116,20 +152,29 @@ class API::V1::DivisionController < Grape::API
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
-                body: request.attributes
+                request: request.attributes
               }
             end
           end
         end
       end
       resource :project_histories do
+        before do
+          @division = Division.find_by(id: params[:division_id])
+          raise ActiveRecord::RecordNotFound if @division.nil?
+        end
+
+        after_validation do
+          add_response({division: @division})
+        end
+
         desc 'GET /api/v1/divisions/:id/project_histories'
         params do
         end
         get '/' do
           histories = ProjectHistory.all.order(:updated_at)
           {
-            body: histories
+            project_histories: histories
           }
         end
       end
