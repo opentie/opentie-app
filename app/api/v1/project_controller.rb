@@ -14,6 +14,7 @@ class API::V1::ProjectController < Grape::API
     end
     post '/' do 
       # create
+      {}
     end
 
     desc 'GET /api/v1/projects/new'
@@ -21,6 +22,7 @@ class API::V1::ProjectController < Grape::API
     end
     get '/new' do
       # new
+      {}
     end
     
     desc 'get /api/v1/projects/:id/edit'
@@ -28,6 +30,7 @@ class API::V1::ProjectController < Grape::API
     end
     get '/:id/edit' do
       # edit
+      {}
     end
     
     desc 'GET /api/v1/projects/:id'
@@ -36,7 +39,7 @@ class API::V1::ProjectController < Grape::API
     end
     get '/:id' do
       # show
-      Project.find(params[:id])
+      {}
     end
     
     desc 'PUT /api/v1/projects/:id'
@@ -44,6 +47,7 @@ class API::V1::ProjectController < Grape::API
     end
     put '/:id' do
       # update
+      {}
     end
     
     route_param :project_id do
@@ -53,6 +57,7 @@ class API::V1::ProjectController < Grape::API
         end
         get '/' do
           # index
+          {}
         end
 
         desc 'GET /api/v1/projects/:id/request_schemata/:id'
@@ -61,6 +66,7 @@ class API::V1::ProjectController < Grape::API
         end
         get '/:id' do
           # show
+          {}
         end
         route_param :request_schema_id do
           resource :request do
@@ -69,6 +75,7 @@ class API::V1::ProjectController < Grape::API
             end
             post '/' do
               # create
+              {}
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new'
@@ -76,6 +83,7 @@ class API::V1::ProjectController < Grape::API
             end
             get '/new' do
               # new
+              {}
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'
@@ -83,6 +91,7 @@ class API::V1::ProjectController < Grape::API
             end
             get '/edit' do
               # edit
+              {}
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request'
@@ -90,6 +99,7 @@ class API::V1::ProjectController < Grape::API
             end
             get '/' do
               # show
+              {}
             end
 
             desc 'PUT /api/v1/projects/:id/request_schemata/:id/request'
@@ -97,6 +107,7 @@ class API::V1::ProjectController < Grape::API
             end
             put '/' do
               # update
+              {}
             end
 
             desc 'DELETE /api/v1/projects/:id/request_schemata/:id/request'
@@ -104,6 +115,7 @@ class API::V1::ProjectController < Grape::API
             end
             delete '/' do
               # delete
+              {}
             end
             
           end
