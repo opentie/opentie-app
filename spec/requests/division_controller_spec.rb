@@ -41,12 +41,12 @@ RSpec.describe API do
       
       json = JSON.parse(response.body)
       
-      json.each do |project|
+      json['projects'].each do |project|
         p = Project.find_by(id: project['id'])
         expect(p).not_to eq(nil)
       end
       
-      expect(json.size).to eq(Project.all.size)
+      expect(json['projects'].size).to eq(Project.all.size)
       expect(response.status).to eq(200)
     end
     
@@ -72,7 +72,7 @@ RSpec.describe API do
       
       json = JSON.parse(response.body)
       
-      json.each do |request|
+      json['requests'].each do |request|
         expect(Request.find_by(id: request['id'])).not_to eq(nil)
         expect(Delegate.find_by(id: request['delegate_id']).project_id).to eq(@project.id) 
       end
@@ -102,7 +102,7 @@ RSpec.describe API do
 
       json = JSON.parse(response.body)
       
-      json.each do |schema|
+      json['schemata'].each do |schema|
         expect(RequestSchema.find_by(id: schema['id'])).not_to eq(nil)
         expect(RequestSchema.find_by(id: schema['id']).division_id).to eq(@division.id)
       end
@@ -131,7 +131,7 @@ RSpec.describe API do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests"
       json = JSON.parse(response.body)
 
-      json.each do |request|
+      json['requests'].each do |request|
         expect(Request.find_by(id: request['id'])).not_to eq(nil)
         expect(Request.find_by(id: request['id']).request_schema_id).to eq(@request_schema.id)
       end
@@ -160,7 +160,7 @@ RSpec.describe API do
       
       json = JSON.parse(response.body)
       
-      json.each do |history|
+      json['histories'].each do |history|
         expect(ProjectHistory.find_by(id: history['id'])).not_to eq(nil)
       end
       

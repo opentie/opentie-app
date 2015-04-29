@@ -20,9 +20,6 @@ RSpec.describe API do
     # show
     it 'GET /api/v1/projects/:id' do
       get "/api/v1/projects/#{@project.id}"
-      json = JSON.parse(response.body)
-      eq_project = Project.find(@project.id)
-      expect(json['id']).to eq(eq_project.id)
       expect(response.status).to eq(200)
     end
 

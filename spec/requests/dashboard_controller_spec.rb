@@ -20,8 +20,8 @@ RSpec.describe API do
 
       expect(json).not_to eq(nil)
 
-      expect(json['projects'].size).to eq(@account.projects.count)
-      expect(json['divisions'].size).to eq(@account.divisions.count)
+      expect(json['my_projects'].size).to eq(@account.projects.count)
+      expect(json['my_divisions'].size).to eq(@account.divisions.count)
       expect(response.status).to eq(200)
     end
   end
