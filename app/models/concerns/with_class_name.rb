@@ -1,9 +1,11 @@
 module WithClassName
   extend ActiveSupport::Concern
+  
+  def attributes
+    super.merge({'_type' => _type})
+  end
 
-  def as_json(options={})
-    hash = super options
-    hash.merge!({_type: self.class.name.underscore})
-    hash
+  def _type
+    self.class.name.underscore
   end
 end

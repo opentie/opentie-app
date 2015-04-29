@@ -6,7 +6,7 @@ class API::V1::ProjectController < Grape::API
     end
 
     after_validation do
-      add_response(current_user.organizations)
+      #add_response(current_user.organizations)
     end
 
     desc 'POST /api/v1/projects/'

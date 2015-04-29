@@ -1,12 +1,25 @@
 class API::V1::DivisionController < Grape::API
   
   resource :divisions do
+    helpers do
+      def fulltime_params
+        projects = current_user.projects
+        divisions = current_user.divisions
+        request_schemata = RequestSchema.all
+        {
+          my_projects: projects,
+          my_divisions: divisions,
+          my_request_schemata: request_schemata
+        }
+      end
+    end
+
     before do
       error!('401 Unauthorized', 401) unless authenticated?
     end
 
     after_validation do
-      add_response(current_user.organizations)
+      add_response(fulltime_params)
     end
     
     desc 'GET /api/v1/divisions/:id'
@@ -16,9 +29,8 @@ class API::V1::DivisionController < Grape::API
     get '/:id' do
       division = Division.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if division.nil?
-      members = division.accounts
       {
-        division: division.attributes.merge({members: members})
+        division: division.as_json(include: :accounts)
       }
     end
 
