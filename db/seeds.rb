@@ -116,5 +116,19 @@ unless Rails.env.production?
     end
     #Request.import requests
   end
+
+  puts "create ProjectComment"
+  ActiveRecord::Base.transaction do
+    Project.all.each do |project|
+      Division.all.each do |division|
+        ProjectComment.create(
+          project_id: project.id,
+          division_id: division.id,
+          comment: "===to=== #{project.name} ===from=== #{division.name}"
+        )
+      end
+    end
+  end
+
 end
 
