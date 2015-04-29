@@ -5,6 +5,10 @@ class API::V1::ProjectController < Grape::API
       error!('401 Unauthorized', 401) unless authenticated?
     end
 
+    after_validation do
+      add_response(current_user.organizations)
+    end
+
     desc 'POST /api/v1/projects/'
     params do
     end

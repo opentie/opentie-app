@@ -4,13 +4,15 @@ class API::V1::DashboardController < Grape::API
       error!('401 Unauthorized', 401) unless authenticated?
     end
 
+    after_validation do
+      add_response(current_user.organizations)
+    end
+
     desc "GET /api/v1/dashboard"
     params do
     end
-    get do 
+    get do
       {
-        divisions: current_user.divisions,
-        projects: current_user.projects
       }
     end
   end

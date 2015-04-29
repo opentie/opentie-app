@@ -31,4 +31,11 @@ class Account < ActiveRecord::Base
     length: { minimum: 8 }
   }
 
+  def organizations
+    {
+      divisions: self.divisions,
+      projects: self.projects
+    }
+  end
+
 end

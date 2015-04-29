@@ -4,6 +4,10 @@ class API::V1::DivisionController < Grape::API
     before do
       error!('401 Unauthorized', 401) unless authenticated?
     end
+
+    after_validation do
+      add_response(current_user.organizations)
+    end
     
     desc 'GET /api/v1/divisions/:id'
     params do
@@ -12,7 +16,9 @@ class API::V1::DivisionController < Grape::API
     get '/:id' do
       division = Division.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if division.nil?
-      division
+      {
+        division: division,
+      }
     end
 
     route_param :division_id do
