@@ -20,7 +20,17 @@ RSpec.describe API do
     # show
     it 'GET /api/v1/projects/:id' do
       get "/api/v1/projects/#{@project.id}"
+      
+      json = JSON.parse(response.body)['body']
+      project = Project.find_by(id: json['id'])
+
+      expect(project).not_to eq(nil)
+      expect(json['id']).to eq(@project.id)
+
       expect(response.status).to eq(200)
+      
+      get "/api/v1/projects/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
     # new
@@ -51,13 +61,32 @@ RSpec.describe API do
     # index
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/' do
       get "/api/v1/projects/#{@project.id}/request_schemata/"
+      
+      json = JSON.parse(response.body)['body']
+
+      json.each do |schema|
+        s = RequestSchema.find_by(id: schema['id'])
+        expect(s).not_to eq(nil)
+      end
+
+      expect(json.count).to eq(RequestSchema.all.count)
       expect(response.status).to eq(200)
     end
 
     # show
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/:id' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}"
+
+      json = JSON.parse(response.body)['body']
+      schema = RequestSchema.find_by(id: json['id'])
+
+      expect(schema).not_to eq(nil)
+      expect(json['id']).to eq(@request_schema.id)
+
       expect(response.status).to eq(200)
+      
+      get "/api/v1/projects/#{@project.id}/request_schemata/hogehogehoge123123"
+      expect(response.status).to eq(404)
     end
 
     # new

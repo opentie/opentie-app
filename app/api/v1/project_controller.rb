@@ -38,8 +38,11 @@ class API::V1::ProjectController < Grape::API
       requires :id, type: String, desc: 'project_id'
     end
     get '/:id' do
-      # show
-      {}
+      project = Project.find_by(id: params[:id])
+      raise ActiveRecord::RecordNotFound if project.nil?
+      {
+        body: project.attributes
+      }
     end
     
     desc 'PUT /api/v1/projects/:id'
@@ -56,8 +59,9 @@ class API::V1::ProjectController < Grape::API
         params do
         end
         get '/' do
-          # index
-          {}
+          {
+            body: RequestSchema.all
+          }
         end
 
         desc 'GET /api/v1/projects/:id/request_schemata/:id'
@@ -65,8 +69,11 @@ class API::V1::ProjectController < Grape::API
           requires :id, type: String, desc: 'project_schema_id'
         end
         get '/:id' do
-          # show
-          {}
+          schema = RequestSchema.find_by(id: params[:id])
+          raise ActiveRecord::RecordNotFound if schema.nil?
+          {
+            body: schema
+          }
         end
         route_param :request_schema_id do
           resource :request do
@@ -98,8 +105,12 @@ class API::V1::ProjectController < Grape::API
             params do
             end
             get '/' do
-              # show
-              {}
+              requests = Request.joins(:delegate)
+                .where("delegates.project_id = ?", params[:project_id])
+                .where(request_schema_id: params[:request_schema_id])
+              {
+                body: requests
+              }
             end
 
             desc 'PUT /api/v1/projects/:id/request_schemata/:id/request'
