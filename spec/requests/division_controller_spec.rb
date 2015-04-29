@@ -23,7 +23,7 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id' do
       get "/api/v1/divisions/#{@division.id}"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       division = Division.where(id: json['id']).first
 
       expect(division).not_to eq(nil)
@@ -39,14 +39,14 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/projects' do
       get "/api/v1/divisions/:#{@division.id}/projects"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       
-      json['projects'].each do |project|
+      json.each do |project|
         p = Project.find_by(id: project['id'])
         expect(p).not_to eq(nil)
       end
       
-      expect(json['projects'].size).to eq(Project.all.size)
+      expect(json.size).to eq(Project.all.size)
       expect(response.status).to eq(200)
     end
     
@@ -54,7 +54,7 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/projects/:id' do
       get "/api/v1/divisions/:#{@division.id}/projects/#{@project.id}"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       project = Project.where(id: json['id']).first
       
       expect(project).not_to eq(nil)
@@ -70,9 +70,9 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/projects/:id/requests' do
       get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       
-      json['requests'].each do |request|
+      json.each do |request|
         expect(Request.find_by(id: request['id'])).not_to eq(nil)
         expect(Delegate.find_by(id: request['delegate_id']).project_id).to eq(@project.id) 
       end
@@ -84,7 +84,7 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/projects/:id/requests/:id' do
       get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/#{@request_.id}"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       request = Request.find_by(id: json['id'])
 
       expect(request).not_to eq(nil)
@@ -100,9 +100,9 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/request_schemata' do
       get "/api/v1/divisions/#{@division.id}/request_schemata"
 
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       
-      json['schemata'].each do |schema|
+      json.each do |schema|
         expect(RequestSchema.find_by(id: schema['id'])).not_to eq(nil)
         expect(RequestSchema.find_by(id: schema['id']).division_id).to eq(@division.id)
       end
@@ -114,7 +114,7 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/request_schemata/:id' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       schema = RequestSchema.find_by(id: json['id'])
       
       expect(schema).not_to eq(nil)
@@ -129,9 +129,9 @@ RSpec.describe API do
     # index
     it 'GET /api/v1/divisions/:id/request_schemata/:id/requests' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests"
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
 
-      json['requests'].each do |request|
+      json.each do |request|
         expect(Request.find_by(id: request['id'])).not_to eq(nil)
         expect(Request.find_by(id: request['id']).request_schema_id).to eq(@request_schema.id)
       end
@@ -142,7 +142,7 @@ RSpec.describe API do
     # show
     it 'GET /api/v1/divisions/:id/request_schemata/:id/requests/:id' do
       get "/api/v1/divisions/#{@division.id}/request_schemata/#{@request_schema.id}/requests/#{@schema_request.id}"
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       request = Request.find_by(id: json['id'])
 
       expect(request).not_to eq(nil)
@@ -158,9 +158,9 @@ RSpec.describe API do
     it 'GET /api/v1/divisions/:id/request_histories' do
       get "/api/v1/divisions/#{@division.id}/project_histories"
       
-      json = JSON.parse(response.body)
+      json = JSON.parse(response.body)['body']
       
-      json['histories'].each do |history|
+      json.each do |history|
         expect(ProjectHistory.find_by(id: history['id'])).not_to eq(nil)
       end
       

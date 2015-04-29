@@ -16,7 +16,9 @@ class API::V1::DivisionController < Grape::API
     get '/:id' do
       division = Division.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if division.nil?
-      division.attributes
+      {
+        body: division.attributes
+      }
     end
 
     route_param :division_id do
@@ -26,7 +28,7 @@ class API::V1::DivisionController < Grape::API
         end
         get '/' do
           {
-            projects: Project.all
+            body: Project.all
           }
         end
 
@@ -37,7 +39,9 @@ class API::V1::DivisionController < Grape::API
         get '/:id' do
           project = Project.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if project.nil?
-          project.attributes
+          {
+            body: project.attributes
+          }
         end
 
         route_param :project_id do
@@ -49,7 +53,7 @@ class API::V1::DivisionController < Grape::API
               requests = Request.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
               {
-                requests: requests
+                body: requests
               }
             end
 
@@ -60,7 +64,9 @@ class API::V1::DivisionController < Grape::API
             get '/:id' do
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
-              request.attributes
+              {
+                body: request.attributes
+              }
             end
           end
         end
@@ -73,7 +79,7 @@ class API::V1::DivisionController < Grape::API
         get '/' do
           schemata = RequestSchema.where(division_id: params[:divison_id])
           {
-            schemata: schemata
+            body: schemata
           }
         end
 
@@ -84,7 +90,9 @@ class API::V1::DivisionController < Grape::API
         get '/:id' do
           schema = RequestSchema.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if schema.nil?
-          schema.attributes
+          {
+            body: schema.attributes
+          }
         end
         
         route_param :request_schema_id do
@@ -95,7 +103,7 @@ class API::V1::DivisionController < Grape::API
             get '/' do
               requests = Request.where(request_schema_id: params[:request_schema_id])
               {
-                requests: requests
+                body: requests
               }
             end
 
@@ -106,7 +114,9 @@ class API::V1::DivisionController < Grape::API
             get '/:id' do
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
-              request.attributes
+              {
+                body: request.attributes
+              }
             end
           end
         end
@@ -118,7 +128,7 @@ class API::V1::DivisionController < Grape::API
         get '/' do
           histories = ProjectHistory.all.order(:updated_at)
           {
-            histories: histories
+            body: histories
           }
         end
       end
