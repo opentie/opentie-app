@@ -30,12 +30,4 @@ class Account < ActiveRecord::Base
     presence: true,
     length: { minimum: 8 }
   }
-
-  def organizations
-    {
-      my_divisions: self.divisions,
-      my_projects: self.projects
-    }
-  end
-
 end
