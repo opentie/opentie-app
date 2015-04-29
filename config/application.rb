@@ -32,6 +32,7 @@ module OpentieApp
     config.autoload_paths += Dir["#{Rails.root}/app*"]
     config.autoload_paths += Dir["#{Rails.root}/app/controllers/concerns/*"]
     config.autoload_paths += Dir["#{Rails.root}/app/models/concerns/*"]
+    config.autoload_paths += Dir["#{Rails.root}/lib/**"]
     config.generators do |g|
       g.orm :active_record
     end
