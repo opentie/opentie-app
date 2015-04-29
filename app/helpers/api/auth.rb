@@ -13,6 +13,10 @@ module API::Auth
     session[:expires_at] = Time.zone.now + 60.minutes
   end
 
+  def revoke!
+    session.destroy
+  end
+
   def current_user
     unless available?
       session.destroy

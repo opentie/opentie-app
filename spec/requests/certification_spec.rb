@@ -2,7 +2,7 @@
 require 'rails_helper'
 
 RSpec.describe API do
-  describe 'POST /api/v1/login/' do
+  describe 'Api spec for certification controller: ' do
 
     before do
       @path = '/api/v1/login/'
@@ -25,6 +25,14 @@ RSpec.describe API do
       post @path, @login_params
       json = JSON.parse(response.body)
       expect(json['message']).to eq('Already authenticated')
+      expect(response.status).to eq(201)
+    end
+
+    it 'Logout test' do
+      post @path, @login_param
+      post '/api/v1/logout/'
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq('Successful logout')
       expect(response.status).to eq(201)
     end
   end

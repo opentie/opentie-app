@@ -31,6 +31,6 @@ class API::V1 < Grape::API
   mount AccountController
   mount ProjectController
   mount DivisionController
-  mount LoginController
+  mount CertificationController
   mount DashboardController
 end
