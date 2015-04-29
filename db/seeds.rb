@@ -120,11 +120,11 @@ unless Rails.env.production?
   puts "create ProjectComment"
   ActiveRecord::Base.transaction do
     Project.all.each do |project|
-      Division.all.each do |division|
+      Role.all.each do |role|
         ProjectComment.create(
           project_id: project.id,
-          division_id: division.id,
-          comment: "===to=== #{project.name} ===from=== #{division.name}"
+          role_id: role.id,
+          comment: "===to=== #{project.name} ===from=== #{role.id}"
         )
       end
     end
