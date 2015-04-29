@@ -28,6 +28,8 @@ RSpec.describe API do
 
       expect(division).not_to eq(nil)
       expect(json['id']).to eq(@division.id)
+      expect(json['members'].count).to eq(division.accounts.count)
+
       expect(response.status).to eq(200)
 
       get "/api/v1/divisions/hogehogehoge123123"

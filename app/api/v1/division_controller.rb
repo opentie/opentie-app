@@ -16,8 +16,9 @@ class API::V1::DivisionController < Grape::API
     get '/:id' do
       division = Division.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if division.nil?
+      members = division.accounts
       {
-        body: division.attributes
+        body: division.attributes.merge({members: members})
       }
     end
 
