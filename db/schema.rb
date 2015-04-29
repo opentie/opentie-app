@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(version: 20150429092215) do
 
   create_table "project_comments", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "project_id"
-    t.uuid     "division_id"
+    t.uuid     "role_id"
     t.text     "comment"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "project_histories", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
