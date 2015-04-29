@@ -18,7 +18,7 @@ class API::V1::DivisionController < Grape::API
       raise ActiveRecord::RecordNotFound if division.nil?
       members = division.accounts
       {
-        division: division.attributes.merge({members: members})
+        division: division.as_json(include: :accounts)
       }
     end
 
@@ -38,7 +38,7 @@ class API::V1::DivisionController < Grape::API
         end
         get '/' do
           {
-            projects: Project.all
+            projects: Project.all.as_json
           }
         end
 
@@ -50,7 +50,7 @@ class API::V1::DivisionController < Grape::API
           project = Project.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if project.nil?
           {
-            project: project.attributes
+            project: project.as_json
           }
         end
 
@@ -72,7 +72,7 @@ class API::V1::DivisionController < Grape::API
               requests = Request.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
               {
-                requests: requests
+                requests: requests.as_json
               }
             end
 
@@ -84,7 +84,7 @@ class API::V1::DivisionController < Grape::API
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
-                request: request.attributes
+                request: request.as_json
               }
             end
           end
@@ -107,7 +107,7 @@ class API::V1::DivisionController < Grape::API
         get '/' do
           schemata = RequestSchema.where(division_id: params[:divison_id])
           {
-            request_schemata: schemata
+            request_schemata: schemata.as_json
           }
         end
 
@@ -119,7 +119,7 @@ class API::V1::DivisionController < Grape::API
           schema = RequestSchema.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if schema.nil?
           {
-            request_schema: schema.attributes
+            request_schema: schema.as_json
           }
         end
         
@@ -140,7 +140,7 @@ class API::V1::DivisionController < Grape::API
             get '/' do
               requests = Request.where(request_schema_id: params[:request_schema_id])
               {
-                requests: requests
+                requests: requests.as_json
               }
             end
 
@@ -152,7 +152,7 @@ class API::V1::DivisionController < Grape::API
               request = Request.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
-                request: request.attributes
+                request: request.as_json
               }
             end
           end
@@ -174,7 +174,7 @@ class API::V1::DivisionController < Grape::API
         get '/' do
           histories = ProjectHistory.all.order(:updated_at)
           {
-            project_histories: histories
+            project_histories: histories.as_json
           }
         end
       end
