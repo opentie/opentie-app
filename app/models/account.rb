@@ -33,8 +33,8 @@ class Account < ActiveRecord::Base
 
   def organizations
     {
-      divisions: self.divisions,
-      projects: self.projects
+      my_divisions: self.divisions,
+      my_projects: self.projects
     }
   end
 
