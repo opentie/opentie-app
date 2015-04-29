@@ -4,5 +4,5 @@ class Role < ActiveRecord::Base
   belongs_to :account
   belongs_to :division
 
-  has_many :projects, throuth: :project_comments
+  has_many :projects, through: :project_comments
 end
