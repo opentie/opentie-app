@@ -88,8 +88,8 @@ unless Rails.env.production?
   puts "create Delegate"
   ActiveRecord::Base.transaction do
     delegates = []
-    priority_count = 0
     Project.all.each do |project|
+      priority_count = 0
       Account.all.each do |account|
         Delegate.create(
           project_id: project.id,
@@ -106,7 +106,8 @@ unless Rails.env.production?
   puts "create Request"
   ActiveRecord::Base.transaction do
     requests = []
-    Delegate.all.each do |delegate|
+    Project.all.each do |project|
+      delegate = project.delegates.find_by(priority: 0)
       RequestSchema.all.each do |schema|
         Request.create(
           request_schema_id: schema.id,
