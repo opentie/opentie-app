@@ -36,6 +36,9 @@ gem 'activerecord-import'
 gem 'redis'
 gem 'redis-rails'
 
+# soft delete gem
+gem 'kakurenbo-puti'
+
 gem 'activeadmin', github: 'activeadmin'
 
 group :assets do
