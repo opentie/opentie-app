@@ -1,12 +1,25 @@
 class API::V1::ProjectController < Grape::API
   
   resource :projects do
+    helpers do
+      def fulltime_params
+        projects = current_user.projects
+        divisions = current_user.divisions
+         request_schemata = RequestSchema.all
+        {
+          my_projects: projects,
+          my_divisions: divisions,
+          my_request_schemata: request_schemata
+        }
+      end
+    end
+
     before do
       error!('401 Unauthorized', 401) unless authenticated?
     end
 
     after_validation do
-      #add_response(current_user.organizations)
+      add_response(fulltime_params)
     end
 
     desc 'POST /api/v1/projects/'
@@ -41,7 +54,7 @@ class API::V1::ProjectController < Grape::API
       project = Project.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if project.nil?
       {
-        body: project.attributes
+        project: project.attributes
       }
     end
     
@@ -55,28 +68,46 @@ class API::V1::ProjectController < Grape::API
     
     route_param :project_id do
       resource :request_schemata do
+        before do
+          @project = Project.find_by(id: params[:project_id])
+          raise ActiveRecord::RecordNotFound if @project.nil?
+        end
+
+        after_validation do
+          add_response({project: @project})
+        end
+
         desc 'GET /api/v1/projects/:id/request_schemata/'
         params do
         end
         get '/' do
           {
-            body: RequestSchema.all
+            request_schemata: RequestSchema.all
           }
         end
 
         desc 'GET /api/v1/projects/:id/request_schemata/:id'
         params do
-          requires :id, type: String, desc: 'project_schema_id'
+          requires :id, type: String, desc: 'request_schema_id'
         end
         get '/:id' do
-          schema = RequestSchema.find_by(id: params[:id])
-          raise ActiveRecord::RecordNotFound if schema.nil?
+          request_schema = RequestSchema.find_by(id: params[:id])
+          raise ActiveRecord::RecordNotFound if request_schema.nil?
           {
-            body: schema
+            request_schema: request_schema
           }
         end
         route_param :request_schema_id do
           resource :request do
+            before do
+              @request_schema = RequestSchema.find_by(id: params[:request_schema_id])
+              raise ActiveRecord::RecordNotFound if @request_schema.nil?
+            end
+            
+            after_validation do
+              add_response({project: @request_schema})
+            end
+            
             desc 'POST /api/v1/projects/:id/request_schemata/:id/request'
             params do
             end
@@ -108,8 +139,9 @@ class API::V1::ProjectController < Grape::API
               requests = Request.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
+                .first
               {
-                body: requests
+                request: requests
               }
             end
 
