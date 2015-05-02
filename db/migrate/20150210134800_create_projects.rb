@@ -7,7 +7,7 @@ class CreateProjects < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    execute "CREATE SEQUENCE projects_number_seq OWNED BY projects.number INCREMENT BY 1 START WITH 20"
+    execute "CREATE SEQUENCE projects_number_seq INCREMENT BY 1 START WITH 20"
   end
 
   def self.down
