@@ -11,6 +11,14 @@ class API::V1::RegisterController < Grape::API
       
     end
 
+    desc 'POST /api/v1/register/validate'
+    params do
+
+    end
+    get '/validate' do
+      
+    end
+
     desc 'POST /api/v1/register/'
     params do
       requires :name, type: String, desc: 'name'

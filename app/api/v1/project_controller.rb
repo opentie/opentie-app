@@ -115,7 +115,14 @@ class API::V1::ProjectController < Grape::API
               # create
               {}
             end
-
+            
+            desc 'POST /api/v1/projects/:id/request_schemata/:id/request/validate'
+            params do
+            end
+            post '/validate' do
+              {}
+            end
+            
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new'
             params do
             end
