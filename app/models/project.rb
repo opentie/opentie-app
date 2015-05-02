@@ -39,7 +39,7 @@ class Project < ActiveRecord::Base
   
   private
   def increment_number
-    value = ActiveRecord::Migration::execute "SELECT nextval('projects_number_seq')"
+    value = Project.connection.execute "SELECT nextval('projects_number_seq')"
     self.number = value[0]["nextval"]
   end
 
