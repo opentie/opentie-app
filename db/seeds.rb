@@ -77,6 +77,7 @@ unless Rails.env.production?
       3.times do |i|
         RequestSchema.create(
           division_id: division.id,
+          name: "request_shcema_name_#{division.id[0,3]}",
           payload: { num: i, setting: "div_setting" }
         )
       end
