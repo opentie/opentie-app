@@ -143,7 +143,7 @@ class API::V1::ProjectController < Grape::API
             params do
             end
             get '/' do
-              requests = Request.joins(:delegate)
+              requests = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
                 .first
