@@ -14,7 +14,7 @@ RSpec.describe API do
       @division = Division.first
       @project = Project.first
       # Use @request_, because @request used by rack 
-      @request_ = @project.delegates.first.requests.first
+      @request_ = @project.delegates.find_by(priority: 0).requests.first
       @request_schema = @division.request_schemata.first
       @schema_request = @request_schema.requests.first
     end

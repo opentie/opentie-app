@@ -12,20 +12,20 @@ RSpec.describe API do
       post '/api/v1/login', login_param
 
       @project = Project.first
-      @delegate = @project.delegates.first
-      @request = @delegate.requests.first
-      @request_schema = @request.request_schema
+      @delegate = @project.delegates.find_by(priority: 0)
+      @request_ = @delegate.requests.first
+      @request_schema = @request_.request_schema
     end
 
     # show
     it 'GET /api/v1/projects/:id' do
       get "/api/v1/projects/#{@project.id}"
       
-      json = JSON.parse(response.body)['body']
-      project = Project.find_by(id: json['id'])
+      json = JSON.parse(response.body)
+      project = Project.find_by(id: json['project']['id'])
 
       expect(project).not_to eq(nil)
-      expect(json['id']).to eq(@project.id)
+      expect(json['project']['id']).to eq(@project.id)
 
       expect(response.status).to eq(200)
       
@@ -62,14 +62,14 @@ RSpec.describe API do
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/' do
       get "/api/v1/projects/#{@project.id}/request_schemata/"
       
-      json = JSON.parse(response.body)['body']
+      json = JSON.parse(response.body)
 
-      json.each do |schema|
+      json['request_schemata'].each do |schema|
         s = RequestSchema.find_by(id: schema['id'])
         expect(s).not_to eq(nil)
       end
 
-      expect(json.count).to eq(RequestSchema.all.count)
+      expect(json['request_schemata'].count).to eq(RequestSchema.all.count)
       expect(response.status).to eq(200)
     end
 
@@ -77,16 +77,28 @@ RSpec.describe API do
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/:id' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}"
 
-      json = JSON.parse(response.body)['body']
-      schema = RequestSchema.find_by(id: json['id'])
+      json = JSON.parse(response.body)
+      schema = RequestSchema.find_by(id: json['request_schema']['id'])
 
       expect(schema).not_to eq(nil)
-      expect(json['id']).to eq(@request_schema.id)
+      expect(json['request_schema']['id']).to eq(@request_schema.id)
 
       expect(response.status).to eq(200)
       
       get "/api/v1/projects/#{@project.id}/request_schemata/hogehogehoge123123"
       expect(response.status).to eq(404)
+    end
+
+    # edit
+    it 'GET /api/v1/projects/:id/request_schemata/:id/request' do
+      get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
+
+      json = JSON.parse(response.body)
+      request = Request.find_by(id: json['request']['id'])
+
+      expect(request).not_to eq(nil)
+      
+      expect(response.status).to eq(200)
     end
 
     # new
