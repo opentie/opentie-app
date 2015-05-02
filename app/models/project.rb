@@ -11,6 +11,8 @@ class Project < ActiveRecord::Base
 
   store_accessor :payload
 
+  before_create :increment_number
+
   after_save do
     if changes.include? :name
       ProjectHistory.create(project: self, field: :name, value: changes[:name].last)
@@ -32,10 +34,15 @@ class Project < ActiveRecord::Base
       false
     else
       true
-    end    
+    end
   end
   
   private
+  def increment_number
+    value = ActiveRecord::Migration::execute "SELECT nextval('projects_number_seq')"
+    self.number = value[0]["nextval"]
+  end
+
   def diff(h1, h2)
     h1 ||= {}
     h2 ||= {}
