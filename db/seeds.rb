@@ -1,6 +1,8 @@
 
 # coding: utf-8
 unless Rails.env.production?
+  puts "initialize sequence" 
+  Project.initialize_number(20)
 
   puts "create Account"
   ActiveRecord::Base.transaction do
