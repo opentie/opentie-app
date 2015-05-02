@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502143941) do
+ActiveRecord::Schema.define(version: 20150502145112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,10 @@ ActiveRecord::Schema.define(version: 20150502143941) do
     t.integer  "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "frozen_at"
   end
+
+  add_index "projects", ["frozen_at"], name: "index_projects_on_frozen_at", using: :btree
 
   create_table "request_schemata", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "division_id"
