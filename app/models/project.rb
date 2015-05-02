@@ -39,8 +39,8 @@ class Project < ActiveRecord::Base
   
   private
   def increment_number
-    value = ActiveRecord::Migration::execute "SELECT nextval('projects_number_seq')"
-    self.number = value[0]["nextval"]
+    offset = (GlobalSetting.get('project_schema.project_number_offset') || 0)
+    self.number = (Project.maximum(:number) || offset) + 1
   end
 
   def diff(h1, h2)
