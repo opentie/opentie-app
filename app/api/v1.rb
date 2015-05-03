@@ -20,7 +20,6 @@ class API::V1 < Grape::API
   end
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
-    binding.pry
     error_response(message: "Bad request", status: 400)
   end
 
