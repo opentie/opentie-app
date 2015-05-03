@@ -51,7 +51,7 @@ RSpec.describe API do
     end
 
     it 'Logout test' do
-      post @path, @login_param
+      post @path, @login_params
       post '/api/v1/logout/'
       json = JSON.parse(response.body)
       expect(json['message']).to eq('Successful logout')
