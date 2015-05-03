@@ -105,7 +105,7 @@ class API::V1::ProjectController < Grape::API
             end
             
             after_validation do
-              add_response({project: @request_schema})
+              add_response({request_schema: @request_schema})
             end
             
             desc 'POST /api/v1/projects/:id/request_schemata/:id/request'
