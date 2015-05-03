@@ -10,16 +10,19 @@
       "children": [
         {
           "name":"name",
+          "type":"text",
           "title":"商品名",
           "note":"アコムレンタルの商品名"
         },
         {
           "name":"code",
+          "type":"text",
           "title":"商品番号",
           "note":"アコムレンタルの商品番号"
         },
         {
           "name":"number",
+          "type":"number",
           "title":"個数"
         }
       ]
