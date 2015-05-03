@@ -6,8 +6,7 @@ unless Rails.env.production?
 
   puts "create Account"
   ActiveRecord::Base.transaction do
-    accounts = []
-    20.times do
+    30.times do
       name = "account_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       Account.create(
         name: name,
@@ -17,38 +16,42 @@ unless Rails.env.production?
         payload: { hoge: "fuga"}
       )
     end
-    #Account.import accounts
   end
 
   puts "create Project"
   ActiveRecord::Base.transaction do
-    projects = []
     10.times do
       name = "project_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
-      projects << Project.create(
+      Project.create(
         name: name,
         payload: { email: "#{name}@example.jp" }
       )
     end
-    #Project.import projects
   end
 
   puts "create Division"
   ActiveRecord::Base.transaction do
-    divisions = []
-    5.times do
-      name = "division_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
+    [
+      '総務局',
+      '総合計画局',
+      '推進局',
+      'ステージ管理局',
+      '渉外局',
+      '本部企画局',
+      '情報システム局',
+      '広報宣伝局',
+      '財務局',
+      '調査専門部会'
+    ].each do |name|
       Division.create(
         name: name,
-        payload: { people: 15 }
+        payload: {}
       )
     end
-    #Division.import divisions
   end
   
   puts "create Roles"
   ActiveRecord::Base.transaction do
-    roles = []
     Division.all.each do |division|
       Account.all.each do |account|
         Role.create(
@@ -57,39 +60,10 @@ unless Rails.env.production?
         )
       end
     end
-    #Role.imoport roles
   end
   
-  puts "create GlobalSetting"
-  ActiveRecord::Base.transaction do
-    global_settings = [] 
-    %w(global14 setting15).each do |name|
-      GlobalSetting.create(
-        name: name,
-        value: { name: name }
-      )
-    end
-    #GlobalSetting.import global_settings
-  end
-  
-  puts "create RequestSchemata"
-  ActiveRecord::Base.transaction do
-    schemata = []
-    Division.all.each do |division|
-      3.times do |i|
-        RequestSchema.create(
-          division_id: division.id,
-          name: "request_shcema_name_#{division.id[0,3]}",
-          payload: { num: i, setting: "div_setting" }
-        )
-      end
-    end
-    #RequestSchema.import schemata
-  end
-
   puts "create Delegate"
   ActiveRecord::Base.transaction do
-    delegates = []
     Project.all.each do |project|
       priority_count = 0
       Account.all.each do |account|
@@ -101,13 +75,42 @@ unless Rails.env.production?
         priority_count += 1
       end
     end
-    #Delegate.import delegates
+  end
+end
+
+# GlobalSetting data
+@global_settings_path = "#{Rails.root}/config/global_settings/"
+@request_schemata_path = "#{Rails.root}/config/request_schemata/"
+
+puts "load RequestSchema"
+Dir.glob("#{@request_schemata_path}*.json") do |file_path|
+  json_data = open(file_path) do |io|
+    JSON.load(io)
   end
 
+  RequestSchema.create(
+    division_id: Division.find_by(name: json_data['division_name']).id,
+    name: json_data['name'],
+    payload: json_data['payload'].to_json
+  )
+end
 
+
+puts "load GlobalSetting"
+Dir.glob("#{@global_settings_path}*.json") do |file_path|
+  json_data = open(file_path) do |io|
+    JSON.load(io)
+  end
+  
+  GlobalSetting.create(
+    name: json_data['name'],
+    value: json_data['payload'].to_json
+  )
+end
+
+unless Rails.env.production?
   puts "create Request"
   ActiveRecord::Base.transaction do
-    requests = []
     Project.all.each do |project|
       delegate = project.delegates.find_by(priority: 0)
       RequestSchema.all.each do |schema|
@@ -118,7 +121,6 @@ unless Rails.env.production?
         )
       end
     end
-    #Request.import requests
   end
 
   puts "create ProjectComment"
@@ -133,6 +135,5 @@ unless Rails.env.production?
       end
     end
   end
-
 end
 
