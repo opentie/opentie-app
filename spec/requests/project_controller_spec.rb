@@ -36,6 +36,10 @@ RSpec.describe API do
     # new
     it 'GET /api/v1/projects/new' do
       get "/api/v1/projects/new"
+
+      json = JSON.parse(response.body)
+
+      expect(json['project_schema']).not_to eq(nil)
       expect(response.status).to eq(200)
     end
     
@@ -45,19 +49,35 @@ RSpec.describe API do
         name: "test_project_name",
         payload: { hoge: "fuga" }
       }
-      post "/api/v1/projects/", params
+      expect {
+        post "/api/v1/projects/", params
+      }.to change(Project, :count).by(1)
       expect(response.status).to eq(201)
     end
 
     # edit
     it 'GET /api/v1/projects/:id/edit' do
       get "/api/v1/projects/#{@project.id}/edit"
+      
+      json = JSON.parse(response.body)
+      
+      expect(json['project_schema']).not_to eq(nil)
+      expect(json['project']['id']).to eq(@project.id)
       expect(response.status).to eq(200)
     end
 
     # update
     it 'PUT /api/v1/projects/:id' do
-      put "/api/v1/projects/#{@project.id}"
+      attribute_params = {
+        payload: { "hogehoge" => "fuga" }
+      }
+      
+      put "/api/v1/projects/#{@project.id}", attribute_params
+      @project.reload
+
+      json = JSON.parse(response.body)
+      
+      expect(@project.payload).to eq(attribute_params[:payload])
       expect(response.status).to eq(200)
     end
     
@@ -116,7 +136,9 @@ RSpec.describe API do
       params = {
         payload: { hoge: "fuga" }
       }
-      post "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", params
+      expect {
+        post "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", params
+      }.to change(Request, :count).by(1)
       expect(response.status).to eq(201)
     end
 

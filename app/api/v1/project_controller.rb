@@ -28,27 +28,37 @@ class API::V1::ProjectController < Grape::API
       requires :name, type: String
     end
     post '/' do
-      Project.create(
+      project = Project.create(
         name: params[:name],
         payload: params[:payload]
       )
-      {}
+      {
+        project: project.attributes
+      }
     end
 
     desc 'GET /api/v1/projects/new'
     params do
     end
     get '/new' do
-      # new
-      {}
+      global_setting = GlobalSetting.get(:project_schema)
+      {
+        project_schema: global_setting
+      }
     end
     
     desc 'get /api/v1/projects/:id/edit'
     params do
+      requires :id, type: String, desc: 'project_id'
     end
     get '/:id/edit' do
-      # edit
-      {}
+      project = Project.find_by(id: params[:id])
+      raise ActiveRecord::RecordNotFound if project.nil?
+      global_setting = GlobalSetting.get(:project_schema)
+      {
+        project: project.attributes,
+        project_schema: global_setting
+      }
     end
     
     desc 'GET /api/v1/projects/:id'
@@ -65,10 +75,16 @@ class API::V1::ProjectController < Grape::API
     
     desc 'PUT /api/v1/projects/:id'
     params do
+      requires :id, type: String, desc: 'project_id'
+      requires :payload, type: Hash, desc: 'new project'
     end
     put '/:id' do
-      # update
-      {}
+      project = Project.find_by(id: params[:id])
+      raise ActiveRecord::RecordNotFound if project.nil?
+      project.update(payload: params[:payload])
+      {
+        project: project.reload
+      }
     end
     
     route_param :project_id do
@@ -122,12 +138,14 @@ class API::V1::ProjectController < Grape::API
                 project_id: params[:project_id],
                 account_id: current_user.id
               )
-              Request.create(
+              request = Request.create(
                 delegate_id: delegate.id,
                 request_schema_id: params[:request_schema_id],
                 payload: params[:payload]
               )
-              {}
+              {
+                request: request
+              }
             end
             
             desc 'POST /api/v1/projects/:id/request_schemata/:id/request/validate'
