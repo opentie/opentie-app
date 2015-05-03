@@ -41,7 +41,11 @@ RSpec.describe API do
     
     # create
     it 'POST /api/v1/projects' do
-      post "/api/v1/projects"
+      params = {
+        name: "test_project_name",
+        paylaod: { hoge: "fuga" }
+      }
+      post "/api/v1/projects/", params
       expect(response.status).to eq(201)
     end
 

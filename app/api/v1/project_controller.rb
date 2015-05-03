@@ -5,7 +5,7 @@ class API::V1::ProjectController < Grape::API
       def fulltime_params
         projects = current_user.projects
         divisions = current_user.divisions
-         request_schemata = RequestSchema.all
+        request_schemata = RequestSchema.all
         {
           my_projects: projects,
           my_divisions: divisions,
@@ -24,9 +24,14 @@ class API::V1::ProjectController < Grape::API
 
     desc 'POST /api/v1/projects/'
     params do
+      requires :payload, type: Hash
+      requires :name, type: String
     end
-    post '/' do 
-      # create
+    post '/' do
+      Project.create(
+        name: params[:name],
+        payload: params[:payload]
+      )
       {}
     end
 
@@ -110,9 +115,18 @@ class API::V1::ProjectController < Grape::API
             
             desc 'POST /api/v1/projects/:id/request_schemata/:id/request'
             params do
+              requires :payload, type: Hash, desc: 'payloads'
             end
             post '/' do
-              # create
+              delegate = Delegate.find_by(
+                project_id: params[:project_id],
+                account_id: params[:account_id]
+              )
+              Request.create(
+                delegate_id: delegate.id,
+                request_schema_id: params[:request_schema_id],
+                payload: params[:payload]
+              )
               {}
             end
             
