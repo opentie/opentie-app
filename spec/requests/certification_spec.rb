@@ -11,6 +11,28 @@ RSpec.describe API do
         email: account.email,
         password: 'password'
       }
+      @another_params = {
+        email: "fake@example.com",
+        password: "password"
+      }
+      @another_params2 = {
+        email: account.email,
+        password: "fakepass"
+      }
+    end
+    
+    it 'failed login test' do
+      post @path, @another_params
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq({"email doesn't match")
+      expect(response.status).to eq(201)
+    end
+
+    it 'failed login test2' do
+      post @path, @another_params2
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq({"password doesn't match")
+      expect(response.status).to eq(201)
     end
 
     it 'Login test' do

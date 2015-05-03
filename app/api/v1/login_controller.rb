@@ -9,7 +9,8 @@ class API::V1::LoginController < Grape::API
     post do
       unless authenticated?
         account = Account.find_by(email: params[:email])
-        error!({ message: "passwords don't match" }, 400) unless account.authenticate(params[:password])
+        error!({ message: "email doesn't match" }, 401) unless account.nil?
+        error!({ message: "password doesn't match" }, 401) unless account.authenticate(params[:password])
         authenticate!(account)
         {
           message: 'Accept authenticate'
