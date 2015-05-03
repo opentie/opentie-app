@@ -142,11 +142,11 @@ end
 if Rails.env.development?
   puts "create Account"
   ActiveRecord::Base.transaction do
-    30.times do
+    30.times do |i|
       name = "account_name_" + ((0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a).sample(5).join
       Account.create(
         name: name,
-        email: "#{name}@example.jp",
+        email: "dev#{i}@example.jp",
         password: "password",
         password_confirmation: "password",
         payload: { hoge: "fuga"}
