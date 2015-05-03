@@ -120,7 +120,7 @@ class API::V1::ProjectController < Grape::API
             post '/' do
               delegate = Delegate.find_by(
                 project_id: params[:project_id],
-                account_id: params[:account_id]
+                account_id: current_user.id
               )
               Request.create(
                 delegate_id: delegate.id,

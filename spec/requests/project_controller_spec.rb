@@ -43,7 +43,7 @@ RSpec.describe API do
     it 'POST /api/v1/projects' do
       params = {
         name: "test_project_name",
-        paylaod: { hoge: "fuga" }
+        payload: { hoge: "fuga" }
       }
       post "/api/v1/projects/", params
       expect(response.status).to eq(201)
@@ -113,7 +113,10 @@ RSpec.describe API do
     
     # create
     it 'POST /api/v1/projects/:id/request_schemata/:id/request' do
-      post "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
+      params = {
+        payload: { hoge: "fuga" }
+      }
+      post "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", params
       expect(response.status).to eq(201)
     end
 
