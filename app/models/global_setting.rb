@@ -7,6 +7,6 @@ class GlobalSetting < ActiveRecord::Base
   }
 
   def self.get(key)
-    where(id: key).first || DEFAULTS[key.to_sym]
+    where(name: key).first || DEFAULTS[key.to_sym]
   end
 end
