@@ -7,6 +7,19 @@ unless Rails.env.production?
   rescue => e
     Project.connection.execute "CREATE SEQUENCE projects_number_seq INCREMENT BY 1 START WITH 20"
   end
+
+  @global_settings_path = "#{Rails.root}/config/global_settings/"
+  puts "load GlobalSetting"
+  Dir.glob("#{@global_settings_path}*.json") do |file_path|
+    json_data = open(file_path) do |io|
+      JSON.load(io)
+    end
+    
+    GlobalSetting.create(
+      name: json_data['name'],
+      value: json_data['payload'].to_json
+    )
+  end
 end
 
 if Rails.env.test?
@@ -200,10 +213,7 @@ if Rails.env.development?
     end
   end
 
-  # GlobalSetting data
-  @global_settings_path = "#{Rails.root}/config/global_settings/"
   @request_schemata_path = "#{Rails.root}/config/request_schemata/"
-
   puts "load RequestSchema"
   Dir.glob("#{@request_schemata_path}*.json") do |file_path|
     json_data = open(file_path) do |io|
@@ -217,18 +227,6 @@ if Rails.env.development?
     )
   end
 
-  puts "load GlobalSetting"
-  Dir.glob("#{@global_settings_path}*.json") do |file_path|
-    json_data = open(file_path) do |io|
-      JSON.load(io)
-    end
-    
-    GlobalSetting.create(
-      name: json_data['name'],
-      value: json_data['payload'].to_json
-    )
-  end
-  
   puts "create Request"
   ActiveRecord::Base.transaction do
     Project.all.each do |project|
