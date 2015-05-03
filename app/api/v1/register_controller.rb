@@ -1,14 +1,12 @@
 class API::V1::RegisterController < Grape::API
   resource :register do
-    before do
-      redirect '/' if authenticated?
-    end
-    
     desc 'GET /api/v1/register/new'
     params do
     end
     get '/new' do
-      
+      {
+        account_schema: GlobalSetting.get(:account_schema)
+      }
     end
 
     desc 'POST /api/v1/register/validate'
@@ -29,14 +27,16 @@ class API::V1::RegisterController < Grape::API
     end
     post '/' do
       account = Account.create(
-                               name: params[:name],
-                               email: params[:email],
-                               password: params[:password],
-                               password_confirmation: params[:password_confirmation],
-                               payload: params[:payload]
-                               )
-      authenticate(account)
-      account
+        name: params[:name],
+        email: params[:email],
+        password: params[:password],
+        password_confirmation: params[:password_confirmation],
+        payload: params[:payload]
+      )
+      authenticate!(account)
+      {
+        account: account
+      }
     end
     
   end
