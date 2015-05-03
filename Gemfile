@@ -41,9 +41,6 @@ gem 'kakurenbo-puti'
 
 gem 'activeadmin', github: 'activeadmin'
 
-# validation & form generation
-gem 'formalizr', path: '../formalizr'
-
 group :assets do
   gem 'uglifier'
 end
