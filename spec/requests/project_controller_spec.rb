@@ -55,6 +55,12 @@ RSpec.describe API do
       expect(response.status).to eq(201)
     end
 
+    # validate
+    it 'POST /api/v1/projects/validate' do
+      post "/api/v1/projects/validate/"
+      expect(response.status).to eq(201)
+    end
+
     # edit
     it 'GET /api/v1/projects/:id/edit' do
       get "/api/v1/projects/#{@project.id}/edit"
@@ -113,7 +119,9 @@ RSpec.describe API do
       expect(response.status).to eq(404)
     end
 
-    # edit
+
+
+    # show
     it 'GET /api/v1/projects/:id/request_schemata/:id/request' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
 
@@ -128,6 +136,10 @@ RSpec.describe API do
     # new
     it 'GET /api/v1/projects/:id/request_schemata/:id/request/new' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/new"
+      
+      json = JSON.parse(response.body)
+      expect(json['request_schema']['id']).to eq(@request_schema.id)
+
       expect(response.status).to eq(200)
     end
     
@@ -145,18 +157,40 @@ RSpec.describe API do
     # edit
     it 'GET /api/v1/projects/:id/request_schemata/:id/request/edit' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/edit"
+
+      json = JSON.parse(response.body)
+      request = Request.find_by(id: json['request']['id'])
+
+      expect(request).not_to eq(nil)
+      expect(json['request_schema']['id']).to eq(@request_schema.id)
+
       expect(response.status).to eq(200)
     end
 
     # update
     it 'PUT /api/v1/projects/:id/request_schemata/:id/request' do
-      put "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
+
+      update_params = {
+        status: 1,
+        payload: { "hogehoge" => "fuga" }
+      }
+      put "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", update_params
+      
+      json = JSON.parse(response.body)
+      expect(json['request']['status'].to_i).to eq(update_params[:status])
+      expect(json['request']['payload']).to eq(update_params[:payload])
+
       expect(response.status).to eq(200)
     end
     
     # delete
     it 'DELETE /api/v1/projects/:id/request_schemata/:id/request' do
       delete "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
+      
+      json = JSON.parse(response.body)
+      request = Request.find_by(id: json['request']['id'])
+
+      expect(request.soft_destroyed?).to eq(true)
       expect(response.status).to eq(200)
     end
     

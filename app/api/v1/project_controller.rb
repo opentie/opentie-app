@@ -37,6 +37,13 @@ class API::V1::ProjectController < Grape::API
       }
     end
 
+    desc 'POST /api/v1/projects/validate'
+    params do
+    end
+    post '/validate' do
+      {}
+    end
+
     desc 'GET /api/v1/projects/new'
     params do
     end
@@ -154,50 +161,76 @@ class API::V1::ProjectController < Grape::API
             post '/validate' do
               {}
             end
-            
+
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new'
             params do
             end
             get '/new' do
-              # new
-              {}
+              {
+              }
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'
             params do
             end
             get '/edit' do
-              # edit
-              {}
+              request = Request.without_soft_destroyed.joins(:delegate)
+                .where("delegates.project_id = ?", params[:project_id])
+                .where(request_schema_id: params[:request_schema_id])
+                .first
+              raise ActiveRecord::RecordNotFound if request.nil?
+              {
+                request: request
+              }
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request'
             params do
             end
             get '/' do
-              requests = Request.without_soft_destroyed.joins(:delegate)
+              request = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
                 .first
+              raise ActiveRecord::RecordNotFound if request.nil?
               {
-                request: requests
+                request: request
               }
             end
 
             desc 'PUT /api/v1/projects/:id/request_schemata/:id/request'
             params do
+              requires :payload, type: Hash, desc: "update pyaload"
+              requires :status, type: Integer, desc: "update status"
             end
             put '/' do
-              # update
-              {}
+              request = Request.without_soft_destroyed.joins(:delegate)
+                .where("delegates.project_id = ?", params[:project_id])
+                .where(request_schema_id: params[:request_schema_id])
+                .first
+              raise ActiveRecord::RecordNotFound if request.nil?
+              request.update(
+                payload: params[:payload],
+                status: params[:status]
+              )
+              {
+                request: request.reload
+              }
             end
 
             desc 'DELETE /api/v1/projects/:id/request_schemata/:id/request'
             params do
             end
             delete '/' do
-              # delete
-              {}
+              request = Request.without_soft_destroyed.joins(:delegate)
+                .where("delegates.project_id = ?", params[:project_id])
+                .where(request_schema_id: params[:request_schema_id])
+                .first
+              raise ActiveRecord::RecordNotFound if request.nil?
+              request.soft_destroy!
+              {
+                request: request
+              }
             end
             
           end
