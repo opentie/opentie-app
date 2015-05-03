@@ -41,6 +41,9 @@ gem 'kakurenbo-puti'
 
 gem 'activeadmin', github: 'activeadmin'
 
+# validation & form generation
+gem 'formalizr', git: 'https://github.com/opentie/formalizr.git'
+
 group :assets do
   gem 'uglifier'
 end
