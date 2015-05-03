@@ -1,8 +1,11 @@
-
 # coding: utf-8
 unless Rails.env.production?
   puts "initialize sequence" 
-  Project.initialize_number(20)
+  begin
+    Project.initialize_number(20)  
+  rescue => e
+    Project.connection.execute "CREATE SEQUENCE projects_number_seq INCREMENT BY 1 START WITH 20"
+  end
 
   puts "create Account"
   ActiveRecord::Base.transaction do
