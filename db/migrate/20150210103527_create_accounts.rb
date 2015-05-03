@@ -5,7 +5,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :email,                  null: false, default: ""
       t.string :password_digest,        null: false, default: ""
       t.string :session_token
-      t.hstore :payload
+      t.json :payload
 
       t.timestamps null: false
     end

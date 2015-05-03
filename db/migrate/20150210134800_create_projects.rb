@@ -2,7 +2,7 @@ class CreateProjects < ActiveRecord::Migration
   def self.up
     create_table :projects, id: :uuid do |t|
       t.string :name
-      t.hstore :payload
+      t.json :payload
       t.integer :number
 
       t.timestamps null: false
