@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name":"desc",
+      "name":"note",
       "type":"paragraph",
       "title":"備考",
       "note":"要望等あればこちらにお願いします。"
