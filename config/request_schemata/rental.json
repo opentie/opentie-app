@@ -1,0 +1,37 @@
+{
+  "division_name": "推進局",
+  "name": "レンタル物品申請",
+  "payload": [
+    {
+      "name":"goods",
+      "title":"レンタルする物品",
+      "type":"table",
+      "note":"申請される物品の商品名、商品番号、及び個数を記入してください。なお、物品はアコムレンタルのパンフレットよりお選びください。",
+      "columns": [
+        {
+          "name":"name",
+          "type":"text",
+          "title":"商品名",
+          "note":"アコムレンタルの商品名"
+        },
+        {
+          "name":"code",
+          "type":"text",
+          "title":"商品番号",
+          "note":"アコムレンタルの商品番号"
+        },
+        {
+          "name":"number",
+          "type":"number",
+          "title":"個数"
+        }
+      ]
+    },
+    {
+      "name":"note",
+      "type":"paragraph",
+      "title":"備考",
+      "note":"要望等あればこちらにお願いします。"
+    }
+  ]
+}

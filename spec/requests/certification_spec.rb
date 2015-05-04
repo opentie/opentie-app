@@ -11,6 +11,28 @@ RSpec.describe API do
         email: account.email,
         password: 'password'
       }
+      @another_params = {
+        email: "fake@example.com",
+        password: "password"
+      }
+      @another_params2 = {
+        email: account.email,
+        password: "fakepass"
+      }
+    end
+    
+    it 'failed login test' do
+      post @path, @another_params
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq("email doesn't match")
+      expect(response.status).to eq(401)
+    end
+
+    it 'failed login test2' do
+      post @path, @another_params2
+      json = JSON.parse(response.body)
+      expect(json['message']).to eq("password doesn't match")
+      expect(response.status).to eq(401)
     end
 
     it 'Login test' do
@@ -29,7 +51,7 @@ RSpec.describe API do
     end
 
     it 'Logout test' do
-      post @path, @login_param
+      post @path, @login_params
       post '/api/v1/logout/'
       json = JSON.parse(response.body)
       expect(json['message']).to eq('Successful logout')

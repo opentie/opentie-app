@@ -20,7 +20,7 @@ class API::V1 < Grape::API
   end
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
-      error_response(message: "Bad request", status: 400)
+    error_response(message: "Bad request", status: 400)
   end
 
   rescue_from :all do |e|

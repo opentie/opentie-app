@@ -81,7 +81,7 @@ class API::V1::DivisionController < Grape::API
             params do
             end
             get '/' do
-              requests = Request.joins(:delegate)
+              requests = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", params[:project_id])
               {
                 requests: requests
@@ -93,7 +93,7 @@ class API::V1::DivisionController < Grape::API
               requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
-              request = Request.find_by(id: params[:id])
+              request = Request.without_soft_destroyed.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request.attributes
@@ -150,7 +150,7 @@ class API::V1::DivisionController < Grape::API
             params do
             end
             get '/' do
-              requests = Request.where(request_schema_id: params[:request_schema_id])
+              requests = Request.without_soft_destroyed.where(request_schema_id: params[:request_schema_id])
               {
                 requests: requests
               }
@@ -161,7 +161,7 @@ class API::V1::DivisionController < Grape::API
               requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
-              request = Request.find_by(id: params[:id])
+              request = Request.without_soft_destroyed.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request.attributes

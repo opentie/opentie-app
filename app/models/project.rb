@@ -23,6 +23,10 @@ class Project < ActiveRecord::Base
       }
     end
   end
+  
+  def self.initialize_number(val)
+    Project.connection.execute "SELECT setval('projects_number_seq', #{val})"
+  end
 
   def complete?
     min_length = GlobalSetting.get 'project_schema.delegates_count_min'
@@ -39,7 +43,7 @@ class Project < ActiveRecord::Base
   
   private
   def increment_number
-    value = ActiveRecord::Migration::execute "SELECT nextval('projects_number_seq')"
+    value = Project.connection.execute "SELECT nextval('projects_number_seq')"
     self.number = value[0]["nextval"]
   end
 
