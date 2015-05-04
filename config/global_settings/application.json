@@ -1,0 +1,8 @@
+{
+  "name": "application",
+  "payload": {
+    "renderer_root": "https://login.sohosai.tsukuba.ac.jp",
+    "project_name": "第41回雙峰祭",
+    "campus_name": "筑波大学"
+  }
+}
