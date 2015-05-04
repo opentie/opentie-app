@@ -1,0 +1,31 @@
+{
+  "division_name": "推進局",
+  "name": "機材申請",
+  "payload": [
+    {
+      "name": "equipments",
+      "type": "table",
+      "title": "機材選択",
+      "note": "申請対象の機材を選んでください",
+      "children": [
+        {
+          "name": "name",
+          "type": "select",
+          "title": "物品名",
+          "choices": [
+            { "value": "hoge", "label": "ほげ" },
+            { "value": "fuga", "label": "ふが" },
+            { "value": "piyo", "label": "ぴよ" },
+            { "value": "foo",  "label": "ふー" }
+          ]
+        },
+        {
+          "name": "number",
+          "type": "number",
+          "title": "個数",
+          "default": 1
+        }
+      ]
+    }
+  ]
+}
