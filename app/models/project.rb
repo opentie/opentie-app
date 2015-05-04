@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   include WithClassName
+  include Formalizr::Querier
 
   has_many :project_comments
   has_many :roles, through: :project_comments

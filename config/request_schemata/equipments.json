@@ -7,7 +7,7 @@
       "type": "table",
       "title": "機材選択",
       "note": "申請対象の機材を選んでください",
-      "children": [
+      "columns": [
         {
           "name": "name",
           "type": "select",
