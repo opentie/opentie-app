@@ -6,7 +6,7 @@
       "name": "use_charcoal",
       "type": "radio",
       "title": "炭火使用の有無について",
-      "note": "調理を行う際、炭火を使用しますか？"
+      "note": "調理を行う際、炭火を使用しますか？",
       "choices": [
         { "value": "yes", "label": "使用する" },
         { "value": "no", "label": "使用しない" }
@@ -15,13 +15,13 @@
     {
       "name": "cooking_menus",
       "type": "paragraph",
-      "title": "調理品目"
+      "title": "調理品目",
       "note": "調理品目を具体的に記入してください"
     },
     {
       "name": "names_of_cooker",
       "type": "table",
-      "title": "調理者の氏名 (カタカナ)"
+      "title": "調理者の氏名 (カタカナ)",
       "note": "調理に携わる予定の方を全て入力してください",
       "children": [
         "name": "name",
@@ -35,6 +35,5 @@
       "title": "備考",
       "note": "要望などがあればこちらにお願いします"
     }
-
   ]
 }
