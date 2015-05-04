@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Account < ActiveRecord::Base
   include WithClassName
-
+  
   has_secure_password
 
   has_many :delegates, dependent: :destroy
@@ -22,12 +22,12 @@ class Account < ActiveRecord::Base
     presence: true,
     uniqueness: true,
   }
-  validates :password, {
-    presence: true,
-    length: { minimum: 8 }
-  }
-  validates :password_confirmation, {
-    presence: true,
-    length: { minimum: 8 }
-  }
+  validates :password             , length: { minimum: 8 }, :if => :validate_password?
+  validates :password_confirmation, presence: true        , :if => :validate_password?
+
+  private
+  def validate_password?
+    password.present? || password_confirmation.present?
+  end
+
 end

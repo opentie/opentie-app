@@ -6,11 +6,11 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :password_digest,        null: false, default: ""
       t.string :session_token
       t.json :payload
+      t.string :confirmation_token
+      t.boolean :confirmed_email,                    default: false
 
       t.timestamps null: false
     end
     
-    #add_index :accounts, :email, unique: true
-    #add_index :accounts, :session_token, unique: true
   end
 end

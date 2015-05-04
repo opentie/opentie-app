@@ -1,3 +1,13 @@
-UserMailer#registration_confirmation
- 
-<%= @text %>, find me in app/views/app/views/user_mailer/registration_confirmation.text.erb
+<%= @account_name %> 様
+
+この度は<%= @project_name %>へ登録していただき、ありがとうございました。
+下記リンクから登録を完了する事ができます。
+
+
+[ログイン情報]
+ID : <%= @account_email %>
+PASS : (セキュリティのため非表示です)
+
+こちらからアカウントの登録を完了できます
+
+<%= @confirm_url %>

@@ -14,7 +14,7 @@ class API::V1::RegisterController < Grape::API
 
     end
     get '/validate' do
-      
+      {}
     end
 
     desc 'POST /api/v1/register/'
@@ -26,19 +26,35 @@ class API::V1::RegisterController < Grape::API
       requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
+      next redirect '/api/v1/dashboard' if authenticated?
+      confirm_token = Devise.friendly_token
+
       account = Account.create(
         name: params[:name],
         email: params[:email],
         password: params[:password],
         password_confirmation: params[:password_confirmation],
-        payload: params[:payload]
+        payload: params[:payload],
+        confirmation_token: confirm_token
       )
-      authenticate!(account)
+      AccountMailer.registration_confirmation(account).deliver
       {
         account: account
       }
     end
     
+    desc 'GET /api/v1/register/confirm'
+    params do
+      requires :confirm_token, type: String, desc: 'confirm_token'
+    end
+    get '/confirm' do
+      error!('401 Unauthorized', 401) unless authenticated?
+      error!('400 Bad request', 400) unless current_user.confirmation_token == params[:confirm_token]
+      error!('400 Bad request', 400) unless !current_user.confirmed_email
+      current_user.update(confirmed_email: true)
+      {
+      }
+    end
   end
 end
   

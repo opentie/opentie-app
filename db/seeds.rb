@@ -32,7 +32,8 @@ if Rails.env.test?
         email: "#{name}@example.jp",
         password: "password",
         password_confirmation: "password",
-        payload: { hoge: "fuga"}
+        payload: { hoge: "fuga"},
+        confirmed_email: true
       )
     end
   end
@@ -149,7 +150,8 @@ if Rails.env.development?
         email: "dev#{i}@example.jp",
         password: "password",
         password_confirmation: "password",
-        payload: { hoge: "fuga"}
+        payload: { hoge: "fuga"},
+        confirmed_email: true
       )
     end
   end

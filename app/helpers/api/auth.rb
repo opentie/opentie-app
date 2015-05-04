@@ -5,7 +5,7 @@ module API::Auth
   end
   
   def authenticated?
-    !current_user.nil?
+    current_user.confirmed_email && !current_user.nil?
   end
 
   def authenticate!(account)
