@@ -75,12 +75,16 @@ RSpec.describe API do
     # update
     it 'PUT /api/v1/projects/:id' do
       attribute_params = {
-        payload: { "hogehoge" => "fuga" }
+        payload: {
+          "changes" => "chenged",
+        }.merge(@project.payload)
       }
-      
-      put "/api/v1/projects/#{@project.id}", attribute_params
-      @project.reload
 
+      expect {
+        put "/api/v1/projects/#{@project.id}", attribute_params
+      }.to change(ProjectHistory, :count).by(1)
+      
+      @project.reload
       json = JSON.parse(response.body)
       
       expect(@project.payload).to eq(attribute_params[:payload])
