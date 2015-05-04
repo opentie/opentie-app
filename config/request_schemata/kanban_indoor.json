@@ -1,0 +1,32 @@
+{
+  "division_name": "推進局",
+  "name": "屋内看板申請",
+  "payload": [
+    {
+      "name": "small_kanban",
+      "title": "小看板",
+      "type": "radio",
+      "note": "小看板を使用する場合は、「使用する」にチェックを入れてください。",
+      "choices": [
+        { "value": "yes", "label": "使用する" },
+        { "value": "no", "label": "使用しない" }
+      ]
+    },
+    {
+      "name": "standing_kanban",
+      "title": "自立式看板",
+      "type": "radio",
+      "note": "自立式看板を使用する場合は、「使用する」にチェックを入れてください。",
+      "choices": [
+        { "value": "yes", "label": "使用する" },
+        { "value": "no", "label": "使用しない" }
+      ]
+    },
+    {
+      "name": "note",
+      "title": "備考",
+      "type": "paragraph",
+      "note": "要望などがあればこちらにお願いします。"
+    }
+  ]
+}

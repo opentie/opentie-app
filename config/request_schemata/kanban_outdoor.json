@@ -1,0 +1,32 @@
+{
+  "division_name": "推進局",
+  "name": "屋外看板申請",
+  "payload": [
+    {
+      "name": "big_kanban",
+      "type": "radio",
+      "title": "大看板",
+      "note": "大看板を使用する場合は、「使用する」にチェックを入れてください",
+      "choices": [
+        { "value": "yes", "label": "使用する" },
+        { "value": "no", "label": "使用しない" }
+      ]
+    },
+    {
+      "name": "narrow_kanban",
+      "type": "radio",
+      "title": "細看板",
+      "note": "細看板を使用する場合は、「使用する」にチェックを入れてください",
+      "choices": [
+        { "value": "yes", "label": "使用する" },
+        { "value": "no", "label": "使用しない" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}
