@@ -1,8 +1,6 @@
 class AccountMailer < ApplicationMailer
-  default from: "from@example.com"
-
   def registration_confirmation
-    @text = "text"
-    mail to: "to@example.com"
+    @text = params[:text]
+    mail to: params[:to]
   end
 end
