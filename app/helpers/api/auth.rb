@@ -5,7 +5,7 @@ module API::Auth
   end
   
   def authenticated?
-    current_user.confirmed_email && !current_user.nil?
+    !current_user.nil? && email_confirmed?
   end
 
   def authenticate!(account)
@@ -15,6 +15,11 @@ module API::Auth
 
   def revoke!
     session.destroy
+  end
+
+  def email_confirmed?
+    return false if current_user.nil?
+    current_user.confirmed_email
   end
 
   def current_user

@@ -23,7 +23,7 @@ RSpec.describe API do
       }
       expect {
         post "/api/v1/register/", params
-      }.to change(Account, :count).by(1)
+      }.to change(Account, :count).by(1), change { ActionMailer::Base.deliveries.count }.by(1)
 
       expect(response.status).to eq(201)
     end
