@@ -24,9 +24,11 @@
       "title": "調理者の氏名 (カタカナ)",
       "note": "調理に携わる予定の方を全て入力してください",
       "children": [
-        "name": "name",
-        "type": "text",
-        "title": "氏名 (カタカナ)"
+        {
+          "name": "name",
+          "type": "text",
+          "title": "氏名 (カタカナ)"
+        }
       ]
     },
     {
