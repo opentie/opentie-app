@@ -16,6 +16,5 @@
 *.sw[a-z]
 *~
 
-# openid keys
-/config/openid.yml
-/public/assets
+# mailer keys
+/config/email.yml
