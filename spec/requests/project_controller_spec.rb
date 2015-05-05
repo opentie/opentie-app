@@ -137,27 +137,6 @@ RSpec.describe API do
       expect(response.status).to eq(200)
     end
 
-    # new
-    it 'GET /api/v1/projects/:id/request_schemata/:id/request/new' do
-      get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/new"
-
-      json = JSON.parse(response.body)
-      expect(json['request_schema']['id']).to eq(@request_schema.id)
-
-      expect(response.status).to eq(200)
-    end
-
-    # create
-    it 'POST /api/v1/projects/:id/request_schemata/:id/request' do
-      params = {
-        payload: { hoge: "fuga" }
-      }
-      expect {
-        post "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", params
-      }.to change(Request, :count).by(1)
-      expect(response.status).to eq(201)
-    end
-
     # edit
     it 'GET /api/v1/projects/:id/request_schemata/:id/request/edit' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/edit"
@@ -184,17 +163,6 @@ RSpec.describe API do
       expect(json['request']['status'].to_i).to eq(update_params[:status])
       expect(json['request']['payload']).to eq(update_params[:payload])
 
-      expect(response.status).to eq(200)
-    end
-
-    # delete
-    it 'DELETE /api/v1/projects/:id/request_schemata/:id/request' do
-      delete "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
-
-      json = JSON.parse(response.body)
-      request = Request.find_by(id: json['request']['id'])
-
-      expect(request.soft_destroyed?).to eq(true)
       expect(response.status).to eq(200)
     end
 
