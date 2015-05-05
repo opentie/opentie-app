@@ -137,6 +137,18 @@ if Rails.env.test?
       end
     end
   end
+
+  puts "create Invitation"
+  ActiveRecord::Base.transaction do
+    Project.all.each do |project|
+      10.times do |i|
+        Invitation.create(
+          project_id: project.id,
+          invited_email: "tie_test@example.co.hoge"
+        )
+      end
+    end
+  end
 end
 
 
@@ -251,6 +263,18 @@ if Rails.env.development?
           project_id: project.id,
           role_id: role.id,
           comment: "===to=== #{project.name} ===from=== #{role.id}"
+        )
+      end
+    end
+  end
+
+  puts "create Invitation"
+  ActiveRecord::Base.transaction do
+    Project.all.each do |project|
+      5.times do |i|
+        Invitation.create(
+          project_id: project.id,
+          invited_email: "tie_test@example.co.hoge"
         )
       end
     end

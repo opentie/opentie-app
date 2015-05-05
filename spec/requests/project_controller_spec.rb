@@ -92,6 +92,38 @@ RSpec.describe API do
     end
 
 
+    # new
+    it 'GET /api/v1/projects/:id/invitations/new' do
+      get "/api/v1/projects/#{@project.id}/invitations/new"
+      expect(response.status).to eq(200)
+    end
+
+    # create
+    it 'POST /api/v1/projects/:id/invitations' do
+      params = {
+        email: "hoge@example.com"
+      }
+
+      expect {
+        post "/api/v1/projects/#{@project.id}/invitations", params
+      }.to change(Invitation, :count).by(1), change { ActionMailer::Base.deliveries.count }.by(1)
+
+      expect(response.status).to eq(201)
+    end
+
+    # new
+    it 'DELETE /api/v1/projects/:id/invitations/:id' do
+      invitation = @project.invitations.first
+
+      expect {
+        delete "/api/v1/projects/#{@project.id}/invitations/#{invitation.id}"
+      }.to change(Invitation, :count).by(-1)
+
+      expect(response.status).to eq(200)
+    end
+
+
+
     # index
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/' do
       get "/api/v1/projects/#{@project.id}/request_schemata/"

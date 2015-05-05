@@ -129,7 +129,9 @@ class API::V1::ProjectController < Grape::API
         desc 'DELETE /api/v1/projects/:id/invitations/:id/'
         params do
         end
-        delete '/' do
+        delete '/:id' do
+          invitation = Invitation.find_by(id: params[:id])
+          invitation.destroy
           {}
         end
       end
