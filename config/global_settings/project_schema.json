@@ -1,6 +1,153 @@
 {
   "name": "project_schema",
-  "payload": {
-    "schema": "hogehoge"
-  }
+  "payload": [
+    {
+      "name": "confirm_requirement",
+      "type": "radio",
+      "title": "募集要項について",
+      "note": "募集要項を読みましたか？",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "いいえ" },
+        { "value": "yes", "label": "はい" }
+      ],
+      "validators": [
+        { "type": "required", "description": "企画申請をするには、募集要項を読んでいる必要があります" },
+        { "type": "pattern", "condition": "^yes$", "description": "企画申請をするには、募集要項を読んでいる必要があります" }
+      ]
+    },
+    {
+      "name": "project_type",
+      "type": "select",
+      "title": "企画区分",
+      "note": "企画区分を選択してください",
+      "default": "normal",
+      "choices": [
+        { "value": "normal_indoor",    "label": "一般企画 (屋内)" },
+        { "value": "normal_outdoor",   "label": "一般企画 (屋外)" },
+        { "value": "academic_indoor",  "label": "学研企画 (屋内)" },
+        { "value": "academic_outdoor", "label": "学研企画 (屋外)" },
+        { "value": "stage",            "label": "ステージ企画" },
+        { "value": "miniature",        "label": "ミニチュア学研企画" }
+      ],
+      "validators": [
+        { "type": "required", "description": "企画区分は必ず選択してください" },
+        { "type": "validchoice", "description": "選択肢が無効です" }
+      ]
+    },
+    {
+      "name": "attend_geisai",
+      "type": "radio",
+      "title": "芸術祭について",
+      "note": "芸術祭への参加の有無を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "参加しない" },
+        { "value": "yes", "label": "参加する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "芸術祭への参加の有無は必ず選択してください" }
+      ]
+    },
+    {
+      "name": "project_name",
+      "type": "text",
+      "title": "企画名",
+      "note": "企画名を入力してください",
+      "placeholder": "Flesh 筑波カップ",
+      "validators": [
+        { "type": "required", "description": "企画名は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_name_kana",
+      "type": "text",
+      "title": "企画名 (ふりがな)",
+      "note": "企画名のふりがなを入力してください",
+      "placeholder": "ふれっしゅつくばかっぷ",
+      "validators": [
+        { "type": "required", "description": "企画名のふりがなは必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_organizer_name",
+      "type": "text",
+      "title": "企画団体名",
+      "note": "企画団体名を入力してください",
+      "placeholder": "ソレイユファンクラブ",
+      "validators": [
+        { "type": "required", "description": "企画団体名は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_organizer_name_kana",
+      "type": "text",
+      "title": "企画団体名 (ふりがな)",
+      "note": "企画団体名のふりがなを入力してください",
+      "placeholder": "それいゆふぁんくらぶ",
+      "validators": [
+        { "type": "required", "description": "企画団体名のふりがなは必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_attendee_male",
+      "type": "number",
+      "title": "企画参加人数 (男性)",
+      "note": "企画に参加する男性の人数を入力してください",
+      "default": 0,
+      "validators": [
+        { "type": "required", "description": "企画参加人数は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_attendee_female",
+      "type": "number",
+      "title": "企画参加人数 (女性)",
+      "note": "企画に参加する女性の人数を入力してください",
+      "default": 0,
+      "validators": [
+        { "type": "required", "description": "企画参加人数は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_attendee_guest",
+      "type": "number",
+      "title": "企画参加人数 (ゲスト)",
+      "note": "企画に参加するゲストの人数を入力してください。ゲストの定義については、企画実施要項をご覧ください",
+      "default": 0,
+      "validators": [
+        { "type": "required", "description": "企画参加人数は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_detail",
+      "type": "paragraph",
+      "title": "企画概要",
+      "note": "企画の内容について、決定している範囲でなるべく詳細に入力してください。この内容が一般に公開されることはありません",
+      "validators": [
+        { "type": "required", "description": "企画概要は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "project_information",
+      "type": "paragraph",
+      "title": "企画説明",
+      "note": "公式パンフレットや Web サイトなどに使用する企画の説明文を入力してください",
+      "validators": [
+        { "type": "required", "description": "企画説明は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "payment",
+      "type": "radio",
+      "title": "金銭授受の有無",
+      "choices": [
+        { "value": "no", "label": "金銭授受を行わない" },
+        { "value": "yes", "label": "金銭授受を行う" }
+      ],
+      "validators": [
+        { "type": "required", "description": "金銭授受の有無は必ず入力してください" }
+      ]
+    }
+  ]
 }

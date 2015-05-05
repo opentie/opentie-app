@@ -4,6 +4,7 @@ class API::V1::RegisterController < Grape::API
     params do
     end
     get '/' do
+      redirect_to '/dashboard', with: {} if authenticated?
       {
         account_schema: GlobalSetting.get(:account_schema)
       }
@@ -26,11 +27,8 @@ class API::V1::RegisterController < Grape::API
       requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
-      if authenticated?
-        status 302
-        header 'X-Location', '/dashboard'
-        next {}
-      end
+      redirect_to '/dashboard', with: {} if authenticated?
+
       confirm_token = Devise.friendly_token
 
       account = Account.create(
@@ -42,6 +40,7 @@ class API::V1::RegisterController < Grape::API
         confirmation_token: confirm_token
       )
       AccountMailer.registration_confirmation(account).deliver
+      authenticate!(account)
       {
         account: account
       }

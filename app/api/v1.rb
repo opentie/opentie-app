@@ -8,6 +8,7 @@ class API::V1 < Grape::API
   default_format :json
 
   helpers API::Auth
+  helpers API::Redirect
 
   helpers do
     def add_response(hash)
@@ -20,11 +21,12 @@ class API::V1 < Grape::API
   end
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
-    error_response(message: "Bad request", status: 400)
+    error_response(message: "Bad Request", status: 400)
   end
 
   rescue_from :all do |e|
-    error_response(message: "Internal server error", status: 500)
+    binding.pry
+    error_response(message: "Internal Server Error", status: 500)
   end
 
   mount RegisterController
