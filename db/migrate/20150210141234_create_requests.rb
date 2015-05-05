@@ -3,9 +3,9 @@ class CreateRequests < ActiveRecord::Migration
     create_table :requests, id: :uuid do |t|
       t.uuid :request_schema_id
       t.uuid :delegate_id
-      
+
       t.json :payload
-      
+
       t.timestamps null: false
     end
 

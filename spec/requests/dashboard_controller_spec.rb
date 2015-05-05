@@ -15,7 +15,7 @@ RSpec.describe API do
 
     it 'GET /api/v1/dashboard' do
       get "/api/v1/dashboard"
-      
+
       json = JSON.parse(response.body)
 
       expect(json).not_to eq(nil)

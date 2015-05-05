@@ -20,7 +20,7 @@ RSpec.describe API do
     # show
     it 'GET /api/v1/projects/:id' do
       get "/api/v1/projects/#{@project.id}"
-      
+
       json = JSON.parse(response.body)
       project = Project.find_by(id: json['project']['id'])
 
@@ -28,7 +28,7 @@ RSpec.describe API do
       expect(json['project']['id']).to eq(@project.id)
 
       expect(response.status).to eq(200)
-      
+
       get "/api/v1/projects/hogehogehoge123123"
       expect(response.status).to eq(404)
     end
@@ -42,7 +42,7 @@ RSpec.describe API do
       expect(json['project_schema']).not_to eq(nil)
       expect(response.status).to eq(200)
     end
-    
+
     # create
     it 'POST /api/v1/projects' do
       params = {
@@ -64,9 +64,9 @@ RSpec.describe API do
     # edit
     it 'GET /api/v1/projects/:id/edit' do
       get "/api/v1/projects/#{@project.id}/edit"
-      
+
       json = JSON.parse(response.body)
-      
+
       expect(json['project_schema']).not_to eq(nil)
       expect(json['project']['id']).to eq(@project.id)
       expect(response.status).to eq(200)
@@ -83,19 +83,19 @@ RSpec.describe API do
       expect {
         put "/api/v1/projects/#{@project.id}", attribute_params
       }.to change(ProjectHistory, :count).by(1)
-      
+
       @project.reload
       json = JSON.parse(response.body)
-      
+
       expect(@project.payload).to eq(attribute_params[:payload])
       expect(response.status).to eq(200)
     end
-    
+
 
     # index
     it 'GET /api/v1/projects/:id/requests/:id/request_schemata/' do
       get "/api/v1/projects/#{@project.id}/request_schemata/"
-      
+
       json = JSON.parse(response.body)
 
       json['request_schemata'].each do |schema|
@@ -118,7 +118,7 @@ RSpec.describe API do
       expect(json['request_schema']['id']).to eq(@request_schema.id)
 
       expect(response.status).to eq(200)
-      
+
       get "/api/v1/projects/#{@project.id}/request_schemata/hogehogehoge123123"
       expect(response.status).to eq(404)
     end
@@ -133,20 +133,20 @@ RSpec.describe API do
       request = Request.find_by(id: json['request']['id'])
 
       expect(request).not_to eq(nil)
-      
+
       expect(response.status).to eq(200)
     end
 
     # new
     it 'GET /api/v1/projects/:id/request_schemata/:id/request/new' do
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/new"
-      
+
       json = JSON.parse(response.body)
       expect(json['request_schema']['id']).to eq(@request_schema.id)
 
       expect(response.status).to eq(200)
     end
-    
+
     # create
     it 'POST /api/v1/projects/:id/request_schemata/:id/request' do
       params = {
@@ -179,24 +179,24 @@ RSpec.describe API do
         payload: { "hogehoge" => "fuga" }
       }
       put "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", update_params
-      
+
       json = JSON.parse(response.body)
       expect(json['request']['status'].to_i).to eq(update_params[:status])
       expect(json['request']['payload']).to eq(update_params[:payload])
 
       expect(response.status).to eq(200)
     end
-    
+
     # delete
     it 'DELETE /api/v1/projects/:id/request_schemata/:id/request' do
       delete "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
-      
+
       json = JSON.parse(response.body)
       request = Request.find_by(id: json['request']['id'])
 
       expect(request.soft_destroyed?).to eq(true)
       expect(response.status).to eq(200)
     end
-    
+
   end
 end

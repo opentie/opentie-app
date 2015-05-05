@@ -42,7 +42,7 @@ class API::V1::RegisterController < Grape::API
         account: account
       }
     end
-    
+
     desc 'GET /api/v1/register/confirm'
     params do
       requires :confirm_token, type: String, desc: 'confirm_token'
@@ -62,4 +62,4 @@ class API::V1::RegisterController < Grape::API
     end
   end
 end
-  
+

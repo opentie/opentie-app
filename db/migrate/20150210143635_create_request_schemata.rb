@@ -4,7 +4,7 @@ class CreateRequestSchemata < ActiveRecord::Migration
       t.uuid :division_id
 
       t.json :payload
-      
+
       t.timestamps null: false
     end
     add_index :request_schemata, :division_id

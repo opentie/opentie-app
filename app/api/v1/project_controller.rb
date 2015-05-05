@@ -1,5 +1,5 @@
 class API::V1::ProjectController < Grape::API
-  
+
   resource :projects do
     helpers do
       def fulltime_params
@@ -53,7 +53,7 @@ class API::V1::ProjectController < Grape::API
         project_schema: global_setting
       }
     end
-    
+
     desc 'get /api/v1/projects/:id/edit'
     params do
       requires :id, type: String, desc: 'project_id'
@@ -67,7 +67,7 @@ class API::V1::ProjectController < Grape::API
         project_schema: global_setting
       }
     end
-    
+
     desc 'GET /api/v1/projects/:id'
     params do
       requires :id, type: String, desc: 'project_id'
@@ -79,7 +79,7 @@ class API::V1::ProjectController < Grape::API
         project: project.attributes
       }
     end
-    
+
     desc 'PUT /api/v1/projects/:id'
     params do
       requires :id, type: String, desc: 'project_id'
@@ -93,14 +93,14 @@ class API::V1::ProjectController < Grape::API
         project: project.reload
       }
     end
-    
+
     route_param :project_id do
       resource :invitations do
         before do
           @project = Project.find_by(id: params[:project_id])
           raise ActiveRecord::RecordNotFound if @project.nil?
         end
-        
+
         after_validation do
           add_response({project: @project})
         end
@@ -170,43 +170,16 @@ class API::V1::ProjectController < Grape::API
               @request_schema = RequestSchema.find_by(id: params[:request_schema_id])
               raise ActiveRecord::RecordNotFound if @request_schema.nil?
             end
-            
+
             after_validation do
               add_response({request_schema: @request_schema})
             end
-            
-            desc 'POST /api/v1/projects/:id/request_schemata/:id/request'
-            params do
-              requires :payload, type: Hash, desc: 'payloads'
-            end
-            post '/' do
-              delegate = Delegate.find_by(
-                project_id: params[:project_id],
-                account_id: current_user.id
-              )
-              request = Request.create(
-                delegate_id: delegate.id,
-                request_schema_id: params[:request_schema_id],
-                payload: params[:payload]
-              )
-              {
-                request: request
-              }
-            end
-            
+
             desc 'POST /api/v1/projects/:id/request_schemata/:id/request/validate'
             params do
             end
             post '/validate' do
               {}
-            end
-
-            desc 'GET /api/v1/projects/:id/request_schemata/:id/request/new'
-            params do
-            end
-            get '/new' do
-              {
-              }
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'
@@ -217,7 +190,6 @@ class API::V1::ProjectController < Grape::API
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
                 .first
-              raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request
               }
@@ -231,7 +203,6 @@ class API::V1::ProjectController < Grape::API
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
                 .first
-              raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request
               }
@@ -239,7 +210,7 @@ class API::V1::ProjectController < Grape::API
 
             desc 'PUT /api/v1/projects/:id/request_schemata/:id/request'
             params do
-              requires :payload, type: Hash, desc: "update pyaload"
+              requires :payload, type: Hash, desc: "update payload"
               requires :status, type: Integer, desc: "update status"
             end
             put '/' do
@@ -247,35 +218,32 @@ class API::V1::ProjectController < Grape::API
                 .where("delegates.project_id = ?", params[:project_id])
                 .where(request_schema_id: params[:request_schema_id])
                 .first
-              raise ActiveRecord::RecordNotFound if request.nil?
-              request.update(
-                payload: params[:payload],
-                status: params[:status]
-              )
+
+              if request.nil?
+                delegate = Delegate.find_by(
+                  project_id: params[:project_id],
+                  account_id: current_user.id
+                )
+                request = Request.create(
+                  delegate_id: delegate.id,
+                  request_schema_id: params[:request_schema_id],
+                  payload: params[:payload],
+                  status: params[:status],
+                )
+              else
+                request.update(
+                  payload: params[:payload],
+                  status: params[:status]
+                )
+              end
+
               {
                 request: request.reload
               }
             end
-
-            desc 'DELETE /api/v1/projects/:id/request_schemata/:id/request'
-            params do
-            end
-            delete '/' do
-              request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", params[:project_id])
-                .where(request_schema_id: params[:request_schema_id])
-                .first
-              raise ActiveRecord::RecordNotFound if request.nil?
-              request.soft_destroy!
-              {
-                request: request
-              }
-            end
-            
           end
         end
       end
     end
-    
   end
 end

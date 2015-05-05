@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class Account < ActiveRecord::Base
   include WithClassName
-  
+
   has_secure_password
 
   has_many :projects, through: :invitations

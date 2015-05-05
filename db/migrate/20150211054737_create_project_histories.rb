@@ -4,7 +4,7 @@ class CreateProjectHistories < ActiveRecord::Migration
       t.uuid   :project_id
       t.string :field
       t.text   :value
-      
+
       t.timestamps null: false
     end
 

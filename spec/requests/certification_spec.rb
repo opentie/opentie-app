@@ -20,7 +20,7 @@ RSpec.describe API do
         password: "fakepass"
       }
     end
-    
+
     it 'failed login test' do
       post @path, @another_params
       json = JSON.parse(response.body)
@@ -41,7 +41,7 @@ RSpec.describe API do
       expect(json['message']).to eq('Accept authenticate')
       expect(response.status).to eq(201)
     end
-    
+
     it 'Relogin test' do
       post @path, @login_params
       post @path, @login_params

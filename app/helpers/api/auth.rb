@@ -1,9 +1,9 @@
 module API::Auth
-  
+
   def session
     env[Rack::Session::Abstract::ENV_SESSION_KEY]
   end
-  
+
   def authenticated?
     !current_user.nil? && email_confirmed?
   end
@@ -11,7 +11,7 @@ module API::Auth
   def authenticated_with_not_included_confirm?
     !current_user.nil?
   end
-  
+
   def authenticate!(account)
     session[:account_id] = account.id
     session[:expires_at] = Time.zone.now + 60.minutes

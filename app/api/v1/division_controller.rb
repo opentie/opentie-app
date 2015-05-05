@@ -1,5 +1,5 @@
 class API::V1::DivisionController < Grape::API
-  
+
   resource :divisions do
     helpers do
       def fulltime_params
@@ -21,7 +21,7 @@ class API::V1::DivisionController < Grape::API
     after_validation do
       add_response(fulltime_params)
     end
-    
+
     desc 'GET /api/v1/divisions/:id'
     params do
       requires :id, type: String, desc: 'division_id'
@@ -134,7 +134,7 @@ class API::V1::DivisionController < Grape::API
             request_schema: schema.attributes
           }
         end
-        
+
         route_param :request_schema_id do
           resource :requests do
             before do

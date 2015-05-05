@@ -1,9 +1,9 @@
 # coding: utf-8
 
 unless Rails.env.production?
-  puts "initialize sequence" 
+  puts "initialize sequence"
   begin
-    Project.initialize_number(20)  
+    Project.initialize_number(20)
   rescue => e
     Project.connection.execute "CREATE SEQUENCE projects_number_seq INCREMENT BY 1 START WITH 20"
   end
@@ -14,7 +14,7 @@ unless Rails.env.production?
     json_data = open(file_path) do |io|
       JSON.load(io)
     end
-    
+
     GlobalSetting.create(
       name: json_data['name'],
       value: json_data['payload'].to_json
@@ -59,7 +59,7 @@ if Rails.env.test?
       )
     end
   end
-  
+
   puts "create Roles"
   ActiveRecord::Base.transaction do
     Division.all.each do |division|
@@ -71,7 +71,7 @@ if Rails.env.test?
       end
     end
   end
-  
+
   puts "create GlobalSetting"
   ActiveRecord::Base.transaction do
     %w(global14 setting15).each do |name|
@@ -81,7 +81,7 @@ if Rails.env.test?
       )
     end
   end
-  
+
   puts "create RequestSchemata"
   ActiveRecord::Base.transaction do
     Division.all.each do |division|
@@ -187,7 +187,7 @@ if Rails.env.development?
       )
     end
   end
-  
+
   puts "create Roles"
   ActiveRecord::Base.transaction do
     Division.all.each do |division|
@@ -199,7 +199,7 @@ if Rails.env.development?
       end
     end
   end
-  
+
   puts "create Delegate"
   ActiveRecord::Base.transaction do
     Project.all.each do |project|
