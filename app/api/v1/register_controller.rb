@@ -1,9 +1,9 @@
 class API::V1::RegisterController < Grape::API
   resource :register do
-    desc 'GET /api/v1/register/new'
+    desc 'GET /api/v1/register'
     params do
     end
-    get '/new' do
+    get '/' do
       {
         account_schema: GlobalSetting.get(:account_schema)
       }
@@ -26,7 +26,11 @@ class API::V1::RegisterController < Grape::API
       requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
-      next redirect '/api/v1/dashboard' if authenticated?
+      if authenticated?
+        status 302
+        header 'X-Location', '/dashboard'
+        next {}
+      end
       confirm_token = Devise.friendly_token
 
       account = Account.create(
