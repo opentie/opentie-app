@@ -23,7 +23,7 @@ class API::V1::RegisterController < Grape::API
       requires :email, type: String, desc: 'email'
       requires :password, type: String, desc: 'password'
       requires :password_confirmation, type: String, desc: 'password_confirmation'
-      #requires :payload, type: Hash, desc: 'payload'
+      requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
       next redirect '/api/v1/dashboard' if authenticated?
@@ -34,7 +34,7 @@ class API::V1::RegisterController < Grape::API
         email: params[:email],
         password: params[:password],
         password_confirmation: params[:password_confirmation],
-        # payload: params[:payload],
+        payload: params[:payload],
         confirmation_token: confirm_token
       )
       AccountMailer.registration_confirmation(account).deliver
