@@ -95,6 +95,45 @@ class API::V1::ProjectController < Grape::API
     end
     
     route_param :project_id do
+      resource :invitations do
+        before do
+          @project = Project.find_by(id: params[:project_id])
+          raise ActiveRecord::RecordNotFound if @project.nil?
+        end
+        
+        after_validation do
+          add_response({project: @project})
+        end
+
+        desc 'GET /api/v1/projects/:id/invitations/new'
+        params do
+        end
+        get '/new' do
+          {
+          }
+        end
+
+        desc 'POST /api/v1/projects/:id/invitations/'
+        params do
+          requires :email, type: String, desc: "invited email address"
+        end
+        post '/' do
+          Invitation.create(
+            project_id: params[:project_id],
+            invited_email: params[:email]
+          )
+          AccountMailer.invitation(params[:email], current_user).deliver
+          {}
+        end
+
+        desc 'DELETE /api/v1/projects/:id/invitations/:id/'
+        params do
+        end
+        delete '/' do
+          {}
+        end
+      end
+
       resource :request_schemata do
         before do
           @project = Project.find_by(id: params[:project_id])

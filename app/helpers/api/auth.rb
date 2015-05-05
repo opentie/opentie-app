@@ -8,6 +8,10 @@ module API::Auth
     !current_user.nil? && email_confirmed?
   end
 
+  def authenticated_with_not_included_confirm?
+    !current_user.nil?
+  end
+  
   def authenticate!(account)
     session[:account_id] = account.id
     session[:expires_at] = Time.zone.now + 60.minutes
