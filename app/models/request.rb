@@ -1,6 +1,7 @@
 class Request < ActiveRecord::Base
   soft_deletable
   include WithClassName
+  include Formalizr::Querier
 
   STATUS_ROLE = {
     0 => :requested,

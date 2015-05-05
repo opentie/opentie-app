@@ -23,7 +23,7 @@
       "type": "table",
       "title": "調理者の氏名 (カタカナ)",
       "note": "調理に携わる予定の方を全て入力してください",
-      "children": [
+      "columns": [
         {
           "name": "name",
           "type": "text",
