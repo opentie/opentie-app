@@ -4,6 +4,8 @@ class Account < ActiveRecord::Base
   
   has_secure_password
 
+  has_many :projects, through: :invitations
+
   has_many :delegates, dependent: :destroy
   has_many :projects, through: :delegates
   accepts_nested_attributes_for :projects

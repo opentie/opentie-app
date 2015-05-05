@@ -1,6 +1,7 @@
 class Project < ActiveRecord::Base
   include WithClassName
 
+  has_many :accounts, through: :invitations
   has_many :project_comments
   has_many :roles, through: :project_comments
   has_many :delegates, dependent: :destroy
