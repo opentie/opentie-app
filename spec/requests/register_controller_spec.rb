@@ -4,8 +4,8 @@ require 'rails_helper'
 RSpec.describe API do
   describe 'Api spec for register controller: ' do
 
-    it 'GET /api/v1/register/new' do
-      get "/api/v1/register/new"
+    it 'GET /api/v1/register' do
+      get "/api/v1/register"
 
       json = JSON.parse(response.body)
 
