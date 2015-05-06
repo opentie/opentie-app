@@ -244,11 +244,22 @@ class API::V1::ProjectController < Grape::API
                 delegate = current_user.delegates.find_by(
                   project_id: @project.id
                 )
-                delegate.requests << request =  Request.create(
-                  request_schema_id: @request_schema.id,
-                  payload: params[:payload],
-                  status: params[:status],
-                )
+                begin
+                  request_schema = @request_schema.payload
+                  schema = Formalizr::FormSchema.new(request_schema['payload'])
+                  payload = schema.normalize(params[:payload])
+
+                  delegate.requests << request =  Request.create(
+                    request_schema_id: @request_schema.id,
+                    payload: payload,
+                    status: params[:status],
+                  )
+                rescue Formalizr::InvalidInput => err
+                  next {
+                    validities: err.validities,
+                    project_schema: request_schema
+                  }
+                end
               else
                 request.update(
                   payload: params[:payload],

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Account < ActiveRecord::Base
   include WithClassName
+  include Formalizr::Querier
 
   has_secure_password
 

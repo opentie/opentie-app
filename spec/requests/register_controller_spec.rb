@@ -19,7 +19,16 @@ RSpec.describe API do
         email: "test@example.com",
         password: "password",
         password_confirmation: "password",
-        payload: { "hogehoge" => "fuga" }
+        payload: {
+          name: "よみがな",
+          email: "test@example.com",
+          password: "password",
+          password_confirmation: "password",
+          name_kana: "ひらがな",
+          college: "人文学類",
+          grade: "D2",
+          phone: "00-00000-000"
+        }
       }
       expect {
         post "/api/v1/register/", params

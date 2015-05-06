@@ -27,23 +27,34 @@ class API::V1::RegisterController < Grape::API
       requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
-      redirect_to '/dashboard', with: {} if authenticated?
+      begin
+        redirect_to '/dashboard', with: {} if authenticated?
+        confirm_token = Devise.friendly_token
 
-      confirm_token = Devise.friendly_token
+        account_schema = GlobalSetting.get('account_schema')
+        schema =  Formalizr::FormSchema.new(account_schema.value)
+        payload = schema.normalize(params[:payload])
 
-      account = Account.create(
-        name: params[:name],
-        email: params[:email],
-        password: params[:password],
-        password_confirmation: params[:password_confirmation],
-        payload: params[:payload],
-        confirmation_token: confirm_token
-      )
-      AccountMailer.registration_confirmation(account).deliver
-      authenticate!(account)
-      {
-        account: account
-      }
+        account = Account.create(
+          name: payload['name'],
+          email: payload['email'],
+          password: payload['password'],
+          password_confirmation: payload['password_confirmation'],
+          payload: payload,
+          confirmation_token: confirm_token
+        )
+
+        AccountMailer.registration_confirmation(account).deliver
+        authenticate!(account)
+        {
+          account: account
+        }
+      rescue Formalizr::InvalidInput => err
+        {
+          validities: err.validities,
+          project_schema: account_schema
+        }
+      end
     end
 
     desc 'GET /api/v1/register/confirm'
@@ -65,4 +76,3 @@ class API::V1::RegisterController < Grape::API
     end
   end
 end
-
