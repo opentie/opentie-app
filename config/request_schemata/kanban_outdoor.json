@@ -10,6 +10,10 @@
       "choices": [
         { "value": "yes", "label": "使用する" },
         { "value": "no", "label": "使用しない" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ず選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     },
     {
@@ -20,6 +24,10 @@
       "choices": [
         { "value": "yes", "label": "使用する" },
         { "value": "no", "label": "使用しない" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ず選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     },
     {
