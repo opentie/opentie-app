@@ -13,7 +13,7 @@
       ],
       "validators": [
         { "type": "required", "description": "企画申請をするには、募集要項を読んでいる必要があります" },
-        { "type": "pattern", "condition": "^yes$", "description": "企画申請をするには、募集要項を読んでいる必要があります" }
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     },
     {
@@ -32,7 +32,7 @@
       ],
       "validators": [
         { "type": "required", "description": "企画区分は必ず選択してください" },
-        { "type": "validchoice", "description": "選択肢が無効です" }
+        { "type": "validchoice", "description": "いずれかを選択してください" }
       ]
     },
     {
@@ -46,7 +46,8 @@
         { "value": "yes", "label": "参加する" }
       ],
       "validators": [
-        { "type": "required", "description": "芸術祭への参加の有無は必ず選択してください" }
+        { "type": "required", "description": "芸術祭への参加の有無は必ず選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     },
     {
@@ -149,7 +150,8 @@
         { "value": "yes", "label": "金銭授受を行う" }
       ],
       "validators": [
-        { "type": "required", "description": "金銭授受の有無は必ず入力してください" }
+        { "type": "required", "description": "金銭授受の有無は必ず入力してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     }
   ]
