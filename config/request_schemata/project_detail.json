@@ -1,0 +1,35 @@
+{
+  "division_name": "総務局",
+  "name": "企画希望内容申請",
+  "payload": [
+    {
+      "name": "project_detail",
+      "type": "select",
+      "title": "企画希望実施内容",
+      "note": "希望する企画の実施内容を選択してください",
+      "default": "main_meal",
+      "choices": [
+        { "value": "main_meal",              "label": "主食（食品）" },
+        { "value": "light_meal",             "label": "軽食（食品）" },
+        { "value": "drink_meal",             "label": "ドリンク（食品）" },
+        { "value": "suites_meal",            "label": "スイーツ（食品）" },
+        { "value": "tea_drinking_meal",      "label": "喫茶（食品）" },
+        { "value": "other_meal",             "label": "その他（食品）" },
+        { "value": "display_not_meal",       "label": "展示（非食品）" },
+        { "value": "performance_not_meal",   "label": "パフォーマンス（非食品）" },
+        { "value": "join_not_meal",          "label": "参加型（非食品）" },
+        { "value": "other_not_meal",         "label": "その他（非食品）" }
+      ],
+      "validators": [
+        { "type": "required", "description": "希望実施内容は必ず選択してください" },
+        { "type": "validchoice", "description": "いずれかを選択してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}

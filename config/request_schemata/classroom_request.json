@@ -1,0 +1,50 @@
+{
+  "division_name": "総務局",
+  "name": "教室規模申請",
+  "payload": [
+     {
+      "name": "fixation_classroom",
+      "type": "radio",
+      "title": "固定教室の使用可否",
+      "note": "机椅子が固定されている教室の使用が可能な場合は「可」を選択してください",
+      "default": "yes",
+      "choices": [
+        { "value": "no", "label": "不可" },
+        { "value": "yes", "label": "可" }
+      ],
+      "validators": [
+        { "type": "required", "description": "固定教室の可否については必ず選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "scale_classroom",
+      "type": "select",
+      "title": "教室規模",
+      "note": "希望する教室の規模を選択してください",
+      "default": "one_twenty",
+      "choices": [
+        { "value": "under_twenty",        "label": "20人以下" },
+        { "value": "twenty_thirty",       "label": "20〜30人規模" },
+        { "value": "thirty_forty",        "label": "30〜40人規模" },
+        { "value": "forty_fifty",         "label": "40〜50人規模" },
+        { "value": "fifty_sixty",         "label": "50〜60人規模" },
+        { "value": "sixty_seventy",       "label": "60〜70人規模" },
+        { "value": "seventy_eighty",      "label": "70〜80人規模" },
+        { "value": "eighty_ninety",       "label": "80〜90人規模" },
+        { "value": "ninety_onehundred",   "label": "90〜100人規模" },
+        { "value": "onehandred_over",     "label": "100人以上" }
+      ],
+      "validators": [
+        { "type": "required", "description": "教室規模は必ず選択してください" },
+        { "type": "validchoice", "description": "いずれかを選択してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}
