@@ -245,6 +245,9 @@ if Rails.env.development?
       JSON.load(io)
     end
 
+    puts "validating #{json_data['name']}"
+    Formalizr::FormSchema.new(json_data['payload'])
+
     RequestSchema.create(
       division_id: Division.find_by(name: json_data['division_name']).id,
       name: json_data['name'],
