@@ -14,14 +14,14 @@
           "title":"商品名",
           "note":"アコムレンタルの商品名",
           "validators": [
-            { "type": "required", "discription": "必須"},
+            { "type": "required", "discription": "必須"}
           ]
         },
         {
           "name":"code",
           "type":"text",
           "title":"商品番号",
-          "note":"アコムレンタルの商品番号"
+          "note":"アコムレンタルの商品番号",
           "validators": [
             { "type": "required", "discription": "必須"},
             { "type": "pattern", "condition": "\\d+", "description": "半角数字で入力してください" }
@@ -30,10 +30,10 @@
         {
           "name":"number",
           "type":"number",
-          "title":"個数"
+          "title":"個数",
           "validators": [
             { "type": "required", "discription": "必須"},
-            { "type": "number", "discription": "半角数字で入力してください"},
+            { "type": "number", "discription": "半角数字で入力してください"}
           ]
         }
       ],
