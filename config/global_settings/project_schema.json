@@ -17,6 +17,21 @@
       ]
     },
     {
+      "name": "project_member",
+      "type": "radio",
+      "title": "企画構成員について",
+      "note": "企画構成員は全員筑波大学の構成員ですか？",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "いいえ" },
+        { "value": "yes", "label": "はい" }
+      ],
+      "validators": [
+        { "type": "required", "description": "企画構成員については必ず選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
       "name": "project_type",
       "type": "select",
       "title": "企画区分",
@@ -139,6 +154,147 @@
       "note": "公式パンフレットや Web サイトなどに使用する企画の説明文を入力してください",
       "validators": [
         { "type": "required", "description": "企画説明は必ず入力してください" }
+      ]
+    },
+    {
+      "name": "attend_eve",
+      "type": "radio",
+      "title": "雙峰祭前夜祭への参加",
+      "note": "前夜祭へ参加できるのは屋外実施の一般企画、学研企画と一般ステージ企画のみになります",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "実施しない" },
+        { "value": "yes", "label": "実施する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "attend_first",
+      "type": "radio",
+      "title": "雙峰祭一日目への参加",
+      "note": "実施を希望する場合は「実施する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "実施しない" },
+        { "value": "yes", "label": "実施する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "attend_second",
+      "type": "radio",
+      "title": "雙峰祭二日目への参加",
+      "note": "実施を希望する場合は「実施する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "実施しない" },
+        { "value": "yes", "label": "実施する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "be_cook",
+      "type": "radio",
+      "title": "調理の有無",
+      "note": "企画で調理を実施する場合は「調理をする」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "調理しない" },
+        { "value": "yes", "label": "調理する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "money_transfer",
+      "type": "radio",
+      "title": "金銭授受の有無",
+      "note": "金銭の授受を行う場合は「金銭授受あり」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "金銭授受なし" },
+        { "value": "yes", "label": "金銭授受あり" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "goods_payment",
+      "type": "radio",
+      "title": "企画団体物品支給制度（企団給）",
+      "note": "企団給を申請する場合には「申請する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "申請しない" },
+        { "value": "yes", "label": "申請する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "project_notice",
+      "type": "paragraph",
+      "title": "特記事項・その他要望",
+      "note": "特記事項などがある場合には記載してください（例： 音楽を流す, 大型の器機や動物を使用する, 発電機を使用する, 物品協賛を受ける, 屋外で調理以外の目的で火気を使用する, 学外からゲストを呼ぶ（誰を呼ぶのかまで明記してください））",
+    },
+    {
+      "name": "large_power",
+      "type": "radio",
+      "title": "1600W以上の電力使用",
+      "note": "大電力（1600W以上）を使用する場合は「使用する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "使用しない" },
+        { "value": "yes", "label": "使用する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "charcoal_fire",
+      "type": "radio",
+      "title": "炭火の使用",
+      "note": "炭火を使用する場合には「使用する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "使用しない" },
+        { "value": "yes", "label": "使用する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "megavolume",
+      "type": "radio",
+      "title": "大音量の有無",
+      "note": "企画にて大音量を出す場合には「大音量あり」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "大音量なし" },
+        { "value": "yes", "label": "大音量あり" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
       ]
     },
     {
