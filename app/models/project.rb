@@ -51,7 +51,7 @@ class Project < ActiveRecord::Base
     value = self.delegates.count
 
     unless (min_length..max_length).cover? value
-      logger.warn "Number of delegate is out of range: #{value}"
+      Rails.logger.warn "Number of delegate is out of range: #{value}"
       false
     else
       true
