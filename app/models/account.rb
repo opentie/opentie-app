@@ -4,6 +4,7 @@ class Account < ActiveRecord::Base
   include Formalizr::Querier
 
   has_secure_password
+  has_many :recovery_tokens
 
   has_many :invitations
 
