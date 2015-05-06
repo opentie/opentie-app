@@ -89,7 +89,9 @@ class API::V1::ProjectController < Grape::API
     get '/:id' do
       project = current_user.projects.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if project.nil?
+
       {
+        following_member: project.following_member?,
         project: project.attributes
       }
     end

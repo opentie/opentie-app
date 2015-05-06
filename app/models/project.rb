@@ -26,13 +26,28 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def following_member?
+    # 0: false, 1: Invitaion + member => true, 2: true
+    following_member_count = GlobalSetting.get("application").value['project_member'].to_i
+    invited_count = self.invitations.where(account_id: nil).count
+    member_count = self.delegates.count
+
+    if member_count >= following_member_count
+      return 2
+    elsif member_count + invited_count > following_member_count
+      return 1
+    else
+      return 0
+    end
+  end
+
   def self.initialize_number(val)
     Project.connection.execute "SELECT setval('projects_number_seq', #{val})"
   end
 
   def complete?
-    min_length = GlobalSetting.get 'project_schema.delegates_count_min'
-    max_length = GlobalSetting.get 'project_schema.delegates_count_max'
+    min_length = GlobalSetting.get('delegates_count_min').to_i
+    max_length = GlobalSetting.get('delegates_count_max').to_i
     value = self.delegates.count
 
     unless (min_length..max_length).cover? value
