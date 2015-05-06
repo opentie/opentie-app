@@ -12,6 +12,10 @@ class API::V1::ProjectController < Grape::API
           my_request_schemata: request_schemata
         }
       end
+
+      def accessible_project?(project)
+        current_user.projects.include? project
+      end
     end
 
     before do
@@ -63,7 +67,7 @@ class API::V1::ProjectController < Grape::API
       requires :id, type: String, desc: 'project_id'
     end
     get '/:id/edit' do
-      project = Project.find_by(id: params[:id])
+      project = current_user.projects.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if project.nil?
       global_setting = GlobalSetting.get(:project_schema)
       {
@@ -77,7 +81,7 @@ class API::V1::ProjectController < Grape::API
       requires :id, type: String, desc: 'project_id'
     end
     get '/:id' do
-      project = Project.find_by(id: params[:id])
+      project = current_user.projects.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if project.nil?
       {
         project: project.attributes
@@ -90,7 +94,7 @@ class API::V1::ProjectController < Grape::API
       requires :payload, type: Hash, desc: 'new project'
     end
     put '/:id' do
-      project = Project.find_by(id: params[:id])
+      project = current_user.projects.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if project.nil?
       project.update(payload: params[:payload])
       {
@@ -101,7 +105,7 @@ class API::V1::ProjectController < Grape::API
     route_param :project_id do
       resource :invitations do
         before do
-          @project = Project.find_by(id: params[:project_id])
+          @project = current_user.projects.find_by(id: params[:project_id])
           raise ActiveRecord::RecordNotFound if @project.nil?
         end
 
@@ -123,7 +127,7 @@ class API::V1::ProjectController < Grape::API
         end
         post '/' do
           Invitation.create(
-            project_id: params[:project_id],
+            project_id: @project.id,
             invited_email: params[:email]
           )
           AccountMailer.invitation(params[:email], current_user).deliver
@@ -134,7 +138,7 @@ class API::V1::ProjectController < Grape::API
         params do
         end
         delete '/:id' do
-          invitation = Invitation.find_by(id: params[:id])
+          invitation = @project.invitations.find_by(id: params[:id])
           invitation.destroy
           {}
         end
@@ -142,7 +146,7 @@ class API::V1::ProjectController < Grape::API
 
       resource :request_schemata do
         before do
-          @project = Project.find_by(id: params[:project_id])
+          @project = current_user.projects.find_by(id: params[:project_id])
           raise ActiveRecord::RecordNotFound if @project.nil?
         end
 
@@ -193,7 +197,7 @@ class API::V1::ProjectController < Grape::API
             end
             get '/edit' do
               request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", params[:project_id])
+                .where("delegates.project_id = ?", @project.id)
                 .where(request_schema_id: params[:request_schema_id])
                 .first
               {
@@ -206,7 +210,7 @@ class API::V1::ProjectController < Grape::API
             end
             get '/' do
               request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", params[:project_id])
+                .where("delegates.project_id = ?", @project.id)
                 .where(request_schema_id: params[:request_schema_id])
                 .first
               {
@@ -221,17 +225,15 @@ class API::V1::ProjectController < Grape::API
             end
             put '/' do
               request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", params[:project_id])
+                .where("delegates.project_id = ?", @project.id)
                 .where(request_schema_id: params[:request_schema_id])
                 .first
 
               if request.nil?
-                delegate = Delegate.find_by(
-                  project_id: params[:project_id],
-                  account_id: current_user.id
+                delegate = current_user.delegates.find_by(
+                  project_id: @project.id
                 )
-                request = Request.create(
-                  delegate_id: delegate.id,
+                delegates.requests << Request.create(
                   request_schema_id: params[:request_schema_id],
                   payload: params[:payload],
                   status: params[:status],
