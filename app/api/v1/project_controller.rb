@@ -223,6 +223,16 @@ class API::V1::ProjectController < Grape::API
               requires :status, type: Integer, desc: "update status"
             end
             put '/' do
+              unless @request_schema.deadline_at.nil?
+                if @request_schema.deadline_at < Time.zone.now
+                  next {
+                    deadline: true,
+                    request: { payload: params[:payload] },
+                    request_schema: @request_schema
+                  }
+                end
+              end
+
               if params[:status] == 0
                 begin
                   schema = Formalizr::FormSchema.new(@request_schema.payload)
@@ -231,7 +241,7 @@ class API::V1::ProjectController < Grape::API
                   next {
                     validities: err.validities,
                     request: { payload: params[:payload] },
-                    project_schema: @request_schema
+                    request_schema: @request_schema
                   }
                 end
               else

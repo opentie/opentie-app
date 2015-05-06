@@ -203,11 +203,35 @@ RSpec.describe API do
            name:  "upper5string"
         }
       }
+
       put "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", update_params
 
       json = JSON.parse(response.body)
       expect(json['request']['status'].to_i).to eq(update_params[:status])
       expect(json['request']['payload'].deep_symbolize_keys).to eq(update_params[:payload])
+
+      expect(response.status).to eq(200)
+    end
+
+    # update with deadline
+    it 'PUT /api/v1/projects/:id/request_schemata/:id/request' do
+      request = Request.without_soft_destroyed.joins(:delegate)
+        .where("delegates.project_id = ?", @project.id)
+        .where(request_schema_id: @request_schema.id)
+        .first.destroy
+
+      update_params = {
+        status: 0,
+        payload:{
+           name:  "upper5string"
+        }
+      }
+
+      @request_schema.update(deadline_at: Time.zone.now)
+      put "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request", update_params
+
+      json = JSON.parse(response.body)
+      expect(json['deadline']).to eq(true)
 
       expect(response.status).to eq(200)
     end
