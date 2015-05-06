@@ -32,6 +32,10 @@ class API::V1::ProjectController < Grape::API
         name: params[:name],
         payload: params[:payload]
       )
+      Delegate.create(
+        account_id: current_user.id,
+        project_id: project.id
+      )
       {
         project: project.attributes
       }
