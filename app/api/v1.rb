@@ -25,7 +25,6 @@ class API::V1 < Grape::API
   end
 
   rescue_from :all do |e|
-    binding.pry
     error_response(message: "Internal Server Error", status: 500)
   end
 
