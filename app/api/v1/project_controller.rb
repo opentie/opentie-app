@@ -134,10 +134,13 @@ class API::V1::ProjectController < Grape::API
           requires :email, type: String, desc: "invited email address"
         end
         post '/' do
+          error!('403 Forbidden', 403) if @project.following_member? == 2
+
           Invitation.create(
             project_id: @project.id,
             invited_email: params[:email]
           )
+
           AccountMailer.invitation(params[:email], current_user).deliver
           {}
         end

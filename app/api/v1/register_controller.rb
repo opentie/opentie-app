@@ -60,7 +60,8 @@ class API::V1::RegisterController < Grape::API
         invitation.update(account_id: current_user.id)
         Delegate.create(
           account_id: current_user.id,
-          project_id: invitation.project_id
+          project_id: invitation.project_id,
+          priority: 1 # fix me
         )
       end
 
