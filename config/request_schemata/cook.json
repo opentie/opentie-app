@@ -10,13 +10,20 @@
       "choices": [
         { "value": "yes", "label": "使用する" },
         { "value": "no", "label": "使用しない" }
+      ],
+      "valudators": [
+        { "type": "required", "description": "この選択肢は必須です" },
+        { "type": "validchoice", "description": "必ず選択してください" }
       ]
     },
     {
       "name": "cooking_menus",
       "type": "paragraph",
       "title": "調理品目",
-      "note": "調理品目を具体的に記入してください"
+      "note": "調理品目を具体的に記入してください",
+      "valudators": [
+        { "type": "required", "description": "必ず入力してください" }
+      ]
     },
     {
       "name": "names_of_cooker",
@@ -27,8 +34,15 @@
         {
           "name": "name",
           "type": "text",
-          "title": "氏名 (カタカナ)"
+          "title": "氏名 (カタカナ)",
+          "validators": [
+            { "type": "required", "description": "必ず入力してください" },
+            { "type": "pattern", "condition": "^(:\\p{Katakana}|ー)+$", "description": "氏名はカタカナで入力してください" }
+          ]
         }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ず入力してください" }
       ]
     },
     {
