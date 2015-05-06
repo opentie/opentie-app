@@ -47,7 +47,21 @@ RSpec.describe API do
     it 'POST /api/v1/projects' do
       params = {
         name: "test_project_name",
-        payload: { hoge: "fuga" }
+        payload: {
+          confirm_requirement: 'yes',
+          project_type: 'normal_indoor',
+          attend_geisai: 'yes',
+          name: 'ほげ',
+          project_name_kana: 'ほげ',
+          project_organizer_name: 'ソレイユファンクラブ',
+          project_organizer_name_kana: 'それいゆふぁんくらぶ',
+          project_attendee_male: '1',
+          project_attendee_female: '1',
+          project_attendee_guest: '3',
+          project_detail: 'ほげほげ',
+          project_information: 'ほげほげ',
+          payment: 'no'
+        }
       }
       expect {
         post "/api/v1/projects/", params

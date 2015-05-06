@@ -29,20 +29,30 @@ class API::V1::ProjectController < Grape::API
     desc 'POST /api/v1/projects/'
     params do
       requires :payload, type: Hash
-      requires :name, type: String
     end
     post '/' do
-      project = Project.create(
-        name: params[:name],
-        payload: params[:payload]
-      )
-      Delegate.create(
-        account_id: current_user.id,
-        project_id: project.id
-      )
-      {
-        project: project.attributes
-      }
+      begin
+        project_schema = GlobalSetting.get('project_schema')
+        schema = Formalizr::FormSchema.new(project_schema.value)
+        payload = schema.normalize(params[:payload])
+
+        project = Project.create(
+          name: payload['name'],
+          payload: payload
+        )
+        Delegate.create(
+          account_id: current_user.id,
+          project_id: project.id
+        )
+        {
+          project: project.attributes
+        }
+      rescue Formalizr::InvalidInput => err
+        {
+          validities: err.validities,
+          project_schema: project_schema,
+        }
+      end
     end
 
     desc 'POST /api/v1/projects/validate'
@@ -56,9 +66,9 @@ class API::V1::ProjectController < Grape::API
     params do
     end
     get '/new' do
-      global_setting = GlobalSetting.get(:project_schema)
+      project_schema = GlobalSetting.get(:project_schema)
       {
-        project_schema: global_setting
+        project_schema: project_schema
       }
     end
 

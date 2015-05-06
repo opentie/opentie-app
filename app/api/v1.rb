@@ -17,14 +17,17 @@ class API::V1 < Grape::API
   end
 
   rescue_from ActiveRecord::RecordNotFound do |e|
+    puts e
     error_response(message: "Not found", status: 404)
   end
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
+    puts e
     error_response(message: "Bad Request", status: 400)
   end
 
   rescue_from :all do |e|
+    puts e
     error_response(message: "Internal Server Error", status: 500)
   end
 
