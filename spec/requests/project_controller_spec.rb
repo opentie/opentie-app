@@ -26,7 +26,7 @@ RSpec.describe API do
 
       expect(project).not_to eq(nil)
       expect(json['project']['id']).to eq(@project.id)
-      expect(json['following_member_limit']).to eq(2)
+      expect(json['following_member']).to eq(2)
 
       expect(response.status).to eq(200)
 
