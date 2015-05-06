@@ -3,12 +3,52 @@
   "payload": [
     {
       "type" : "text",
+      "name" : "name",
+      "note" : "氏名を入力してください",
+      "title" : "氏名",
+      "validators": [
+        { "type": "required", "description": "必須" },
+        { "type": "minlength", "condition": "1", "description": "1文字以上で入力してください" }
+      ]
+    },
+    {
+      "type" : "text",
+      "name" : "email",
+      "note" : "メールアドレスを入力してください",
+      "title" : "メールアドレス",
+      "validators": [
+        { "type": "required", "description": "必須" },
+        { "type": "pattern", "condition": "@", "description": "" }
+      ]
+    },
+    {
+      "type" : "text",
+      "name" : "password",
+      "note" : "パスワードを入力してください",
+      "title" : "パスワード",
+      "validators": [
+        { "type": "required", "description": "必須" },
+        { "type": "minlength", "condition": "8", "description": "8文字以上で入力してください" }
+      ]
+    },
+    {
+      "type" : "text",
+      "name" : "password_confirmation",
+      "note" : "再度パスワードを入力してください",
+      "title" : "パスワード（確認）",
+      "validators": [
+        { "type": "required", "description": "必須" },
+        { "type": "minlength", "condition": "8", "description": "8文字以上で入力してください" }
+      ]
+    },
+    {
+      "type" : "text",
       "name" : "name_kana",
       "note" : "氏名のよみがなを入力してください",
       "title" : "氏名 (かな)",
       "validators": [
         { "type": "required", "description": "必須" },
-        { "type": "pattern", "condition": "^(:\\p{Hiragana}|ー)+$", "description": "ひらがなで書いてください" }
+        { "type": "pattern", "condition": "^(\\p{Hiragana}|ー)+$", "description": "ひらがなで書いてください" }
       ]
     },
     {
@@ -198,7 +238,7 @@
       "name" : "phone",
       "validators": [
         { "type": "required", "description": "必須" },
-        { "type": "patten", "condition": "^(:\\d|-)+$", "description": "半角数字で入力してください" }
+        { "type": "pattern", "condition": "^((\\d+)-?)*\\d$", "description": "半角数字で入力してください" }
       ]
     }
   ]
