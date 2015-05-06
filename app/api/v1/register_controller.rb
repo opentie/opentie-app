@@ -41,7 +41,7 @@ class API::V1::RegisterController < Grape::API
         {
           validities: err.validities,
           account: { payload:  params[:payload] },
-          project_schema: account_schema
+          account_schema: account_schema
         }
       end
     end
