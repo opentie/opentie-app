@@ -1,0 +1,50 @@
+{
+  "division_name": "総務局",
+  "name": "屋内企画実施場所申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T00:00:00+09:00",
+  "requestable": {
+    "type": "infix",
+    "operator": "exists_equal",
+    "left": {
+      "type": "literal",
+      "literal": ["normal_indoor", "academic_indoor"]
+    },
+    "right":{
+      "type": "field",
+      "field": "project_type"
+    }
+  },
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
+  "payload": [
+    {
+      "name": "project_place",
+      "type": "select",
+      "title": "企画希望実施場所",
+      "note": "企画を実施する希望の場所を選択してください",
+      "default": "normal",
+      "choices": [
+        { "value": "none",                 "label": "指定なし" },
+        { "value": "unsettled",            "label": "X エリア未確定" },
+        { "value": "first_indoor",         "label": "第一エリア（屋内）" },
+        { "value": "second_third_indoor",  "label": "第二・第三エリア（屋内）" },
+        { "value": "hall_indoor",          "label": "会館エリア（屋内）" },
+        { "value": "physical_art_indoor",  "label": "体芸エリア（屋内）" },
+        { "value": "move",                 "label": "移動企画" }
+      ],
+      "validators": [
+        { "type": "required", "description": "希望実施場所は必ず選択してください" },
+        { "type": "validchoice", "description": "いずれかを選択してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}
