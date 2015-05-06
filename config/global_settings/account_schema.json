@@ -28,7 +28,7 @@
       "title" : "メールアドレス",
       "validators": [
         { "type": "required", "description": "必須" },
-        { "type": "pattern", "condition": "@", "description": "" }
+        { "type": "pattern", "condition": "@", "description": "正しいメールアドレスを入力してください" }
       ]
     },
     {
