@@ -11,7 +11,7 @@
         { "value": "yes", "label": "使用する" },
         { "value": "no", "label": "使用しない" }
       ],
-      "valudators": [
+      "validators": [
         { "type": "required", "description": "この選択肢は必須です" },
         { "type": "validchoice", "description": "必ず選択してください" }
       ]
