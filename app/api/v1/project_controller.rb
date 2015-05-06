@@ -233,7 +233,7 @@ class API::V1::ProjectController < Grape::API
                 delegate = current_user.delegates.find_by(
                   project_id: @project.id
                 )
-                delegates.requests << Request.create(
+                delegate.requests << Request.create(
                   request_schema_id: @request_schema.id,
                   payload: params[:payload],
                   status: params[:status],
