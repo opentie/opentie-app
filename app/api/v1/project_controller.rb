@@ -257,6 +257,7 @@ class API::V1::ProjectController < Grape::API
                 rescue Formalizr::InvalidInput => err
                   next {
                     validities: err.validities,
+                    request: { payload: params[:payload] },
                     project_schema: request_schema
                   }
                 end

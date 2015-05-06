@@ -52,6 +52,7 @@ class API::V1::RegisterController < Grape::API
       rescue Formalizr::InvalidInput => err
         {
           validities: err.validities,
+          account: { payload: { params[:payload] } }
           project_schema: account_schema
         }
       end
