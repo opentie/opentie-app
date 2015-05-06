@@ -1,6 +1,24 @@
 {
   "division_name": "総務局",
   "name": "教室規模申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T00:00:00+09:00",
+  "requestable": {
+    "type": "infix",
+    "operator": "exists_equal",
+    "left": {
+      "type": "literal",
+      "literal": ["normal_indoor", "academic_indoor", "miniature"]
+    },
+    "right":{
+      "type": "field",
+      "field": "project_type"
+    }
+  },
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
   "payload": [
      {
       "name": "fixation_classroom",

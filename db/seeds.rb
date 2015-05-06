@@ -251,7 +251,13 @@ if Rails.env.development?
     RequestSchema.create(
       division_id: Division.find_by(name: json_data['division_name']).id,
       name: json_data['name'],
-      payload: json_data['payload'].to_json
+      payload: json_data['payload'].to_json,
+
+      requestable: json_data['requestable'],
+      required: json_data['required'],
+      
+      deadline_at: DateTime.iso8601(json_data['deadline_at']),
+      opened_at: DateTime.iso8601(json_data['opened_at']),
     )
   end
 

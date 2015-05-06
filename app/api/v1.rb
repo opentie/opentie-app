@@ -40,7 +40,7 @@ class API::V1 < Grape::API
   rescue_from :all do |e|
     Rails.logger.error("500 Internal Server Error -> " + e.message)
     Rails.logger.info("++++++++++++++++++++++++++++++++++++\n\n\n\n")
-
+    binding.pry
     error_response(message: "Internal Server Error", status: 500)
   end
 

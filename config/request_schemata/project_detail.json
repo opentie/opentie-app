@@ -1,6 +1,24 @@
 {
   "division_name": "総務局",
   "name": "企画希望内容申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T00:00:00+09:00",
+  "requestable": {
+    "type": "infix",
+    "operator": "exists_equal",
+    "left": {
+      "type": "literal",
+      "literal": ["normal_indoor", "normal_outdoor", "academic_indoor", "academic_outdoor"]
+    },
+    "right":{
+      "type": "field",
+      "field": "project_type"
+    }
+  },
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
   "payload": [
     {
       "name": "project_detail",

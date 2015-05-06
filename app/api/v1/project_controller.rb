@@ -5,12 +5,10 @@ class API::V1::ProjectController < Grape::API
       def fulltime_params
         projects = current_user.projects
         divisions = current_user.divisions
-        request_schemata = RequestSchema.all
         project_schema = GlobalSetting.get("project_schema")
         {
           my_projects: projects,
           my_divisions: divisions,
-          my_request_schemata: request_schemata,
           project_schema: project_schema
         }
       end
@@ -78,6 +76,7 @@ class API::V1::ProjectController < Grape::API
       global_setting = GlobalSetting.get(:project_schema)
       {
         project: project.attributes,
+          my_request_schemata: RequestSchema.requestable(project),
         project_schema: global_setting
       }
     end
@@ -92,7 +91,8 @@ class API::V1::ProjectController < Grape::API
 
       {
         following_member: project.following_member?,
-        project: project.attributes
+        project: project.attributes,
+        my_request_schemata: RequestSchema.requestable(project),
       }
     end
 
@@ -106,19 +106,23 @@ class API::V1::ProjectController < Grape::API
       raise ActiveRecord::RecordNotFound if project.nil?
       project.update(payload: params[:payload])
       {
-        project: project.reload
+        project: project.reload,
+        my_request_schemata: RequestSchema.requestable(project),
       }
     end
 
     route_param :project_id do
       resource :invitations do
         before do
-          @project = current_user.projects.find_by(id: params[:project_id])
-          raise ActiveRecord::RecordNotFound if @project.nil?
+          @project = current_user.projects.find(params[:project_id])
+          @my_request_schemata = RequestSchema.requestable(@project)
         end
 
         after_validation do
-          add_response({project: @project})
+          add_response({
+            project: @project,
+            my_request_schemata: @my_request_schemata
+          })
         end
 
         desc 'GET /api/v1/projects/:id/invitations/new'
@@ -159,10 +163,14 @@ class API::V1::ProjectController < Grape::API
         before do
           @project = current_user.projects.find_by(id: params[:project_id])
           raise ActiveRecord::RecordNotFound if @project.nil?
+          @my_request_schemata = RequestSchema.requestable(@project)
         end
 
         after_validation do
-          add_response({project: @project})
+          add_response({
+            project: @project,
+            my_request_schemata: @my_request_schemata
+          })
         end
 
         desc 'GET /api/v1/projects/:id/request_schemata/'
@@ -188,7 +196,9 @@ class API::V1::ProjectController < Grape::API
         route_param :request_schema_id do
           resource :request do
             before do
-              @request_schema = RequestSchema.find_by(id: params[:request_schema_id])
+              @request_schema = RequestSchema.
+                where(id: params[:request_schema_id]).
+                requestable(@project).first
               raise ActiveRecord::RecordNotFound if @request_schema.nil?
             end
 

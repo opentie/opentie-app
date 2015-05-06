@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504153133) do
+ActiveRecord::Schema.define(version: 20150506175605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,6 +130,9 @@ ActiveRecord::Schema.define(version: 20150504153133) do
     t.datetime "updated_at",               null: false
     t.datetime "deadline_at"
     t.string   "name",        default: "", null: false
+    t.json     "requestable"
+    t.json     "required"
+    t.datetime "opened_at"
   end
 
   add_index "request_schemata", ["division_id"], name: "index_request_schemata_on_division_id", using: :btree

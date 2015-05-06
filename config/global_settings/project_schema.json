@@ -36,7 +36,7 @@
       "type": "select",
       "title": "企画区分",
       "note": "企画区分を選択してください",
-      "default": "normal",
+      "default": "normal_indoor",
       "choices": [
         { "value": "normal_indoor",    "label": "一般企画 (屋内)" },
         { "value": "normal_outdoor",   "label": "一般企画 (屋外)" },
