@@ -56,13 +56,6 @@ class API::V1::ProjectController < Grape::API
       end
     end
 
-    desc 'POST /api/v1/projects/validate'
-    params do
-    end
-    post '/validate' do
-      {}
-    end
-
     desc 'GET /api/v1/projects/new'
     params do
     end
@@ -194,13 +187,6 @@ class API::V1::ProjectController < Grape::API
 
             after_validation do
               add_response({request_schema: @request_schema})
-            end
-
-            desc 'POST /api/v1/projects/:id/request_schemata/:id/request/validate'
-            params do
-            end
-            post '/validate' do
-              {}
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'

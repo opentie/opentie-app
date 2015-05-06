@@ -69,12 +69,6 @@ RSpec.describe API do
       expect(response.status).to eq(201)
     end
 
-    # validate
-    it 'POST /api/v1/projects/validate' do
-      post "/api/v1/projects/validate/"
-      expect(response.status).to eq(201)
-    end
-
     # edit
     it 'GET /api/v1/projects/:id/edit' do
       get "/api/v1/projects/#{@project.id}/edit"
