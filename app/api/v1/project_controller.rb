@@ -235,35 +235,38 @@ class API::V1::ProjectController < Grape::API
               requires :status, type: Integer, desc: "update status"
             end
             put '/' do
-              request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", @project.id)
-                .where(request_schema_id: @request_schema.id)
-                .first
-
-              if request.nil?
-                delegate = current_user.delegates.find_by(
-                  project_id: @project.id
-                )
+              if params[:status] == 0
                 begin
-                  request_schema = @request_schema.payload
-                  schema = Formalizr::FormSchema.new(request_schema)
+                  schema = Formalizr::FormSchema.new(@request_schema.payload)
                   payload = schema.normalize(params[:payload])
-
-                  delegate.requests << request =  Request.create(
-                    request_schema_id: @request_schema.id,
-                    payload: payload,
-                    status: params[:status],
-                  )
                 rescue Formalizr::InvalidInput => err
                   next {
                     validities: err.validities,
                     request: { payload: params[:payload] },
-                    project_schema: request_schema
+                    project_schema: @request_schema
                   }
                 end
               else
+                payload = {}
+              end
+
+              request = Request.without_soft_destroyed.joins(:delegate)
+                .where("delegates.project_id = ?", @project.id)
+                .where(request_schema: @request_schema)
+                .first
+
+              if request.nil?
+                delegate = current_user.delegates.find_by(
+                  project: @project
+                )
+                delegate.requests << request =  Request.create(
+                  request_schema: @request_schema,
+                  payload: payload,
+                  status: params[:status],
+                )
+              else
                 request.update(
-                  payload: params[:payload],
+                  payload: payload,
                   status: params[:status]
                 )
               end
