@@ -265,10 +265,14 @@ class API::V1::ProjectController < Grape::API
                   status: params[:status],
                 )
               else
-                request.update(
-                  payload: payload,
-                  status: params[:status]
-                )
+                if status == 0
+                  request.update(
+                    payload: payload,
+                    status: params[:status]
+                  )
+                else
+                  request.update(status: params[:status])
+                end
               end
 
               {
