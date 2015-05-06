@@ -21,11 +21,13 @@ class AccountMailer < ApplicationMailer
     mail to: email, subject: "#{@global_setting['project_name']} で #{@from_account_name} さんからの招待があります"
   end
 
-  def recovery_token(email, token)
+  def recovery_token(email, account, token)
     @email = email
+    @account_name = account.name
+
 
     @global_setting = GlobalSetting.get(:application).value
-    @recovery_link = "#{@global_setting['renderer_root'].to_s}/recovery_tokens/#{token}"
+    @recovery_link = "#{@global_setting['renderer_root'].to_s}/reset_password?token=#{token}"
 
     mail to: email, subject: "#{@global_setting['project_name']} のパスワードリセット"
   end

@@ -42,10 +42,14 @@ class API::V1::CertificationController < Grape::API
     post do
       unless authenticated?
         account = Account.find_by(email: params[:email])
-        error!({ message: "email doesn't match" }, 401) if account.nil?
-        token = SecureRandom.urlsafe_base64(50)
-        RecoveryToken.create(token: token, account_id: account.id)
-        AccountMailer.recovery_token(params[:email], token)
+        # return psuedo success page for missmatched mail addr
+        # error!({ message: "email doesn't match" }, 401) if account.nil?
+        unless account.nil?
+          # TODO: 同一アドレスに対して有効なトークンを複数同時に発行された状態にしない
+          token = RecoveryToken.create_new_token(account.id)
+          AccountMailer.recovery_token(params[:email], account, token).deliver
+        end
+        { message: 'sent recovery token URI by mail' }
       else
         { message: 'already authenticated' }
       end
@@ -59,14 +63,19 @@ class API::V1::CertificationController < Grape::API
     end
     post '/:token' do
       unless authenticated?
-        token = RecoveryToken.find_by(token: params[:token]).account
-        if token.created_at > 1.hour.ago && (! token.resetted_password)
+        token = RecoveryToken.find_by(token: params[:token])
+        account = token.account
+        if token.is_valid?
           account.update(
             password: params[:password],
             password_confirmation: params[:password_confirmation]
           )
-          account.save!
-          token.update(resetted_password: true).save!
+          token.update(resetted_password: true)
+          if account.save && token.save
+            { message: 'new password has been saved successfully' }
+          else
+            error!({ message: "password doesn't match" }, 401)
+          end
         else
           error!({ message: 'token has been expired' }, 401)
         end
