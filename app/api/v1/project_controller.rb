@@ -6,10 +6,12 @@ class API::V1::ProjectController < Grape::API
         projects = current_user.projects
         divisions = current_user.divisions
         request_schemata = RequestSchema.all
+        project_schema = GlobalSetting.get("project_schema")
         {
           my_projects: projects,
           my_divisions: divisions,
-          my_request_schemata: request_schemata
+          my_request_schemata: request_schemata,
+          project_schema: project_schema
         }
       end
 
@@ -54,13 +56,6 @@ class API::V1::ProjectController < Grape::API
           project_schema: project_schema,
         }
       end
-    end
-
-    desc 'POST /api/v1/projects/validate'
-    params do
-    end
-    post '/validate' do
-      {}
     end
 
     desc 'GET /api/v1/projects/new'
@@ -194,13 +189,6 @@ class API::V1::ProjectController < Grape::API
 
             after_validation do
               add_response({request_schema: @request_schema})
-            end
-
-            desc 'POST /api/v1/projects/:id/request_schemata/:id/request/validate'
-            params do
-            end
-            post '/validate' do
-              {}
             end
 
             desc 'GET /api/v1/projects/:id/request_schemata/:id/request/edit'

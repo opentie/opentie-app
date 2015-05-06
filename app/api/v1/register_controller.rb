@@ -10,20 +10,8 @@ class API::V1::RegisterController < Grape::API
       }
     end
 
-    desc 'POST /api/v1/register/validate'
-    params do
-
-    end
-    get '/validate' do
-      {}
-    end
-
     desc 'POST /api/v1/register/'
     params do
-      requires :name, type: String, desc: 'name'
-      requires :email, type: String, desc: 'email'
-      requires :password, type: String, desc: 'password'
-      requires :password_confirmation, type: String, desc: 'password_confirmation'
       requires :payload, type: Hash, desc: 'payload'
     end
     post '/' do
