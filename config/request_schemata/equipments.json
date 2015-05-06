@@ -18,10 +18,10 @@
             { "value": "piyo", "label": "ぴよ" },
             { "value": "foo",  "label": "ふー" }
           ],
-          "validators": {
+          "validators": [
             { "type": "required", "description": "この選択肢は必須です" },
             { "type": "validchoice", "description": "必ず選択してください" }
-          }
+          ]
         },
         {
           "name": "number",
