@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
 
     if member_count >= following_member_count
       return 2
-    elsif member_count + invited_count > following_member_count
+    elsif member_count + invited_count >= following_member_count
       return 1
     else
       return 0
