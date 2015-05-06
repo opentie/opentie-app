@@ -6,10 +6,12 @@ class API::V1::ProjectController < Grape::API
         projects = current_user.projects
         divisions = current_user.divisions
         request_schemata = RequestSchema.all
+        project_schema = GlobalSetting.get("project_schema")
         {
           my_projects: projects,
           my_divisions: divisions,
-          my_request_schemata: request_schemata
+          my_request_schemata: request_schemata,
+          project_schema: project_schema
         }
       end
 
