@@ -17,13 +17,21 @@
             { "value": "fuga", "label": "ふが" },
             { "value": "piyo", "label": "ぴよ" },
             { "value": "foo",  "label": "ふー" }
-          ]
+          ],
+          "validators": {
+            { "type": "required", "description": "この選択肢は必須です" },
+            { "type": "validchoice", "description": "必ず選択してください" }
+          }
         },
         {
           "name": "number",
           "type": "number",
           "title": "個数",
-          "default": 1
+          "default": 1,
+          "validators": [
+            { "type": "required", "description": "必ず入力してください" },
+            { "type": "number", "description": "半角数字で入力してください" }
+          ]
         }
       ]
     }
