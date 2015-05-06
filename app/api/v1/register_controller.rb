@@ -52,7 +52,7 @@ class API::V1::RegisterController < Grape::API
     end
     get '/confirm' do
       error!('401 Unauthorized', 401) unless authenticated_with_not_included_confirm?
-      error!('400 Bad request', 400) unless current_user.confirmation_token == params[:confirm_token]
+      error!('403 Forbidden', 403) unless current_user.confirmation_token == params[:confirm_token]
       error!('400 Bad request', 400) unless !current_user.confirmed_email
 
       invitation = Invitation.find_by(invited_email: current_user.email)
