@@ -37,6 +37,8 @@ module OpentieApp
       g.orm :active_record
     end
 
+    # Time zone
+    config.time_zone = 'Tokyo'
     config.assets.enabled = false
   end
 end
