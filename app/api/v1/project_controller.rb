@@ -198,7 +198,7 @@ class API::V1::ProjectController < Grape::API
             get '/edit' do
               request = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", @project.id)
-                .where(request_schema_id: params[:request_schema_id])
+                .where(request_schema_id: @request_schema.id)
                 .first
               {
                 request: request
@@ -211,7 +211,7 @@ class API::V1::ProjectController < Grape::API
             get '/' do
               request = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", @project.id)
-                .where(request_schema_id: params[:request_schema_id])
+                .where(request_schema_id: @request_schema.id)
                 .first
               {
                 request: request
@@ -226,7 +226,7 @@ class API::V1::ProjectController < Grape::API
             put '/' do
               request = Request.without_soft_destroyed.joins(:delegate)
                 .where("delegates.project_id = ?", @project.id)
-                .where(request_schema_id: params[:request_schema_id])
+                .where(request_schema_id: @request_schema.id)
                 .first
 
               if request.nil?
@@ -234,7 +234,7 @@ class API::V1::ProjectController < Grape::API
                   project_id: @project.id
                 )
                 delegates.requests << Request.create(
-                  request_schema_id: params[:request_schema_id],
+                  request_schema_id: @request_schema.id,
                   payload: params[:payload],
                   status: params[:status],
                 )
