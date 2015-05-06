@@ -204,7 +204,7 @@ RSpec.describe API do
         .first.destroy
 
       update_params = {
-        status: 1,
+        status: 0,
         payload:{
            name:  "upper5string"
         }
