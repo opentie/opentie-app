@@ -257,15 +257,16 @@ class API::V1::ProjectController < Grape::API
 
               if request.nil?
                 delegate = current_user.delegates.find_by(
-                  project: @project
+                  project_id: @project.id
                 )
-                delegate.requests << request =  Request.create(
-                  request_schema: @request_schema,
+                request = Request.create(
+                  request_schema_id: @request_schema.id,
+                  delegate_id: delegate.id,
                   payload: payload,
                   status: params[:status],
                 )
               else
-                if status == 0
+                if params[:status] == 0
                   request.update(
                     payload: payload,
                     status: params[:status]
