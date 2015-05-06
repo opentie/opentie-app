@@ -89,22 +89,18 @@ if Rails.env.test?
         RequestSchema.create(
           division_id: division.id,
           name: "レンタル物品申請",
-          payload: {
-            "division_name" => "推進局",
-            "name" => "レンタル物品申請",
-            "payload" => [
-              {
-                "type" => "text",
-                "name" => "name",
-                "note" => "物の名前を入力してください",
-                "title" => "名前",
-                "validators" => [
-                  { "type" => "required", "description" => "必須" },
-                  { "type" => "minlength", "condition" => "5", "description" => "5文字以上で入力してください" }
-                ]
-              }
-            ]
-          }.to_json
+          payload: [
+            {
+              "type" => "text",
+              "name" => "name",
+              "note" => "物の名前を入力してください",
+              "title" => "名前",
+              "validators" => [
+                { "type" => "required", "description" => "必須" },
+                { "type" => "minlength", "condition" => "5", "description" => "5文字以上で入力してください" }
+              ]
+            }
+          ].to_json
         )
       end
     end

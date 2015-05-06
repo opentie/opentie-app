@@ -246,7 +246,7 @@ class API::V1::ProjectController < Grape::API
                 )
                 begin
                   request_schema = @request_schema.payload
-                  schema = Formalizr::FormSchema.new(request_schema['payload'])
+                  schema = Formalizr::FormSchema.new(request_schema)
                   payload = schema.normalize(params[:payload])
 
                   delegate.requests << request =  Request.create(
