@@ -56,7 +56,13 @@ class API::V1::RegisterController < Grape::API
       error!('400 Bad request', 400) unless !current_user.confirmed_email
 
       invitation = Invitation.find_by(invited_email: current_user.email)
-      invitation.update(account_id: current_user.id) unless invitation.nil?
+      unless invitation.nil?
+        invitation.update(account_id: current_user.id)
+        Delegate.create(
+          account_id: current_user.id,
+          project_id: invitation.project_id
+        )
+      end
 
       current_user.update(confirmed_email: true)
 
