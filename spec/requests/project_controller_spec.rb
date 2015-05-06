@@ -51,7 +51,7 @@ RSpec.describe API do
       }
       expect {
         post "/api/v1/projects/", params
-      }.to change(Project, :count).by(1)
+      }.to change(Project, :count).by(1), change(Delegate, :count).by(1)
       expect(response.status).to eq(201)
     end
 

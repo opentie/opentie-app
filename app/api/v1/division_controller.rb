@@ -27,7 +27,7 @@ class API::V1::DivisionController < Grape::API
       requires :id, type: String, desc: 'division_id'
     end
     get '/:id' do
-      division = Division.find_by(id: params[:id])
+      division = current_user.divisions.find_by(id: params[:id])
       raise ActiveRecord::RecordNotFound if division.nil?
       {
         division: division.as_json(include: :accounts)
@@ -37,7 +37,7 @@ class API::V1::DivisionController < Grape::API
     route_param :division_id do
       resource :projects do
         before do
-          @division = Division.find_by(id: params[:division_id])
+          @division = current_user.divisions.find_by(id: params[:division_id])
           raise ActiveRecord::RecordNotFound if @division.nil?
         end
 
@@ -81,8 +81,11 @@ class API::V1::DivisionController < Grape::API
             params do
             end
             get '/' do
-              requests = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", params[:project_id])
+              requests = Request.without_soft_destroyed
+                .joins(:delegate).joins(:request_schema)
+                .where("request_schemata.division_id = ?", @division.id)
+                .where("request_schema_id = request_schemata.id")
+                .where("delegates.project_id = ?", @project.id)
               {
                 requests: requests
               }
@@ -93,7 +96,12 @@ class API::V1::DivisionController < Grape::API
               requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
-              request = Request.without_soft_destroyed.find_by(id: params[:id])
+              request = Request.without_soft_destroyed
+                .joins(:delegate).joins(:request_schema)
+                .where("request_schemata.division_id = ?", @division.id)
+                .where("request_schema_id = request_schemata.id")
+                .where("delegates.project_id = ?", @project.id)
+                .find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request.attributes
@@ -105,7 +113,7 @@ class API::V1::DivisionController < Grape::API
 
       resource :request_schemata do
         before do
-          @division = Division.find_by(id: params[:division_id])
+          @division = current_user.divisions.find_by(id: params[:division_id])
           raise ActiveRecord::RecordNotFound if @division.nil?
         end
 
@@ -117,7 +125,7 @@ class API::V1::DivisionController < Grape::API
         params do
         end
         get '/' do
-          schemata = RequestSchema.where(division_id: params[:divison_id])
+          schemata = @division.request_schemata
           {
             request_schemata: schemata
           }
@@ -128,7 +136,7 @@ class API::V1::DivisionController < Grape::API
           requires :id, type: String, desc: 'request_schema_id'
         end
         get '/:id' do
-          schema = RequestSchema.find_by(id: params[:id])
+          schema = @division.request_schemata.find_by(id: params[:id])
           raise ActiveRecord::RecordNotFound if schema.nil?
           {
             request_schema: schema.attributes
@@ -138,7 +146,7 @@ class API::V1::DivisionController < Grape::API
         route_param :request_schema_id do
           resource :requests do
             before do
-              @request_schema = RequestSchema.find_by(id: params[:request_schema_id])
+              @request_schema = @division.request_schemata.find_by(id: params[:request_schema_id])
               raise ActiveRecord::RecordNotFound if @request_schema.nil?
             end
 
@@ -150,7 +158,7 @@ class API::V1::DivisionController < Grape::API
             params do
             end
             get '/' do
-              requests = Request.without_soft_destroyed.where(request_schema_id: params[:request_schema_id])
+              requests = @request_schema.requests.without_soft_destroyed
               {
                 requests: requests
               }
@@ -161,7 +169,7 @@ class API::V1::DivisionController < Grape::API
               requires :id, type: String, desc: 'request_id'
             end
             get '/:id' do
-              request = Request.without_soft_destroyed.find_by(id: params[:id])
+              request = @request_schema.requests.without_soft_destroyed.find_by(id: params[:id])
               raise ActiveRecord::RecordNotFound if request.nil?
               {
                 request: request.attributes
@@ -172,7 +180,7 @@ class API::V1::DivisionController < Grape::API
       end
       resource :project_histories do
         before do
-          @division = Division.find_by(id: params[:division_id])
+          @division = current_user.divisions.find_by(id: params[:division_id])
           raise ActiveRecord::RecordNotFound if @division.nil?
         end
 
@@ -193,4 +201,3 @@ class API::V1::DivisionController < Grape::API
     end
   end
 end
-

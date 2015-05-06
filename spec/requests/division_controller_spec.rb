@@ -90,13 +90,17 @@ RSpec.describe API do
 
     # show
     it 'GET /api/v1/divisions/:id/projects/:id/requests/:id' do
-      get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/#{@request_.id}"
+      division_request = @division.request_schemata.first.requests
+        .joins(:delegate).where("delegates.project_id = ?", @project.id)
+        .where("delegates.id = delegate_id").first
+
+      get "/api/v1/divisions/#{@division.id}/projects/#{@project.id}/requests/#{division_request.id}"
 
       json = JSON.parse(response.body)
       request = Request.find_by(id: json['request']['id'])
 
       expect(request).not_to eq(nil)
-      expect(json['request']['id']).to eq(@request_.id)
+      expect(json['request']['id']).to eq(division_request.id)
       expect(response.status).to eq(200)
 
       expect(json['project']['id']).to eq(@project.id)
