@@ -10,7 +10,7 @@ class API::V1::DivisionController < Grape::API
         {
           my_projects: projects,
           my_divisions: divisions,
-          my_request_schemata: request_schemata,
+          request_schemata: request_schemata,
           project_schema: project_schema
         }
       end

@@ -76,7 +76,7 @@ class API::V1::ProjectController < Grape::API
       global_setting = GlobalSetting.get(:project_schema)
       {
         project: project.attributes,
-          my_request_schemata: RequestSchema.requestable(project),
+        request_schemata: RequestSchema.requestable(project),
         project_schema: global_setting
       }
     end
@@ -92,7 +92,7 @@ class API::V1::ProjectController < Grape::API
       {
         following_member: project.following_member?,
         project: project.attributes,
-        my_request_schemata: RequestSchema.requestable(project),
+        request_schemata: RequestSchema.requestable(project),
       }
     end
 
@@ -107,7 +107,7 @@ class API::V1::ProjectController < Grape::API
       project.update(payload: params[:payload])
       {
         project: project.reload,
-        my_request_schemata: RequestSchema.requestable(project),
+        request_schemata: RequestSchema.requestable(project),
       }
     end
 
@@ -115,13 +115,13 @@ class API::V1::ProjectController < Grape::API
       resource :invitations do
         before do
           @project = current_user.projects.find(params[:project_id])
-          @my_request_schemata = RequestSchema.requestable(@project)
+          @request_schemata = RequestSchema.requestable(@project)
         end
 
         after_validation do
           add_response({
             project: @project,
-            my_request_schemata: @my_request_schemata
+            request_schemata: @request_schemata
           })
         end
 
@@ -163,13 +163,13 @@ class API::V1::ProjectController < Grape::API
         before do
           @project = current_user.projects.find_by(id: params[:project_id])
           raise ActiveRecord::RecordNotFound if @project.nil?
-          @my_request_schemata = RequestSchema.requestable(@project)
+          @request_schemata = RequestSchema.requestable(@project)
         end
 
         after_validation do
           add_response({
             project: @project,
-            my_request_schemata: @my_request_schemata
+            request_schemata: @request_schemata
           })
         end
 

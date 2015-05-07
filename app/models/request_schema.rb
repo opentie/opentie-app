@@ -9,13 +9,13 @@ class RequestSchema < ActiveRecord::Base
   }
 
   def self.requestable(project)
-    opening.to_a.select { |schema| schema.requestable?(project) }
+    all.to_a.select{ |schema| schema.requestable?(project) }
   end
 
   def self.required(project)
-    all.to_a.select { |schema| schema.required?(project) }
+    all.to_a.select{ |schema| schema.required?(project) }
   end
-  
+
   def requestable?(project)
     return true if requestable.nil?
     project.query(requestable)
