@@ -1,6 +1,6 @@
 {
   "division_name": "総務局",
-  "name": "企画実施場所申請",
+  "name": "屋外企画実施場所申請",
   "opened_at": "2015-05-07T00:00:00+09:00",
   "deadline_at": "2015-06-01T00:00:00+09:00",
   "requestable": {
@@ -8,7 +8,7 @@
     "operator": "exists_equal",
     "left": {
       "type": "literal",
-      "literal": ["normal_indoor", "normal_outdoor", "academic_indoor", "academic_outdoor"]
+      "literal": ["normal_outdoor", "academic_outdoor"]
     },
     "right":{
       "type": "field",
@@ -30,14 +30,9 @@
         { "value": "none",                 "label": "指定なし" },
         { "value": "unsettled",            "label": "X エリア未確定" },
         { "value": "first_outdoor",        "label": "第一エリア（屋外）" },
-        { "value": "first_indoor",         "label": "第一エリア（屋内）" },
         { "value": "second_third_outdoor", "label": "第二・第三エリア（屋外）" },
-        { "value": "second_third_indoor",  "label": "第二・第三エリア（屋内）" },
         { "value": "hall_outdoor",         "label": "会館エリア（屋外）" },
-        { "value": "hall_indoor",          "label": "会館エリア（屋内）" },
         { "value": "physical_art_outdoor", "label": "体芸エリア（屋外）" },
-        { "value": "physical_art_indoor",  "label": "体芸エリア（屋内）" },
-        { "value": "stage",                "label": "ステージ" },
         { "value": "move",                 "label": "移動企画" }
       ],
       "validators": [
