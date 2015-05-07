@@ -2,7 +2,7 @@
   "division_name": "総務局",
   "name": "教室規模申請",
   "opened_at": "2015-05-07T00:00:00+09:00",
-  "deadline_at": "2015-06-01T00:00:00+09:00",
+  "deadline_at": "2015-06-01T20:00:00+09:00",
   "requestable": {
     "type": "infix",
     "operator": "exists_equal",
