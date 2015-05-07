@@ -102,6 +102,7 @@ class API::V1::ProjectController < Grape::API
     route_param :project_id do
       before do
         @project = current_user.projects.find(params[:project_id])
+        @delegate = Delegate.find_by(project: @project, account: current_user)
         @my_requests = @project.my_requests(current_user)
         @request_schemata = RequestSchema.requestable(@project)
       end
@@ -235,63 +236,30 @@ class API::V1::ProjectController < Grape::API
               requires :status, type: Integer, desc: "update status"
             end
             put '/' do
-              unless @request_schema.deadline_at.nil?
-                if @request_schema.deadline_at < Time.zone.now
-                  next {
-                    deadline: true,
-                    request: Request.new({
-                      request_schema: @request_schema,
-                      payload: params[:payload],
-                    }),
-                    request_schema: @request_schema
-                  }
-                end
-              end
+              request = Request.without_soft_destroyed
+                .find_or_initialize_by(
+                  delegate: @delegate,
+                  request_schema: @request_schema,
+                )
 
-              if params[:status] == 0
+              request.status = params[:status]
+              if request.status == 0
+                request.payload = params[:payload]
                 begin
                   schema = Formalizr::FormSchema.new(@request_schema.payload)
                   payload = schema.normalize(params[:payload])
+                  request.update(payload: payload, status: 0)
+                  request.save!
                 rescue Formalizr::InvalidInput => err
                   next {
                     validities: err.validities,
-                    request: Request.new({
-                      request_schema: @request_schema,
-                      payload: params[:payload],
-                    }),
+                    request: request,
                     request_schema: @request_schema
                   }
                 end
               else
-                payload = {}
+                request.save!
               end
-
-              request = Request.without_soft_destroyed.joins(:delegate)
-                .where("delegates.project_id = ?", @project.id)
-                .where(request_schema: @request_schema)
-                .first
-
-              if request.nil?
-                delegate = current_user.delegates.find_by(
-                  project_id: @project.id
-                )
-                request = Request.create(
-                  request_schema_id: @request_schema.id,
-                  delegate_id: delegate.id,
-                  payload: payload,
-                  status: params[:status],
-                )
-              else
-                if params[:status] == 0
-                  request.update(
-                    payload: payload,
-                    status: params[:status]
-                  )
-                else
-                  request.update(status: params[:status])
-                end
-              end
-
               {
                 request: request.reload
               }

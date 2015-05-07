@@ -61,14 +61,7 @@ class Project < ActiveRecord::Base
   def my_requests(account)
     delegate = delegates.find_by(account: account)
     RequestSchema.requestable(self).map do |schema|
-      request = schema.requests.find_by(delegate: delegate)
-      if request.nil?
-        request = Request.new({
-          status: -1,
-          delegate: delegate,
-          request_schema: schema
-        })
-      end
+      request = schema.requests.find_or_initialize_by(delegate: delegate)
       request.as_json(include: [:request_schema])
     end
   end
