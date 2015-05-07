@@ -71,7 +71,8 @@ RSpec.describe API do
           project_notice: '',
           large_power: 'no',
           charcoal_fire: 'no',
-          megavolume: 'no'
+          megavolume: 'no',
+          electric_power: '1000'
         }
       }
       expect {
