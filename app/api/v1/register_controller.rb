@@ -38,7 +38,8 @@ class API::V1::RegisterController < Grape::API
             validities['password_confirmation']['validities'].push(
               { 'validity'=> false, 'description' => '同じパスワードを入力してください'}
             )
-          elsif invalid_columns.include? :email
+          end
+          if invalid_columns.include? :email
             validities['email']['validities'].push(
               { 'validity'=> false, 'description' => 'このメールアドレスはすでに登録されています'}
            )
