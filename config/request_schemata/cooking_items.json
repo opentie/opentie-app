@@ -5,7 +5,7 @@
   "deadline_at": "2015-06-01T20:00:00+09:00",
   "requestable": {
     "type": "infix",
-    "operator": "exists_equal",
+    "operator": "equal",
     "left": {
       "type": "literal",
       "literal": "yes"
