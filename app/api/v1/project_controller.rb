@@ -121,7 +121,7 @@ class API::V1::ProjectController < Grape::API
         after_validation do
           add_response({
             project: @project,
-            request_schemata: @request_schemata
+            request_schemata: @request_schemata,
           })
         end
 
@@ -227,6 +227,16 @@ class API::V1::ProjectController < Grape::API
                 .where("delegates.project_id = ?", @project.id)
                 .where(request_schema_id: @request_schema.id)
                 .first
+              if request.nil?
+                request = Request.new({
+                  status: -1,
+                  delegate: Delegate.find_by({
+                    project: @project,
+                    account: current_user,
+                  }),
+                  request_schema: @request_schema,
+                })
+              end
               {
                 request: request
               }
@@ -242,7 +252,10 @@ class API::V1::ProjectController < Grape::API
                 if @request_schema.deadline_at < Time.zone.now
                   next {
                     deadline: true,
-                    request: { payload: params[:payload] },
+                    request: Request.new({
+                      request_schema: @request_schema,
+                      payload: params[:payload],
+                    }),
                     request_schema: @request_schema
                   }
                 end
@@ -255,7 +268,10 @@ class API::V1::ProjectController < Grape::API
                 rescue Formalizr::InvalidInput => err
                   next {
                     validities: err.validities,
-                    request: { payload: params[:payload] },
+                    request: Request.new({
+                      request_schema: @request_schema,
+                      payload: params[:payload],
+                    }),
                     request_schema: @request_schema
                   }
                 end
