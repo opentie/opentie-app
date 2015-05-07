@@ -23,12 +23,14 @@ class API::V1::RegisterController < Grape::API
         schema =  Formalizr::FormSchema.new(account_schema.value)
         payload = schema.normalize(params[:payload])
 
+        safe_payload = payload.deep_except('password', 'password_confirmation')
+
         account = Account.new(
           name: payload['name'],
           email: payload['email'],
           password: payload['password'],
           password_confirmation: payload['password_confirmation'],
-          payload: payload,
+          payload: safe_payload,
           confirmation_token: confirm_token
         )
         unless account.valid?

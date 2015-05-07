@@ -18,7 +18,7 @@ class API::V1 < Grape::API
 
   after do
     Rails.logger.info(options.to_s)
-    Rails.logger.info("Request Params: " + @params.to_s)
+    Rails.logger.info("Request Params: " + @params.deep_except('password', 'password_confirmation').to_s)
     Rails.logger.info("Return Sattus: " + status.to_s)
     Rails.logger.info("++++++++++++++++++++++++++++++++++++\n\n\n\n")
   end
