@@ -182,7 +182,6 @@ RSpec.describe API do
 
     # show
     it 'GET /api/v1/projects/:id/request_schemata/:id/request' do
-      pending "いつかてすとでーたつくる"
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request"
 
       json = JSON.parse(response.body)
@@ -195,7 +194,6 @@ RSpec.describe API do
 
     # edit
     it 'GET /api/v1/projects/:id/request_schemata/:id/request/edit' do
-      pending "いつかてすとでーたつくる"
       get "/api/v1/projects/#{@project.id}/request_schemata/#{@request_schema.id}/request/edit"
 
       json = JSON.parse(response.body)
@@ -209,7 +207,6 @@ RSpec.describe API do
 
     # update
     it 'PUT /api/v1/projects/:id/request_schemata/:id/request' do
-      pending "いつかてすとでーたつくる"
       request = Request.without_soft_destroyed.joins(:delegate)
         .where("delegates.project_id = ?", @project.id)
         .where(request_schema_id: @request_schema.id)
@@ -233,7 +230,6 @@ RSpec.describe API do
 
     # update with deadline
     it 'PUT /api/v1/projects/:id/request_schemata/:id/request' do
-      pending "いつかてすとでーたつくる"
       request = Request.without_soft_destroyed.joins(:delegate)
         .where("delegates.project_id = ?", @project.id)
         .where(request_schema_id: @request_schema.id)

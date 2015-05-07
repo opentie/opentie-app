@@ -46,6 +46,8 @@ class API::V1::RegisterController < Grape::API
           raise Formalizr::InvalidInput.new('invalid email or password', validities)
         end
 
+        account.save!
+
         AccountMailer.registration_confirmation(account).deliver
         authenticate!(account)
         {
