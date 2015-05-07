@@ -58,6 +58,21 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def my_requests(account)
+    delegate = delegates.find_by(account: account)
+    RequestSchema.requestable(self).map do |schema|
+      request = schema.requests.find_by(delegate: delegate)
+      if request.nil?
+        request = Request.new({
+          status: -1,
+          delegate: delegate,
+          request_schema: schema
+        })
+      end
+      request.as_json(include: [:request_schema])
+    end
+  end
+  
   private
   def increment_number
     value = Project.connection.execute "SELECT nextval('projects_number_seq')"

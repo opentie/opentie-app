@@ -45,7 +45,8 @@ class API::V1::ProjectController < Grape::API
           project_id: project.id
         )
         {
-          project: project.attributes
+          project: project.attributes,
+          my_requests: project.my_requests(current_user),
         }
       rescue Formalizr::InvalidInput => err
         {
@@ -77,22 +78,8 @@ class API::V1::ProjectController < Grape::API
       {
         project: project.attributes,
         request_schemata: RequestSchema.requestable(project),
-        project_schema: global_setting
-      }
-    end
-
-    desc 'GET /api/v1/projects/:id'
-    params do
-      requires :id, type: String, desc: 'project_id'
-    end
-    get '/:id' do
-      project = current_user.projects.find_by(id: params[:id])
-      raise ActiveRecord::RecordNotFound if project.nil?
-
-      {
-        following_member: project.following_member?,
-        project: project.attributes,
-        request_schemata: RequestSchema.requestable(project),
+        project_schema: global_setting,
+        my_requests: project.my_requests(current_user),
       }
     end
 
@@ -108,23 +95,36 @@ class API::V1::ProjectController < Grape::API
       {
         project: project.reload,
         request_schemata: RequestSchema.requestable(project),
+        my_requests: project.my_requests(current_user),
       }
     end
 
     route_param :project_id do
+      before do
+        @project = current_user.projects.find(params[:project_id])
+        @my_requests = @project.my_requests(current_user)
+        @request_schemata = RequestSchema.requestable(@project)
+      end
+
+      after_validation do
+        add_response({
+          project: @project,
+          request_schemata: @request_schemata,
+          my_requests: @my_requests,
+        })
+      end
+
+      desc 'GET /api/v1/projects/:id'
+      params do
+        requires :project_id, type: String, desc: 'project_id'
+      end
+      get do
+        {
+          following_member: @project.following_member?
+        }
+      end
+      
       resource :invitations do
-        before do
-          @project = current_user.projects.find(params[:project_id])
-          @request_schemata = RequestSchema.requestable(@project)
-        end
-
-        after_validation do
-          add_response({
-            project: @project,
-            request_schemata: @request_schemata,
-          })
-        end
-
         desc 'GET /api/v1/projects/:id/invitations/new'
         params do
         end
@@ -160,19 +160,6 @@ class API::V1::ProjectController < Grape::API
       end
 
       resource :request_schemata do
-        before do
-          @project = current_user.projects.find_by(id: params[:project_id])
-          raise ActiveRecord::RecordNotFound if @project.nil?
-          @request_schemata = RequestSchema.requestable(@project)
-        end
-
-        after_validation do
-          add_response({
-            project: @project,
-            request_schemata: @request_schemata
-          })
-        end
-
         desc 'GET /api/v1/projects/:id/request_schemata/'
         params do
         end
