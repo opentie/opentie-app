@@ -42,14 +42,14 @@ class API::V1::CertificationController < Grape::API
     post do
       unless authenticated?
         account = Account.find_by(email: params[:email])
-        # return psuedo success page for missmatched mail addr
+        # return psuedo success page for missmatched mail addr,
+        #  and do not send mail for the wrong address
         # error!({ message: "email doesn't match" }, 401) if account.nil?
         unless account.nil?
-          # TODO: 同一アドレスに対して有効なトークンを複数同時に発行された状態にしない
           token = RecoveryToken.create_new_token(account.id)
           AccountMailer.recovery_token(params[:email], account, token).deliver
         end
-        { message: 'sent recovery token URI by mail' }
+        { message: 'sent URL with recovery token by mail' }
       else
         { message: 'already authenticated' }
       end
@@ -64,8 +64,8 @@ class API::V1::CertificationController < Grape::API
     post '/:token' do
       unless authenticated?
         token = RecoveryToken.find_by(token: params[:token])
-        account = token.account
-        if token.is_valid?
+        if token.try :is_valid?
+          account = token.account
           account.update(
             password: params[:password],
             password_confirmation: params[:password_confirmation]
@@ -77,7 +77,7 @@ class API::V1::CertificationController < Grape::API
             error!({ message: "password doesn't match" }, 401)
           end
         else
-          error!({ message: 'token has been expired' }, 401)
+          error!({ message: 'token is invalid' }, 404)
         end
       else
         { message: 'already authenticated' }
