@@ -6,9 +6,8 @@
       "type": "radio",
       "title": "募集要項について",
       "note": "募集要項を読みましたか？",
-      "default": "no",
       "choices": [
-        { "value": "no", "label": "いいえ" },
+        { "label": "いいえ" },
         { "value": "yes", "label": "はい" }
       ],
       "validators": [
@@ -20,7 +19,7 @@
       "name": "project_member",
       "type": "radio",
       "title": "企画構成員について",
-      "note": "企画構成員は全員筑波大学の構成員ですか？",
+      "note": "企画構成員に学外の人間（例：ゲスト）が含まれる場合は「はい」を選択してください",
       "default": "no",
       "choices": [
         { "value": "no", "label": "いいえ" },
@@ -113,7 +112,8 @@
       "default": 0,
       "validators": [
         { "type": "required", "description": "企画参加人数は必ず入力してください" },
-        { "type": "number", "description": "半角数字で入力してください" }
+        { "type": "number", "description": "半角数字で入力してください" },
+        { "type": "min", "condition": "0", "description": "正数を入力してください" }
       ]
     },
     {
@@ -124,7 +124,8 @@
       "default": 0,
       "validators": [
         { "type": "required", "description": "企画参加人数は必ず入力してください" },
-        { "type": "number", "description": "半角数字で入力してください" }
+        { "type": "number", "description": "半角数字で入力してください" },
+        { "type": "min", "condition": "0", "description": "正数を入力してください" }
       ]
     },
     {
@@ -135,7 +136,8 @@
       "default": 0,
       "validators": [
         { "type": "required", "description": "企画参加人数は必ず入力してください" },
-        { "type": "number", "description": "半角数字で入力してください" }
+        { "type": "number", "description": "半角数字で入力してください" },
+        { "type": "min", "condition": "0", "description": "正数を入力してください" }
       ]
     },
     {
@@ -145,15 +147,6 @@
       "note": "企画の内容について、決定している範囲でなるべく詳細に入力してください。この内容が一般に公開されることはありません",
       "validators": [
         { "type": "required", "description": "企画概要は必ず入力してください" }
-      ]
-    },
-    {
-      "name": "project_information",
-      "type": "paragraph",
-      "title": "企画説明",
-      "note": "公式パンフレットや Web サイトなどに使用する企画の説明文を入力してください",
-      "validators": [
-        { "type": "required", "description": "企画説明は必ず入力してください" }
       ]
     },
     {
@@ -202,6 +195,21 @@
       ]
     },
     {
+      "name": "web_pages",
+      "type": "radio",
+      "title": "Webサイトでの広報宣伝",
+      "note": "Web上での広報宣伝を企画独自で行う場合には「広報宣伝をする」を選択してください（SNSなどは含みません）",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "広報宣伝をしない" },
+        { "value": "yes", "label": "広報宣伝をする" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
       "name": "be_cook",
       "type": "radio",
       "title": "調理の有無",
@@ -232,66 +240,10 @@
       ]
     },
     {
-      "name": "goods_payment",
-      "type": "radio",
-      "title": "企画団体物品支給制度（企団給）",
-      "note": "企団給を申請する場合には「申請する」を選択してください",
-      "default": "no",
-      "choices": [
-        { "value": "no", "label": "申請しない" },
-        { "value": "yes", "label": "申請する" }
-      ],
-      "validators": [
-        { "type": "required", "description": "必ずどちらかを選択してください" },
-        { "type": "validchoice", "description": "どちらかを選択してください" }
-      ]
-    },
-    {
       "name": "project_notice",
       "type": "paragraph",
       "title": "特記事項・その他要望",
       "note": "特記事項などがある場合には記載してください（例： 音楽を流す, 大型の器機や動物を使用する, 発電機を使用する, 物品協賛を受ける, 屋外で調理以外の目的で火気を使用する, 学外からゲストを呼ぶ（誰を呼ぶのかまで明記してください））"
-    },
-    {
-      "name": "large_power",
-      "type": "radio",
-      "title": "1600W以上の電力使用",
-      "note": "大電力（1600W以上）を使用する場合は「使用する」を選択してください",
-      "default": "no",
-      "choices": [
-        { "value": "no", "label": "使用しない" },
-        { "value": "yes", "label": "使用する" }
-      ],
-      "validators": [
-        { "type": "required", "description": "必ずどちらかを選択してください" },
-        { "type": "validchoice", "description": "どちらかを選択してください" }
-      ]
-    },
-    {
-      "name": "electric_power",
-      "type": "number",
-      "title": "使用電力量",
-      "note": "想定される使用電力量を入力してください",
-      "default": 0,
-      "validators": [
-        { "type": "required", "description": "使用電力量は必ず入力してください" },
-        { "type": "number", "description": "半角数字で入力してください" }
-      ]
-    },
-    {
-      "name": "charcoal_fire",
-      "type": "radio",
-      "title": "炭火の使用",
-      "note": "炭火を使用する場合には「使用する」を選択してください",
-      "default": "no",
-      "choices": [
-        { "value": "no", "label": "使用しない" },
-        { "value": "yes", "label": "使用する" }
-      ],
-      "validators": [
-        { "type": "required", "description": "必ずどちらかを選択してください" },
-        { "type": "validchoice", "description": "どちらかを選択してください" }
-      ]
     },
     {
       "name": "megavolume",

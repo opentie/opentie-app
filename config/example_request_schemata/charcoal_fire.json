@@ -1,0 +1,45 @@
+{
+  "division_name": "推進局",
+  "name": "屋外炭火使用申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T20:00:00+09:00",
+  "requestable": {
+    "type": "infix",
+    "operator": "exists_equal",
+    "left": {
+      "type": "literal",
+      "literal": ["normal_outdoor", "academic_outdoor"]
+    },
+    "right":{
+      "type": "field",
+      "field": "project_type"
+    }
+  },
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
+  "payload": [
+    {
+      "name": "charcoal_fire",
+      "type": "radio",
+      "title": "炭火の使用",
+      "note": "炭火を使用する場合には「使用する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "使用しない" },
+        { "value": "yes", "label": "使用する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}

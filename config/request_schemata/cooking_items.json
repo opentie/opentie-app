@@ -1,0 +1,39 @@
+{
+  "division_name": "推進局",
+  "name": "調理品目申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T20:00:00+09:00",
+  "requestable": {
+    "type": "infix",
+    "operator": "equal",
+    "left": {
+      "type": "literal",
+      "literal": "yes"
+    },
+    "right":{
+      "type": "field",
+      "field": "be_cook"
+    }
+  },
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
+  "payload": [
+    {
+      "name": "cooking_item",
+      "type": "paragraph",
+      "title": "調理品目一覧",
+      "note": "調理品目の一覧をを具体的に記載してください",
+      "validators": [
+        { "type": "required", "description": "調理品目を必ず記載してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}

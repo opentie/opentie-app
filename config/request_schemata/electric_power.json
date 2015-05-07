@@ -1,0 +1,45 @@
+{
+  "division_name": "総合計画局",
+  "name": "使用電力量申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-06-01T20:00:00+09:00",
+  "required": {
+    "type": "literal",
+    "literal": true
+  },
+  "payload": [
+    {
+      "name": "large_power",
+      "type": "radio",
+      "title": "1600W以上の電力使用",
+      "note": "大電力（1600W以上）を使用する場合は「使用する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "使用しない" },
+        { "value": "yes", "label": "使用する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "electric_power",
+      "type": "number",
+      "title": "使用電力量",
+      "note": "想定される使用電力量を入力してください",
+      "default": 0,
+      "validators": [
+        { "type": "required", "description": "使用電力量は必ず入力してください" },
+        { "type": "number", "description": "半角数字で入力してください" },
+        { "type": "min", "condition": "0", "description": "正数を入力してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}

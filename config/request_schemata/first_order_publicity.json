@@ -1,0 +1,29 @@
+{
+  "division_name": "広報宣伝局",
+  "name": "一次宣伝希望申請",
+  "opened_at": "2015-05-07T00:00:00+09:00",
+  "deadline_at": "2015-05-15T20:00:00+09:00",
+  "payload": [
+    {
+      "name": "first_order_publicity",
+      "type": "radio",
+      "title": "一次宣伝希望申請",
+      "note": "一次宣伝を希望する場合には「希望する」を選択してください",
+      "default": "no",
+      "choices": [
+        { "value": "no", "label": "希望しない" },
+        { "value": "yes", "label": "希望する" }
+      ],
+      "validators": [
+        { "type": "required", "description": "必ずどちらかを選択してください" },
+        { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "note",
+      "type": "paragraph",
+      "title": "備考",
+      "note": "要望などがあればこちらにお願いします"
+    }
+  ]
+}
