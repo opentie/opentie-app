@@ -163,8 +163,8 @@
       "note": "前夜祭へ参加できるのは屋外実施の一般企画、学研企画と一般ステージ企画のみになります",
       "default": "no",
       "choices": [
-        { "value": "no", "label": "実施しない" },
-        { "value": "yes", "label": "実施する" }
+        { "value": "no", "label": "希望しない" },
+        { "value": "yes", "label": "希望する" }
       ],
       "validators": [
         { "type": "required", "description": "必ずどちらかを選択してください" },
@@ -178,8 +178,8 @@
       "note": "実施を希望する場合は「実施する」を選択してください",
       "default": "no",
       "choices": [
-        { "value": "no", "label": "実施しない" },
-        { "value": "yes", "label": "実施する" }
+        { "value": "no", "label": "希望しない" },
+        { "value": "yes", "label": "希望する" }
       ],
       "validators": [
         { "type": "required", "description": "必ずどちらかを選択してください" },
@@ -193,8 +193,8 @@
       "note": "実施を希望する場合は「実施する」を選択してください",
       "default": "no",
       "choices": [
-        { "value": "no", "label": "実施しない" },
-        { "value": "yes", "label": "実施する" }
+        { "value": "no", "label": "希望しない" },
+        { "value": "yes", "label": "希望する" }
       ],
       "validators": [
         { "type": "required", "description": "必ずどちらかを選択してください" },
@@ -265,6 +265,17 @@
       "validators": [
         { "type": "required", "description": "必ずどちらかを選択してください" },
         { "type": "validchoice", "description": "どちらかを選択してください" }
+      ]
+    },
+    {
+      "name": "electric_power",
+      "type": "number",
+      "title": "使用電力量",
+      "note": "想定される使用電力量を入力してください",
+      "default": 0,
+      "validators": [
+        { "type": "required", "description": "使用電力量は必ず入力してください" },
+        { "type": "number", "description": "半角数字で入力してください" }
       ]
     },
     {
