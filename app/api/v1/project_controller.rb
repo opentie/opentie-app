@@ -236,12 +236,16 @@ class API::V1::ProjectController < Grape::API
               requires :status, type: Integer, desc: "update status"
             end
             put '/' do
-              request = Request.without_soft_destroyed
-                .find_or_initialize_by(
-                  delegate: @delegate,
-                  request_schema: @request_schema,
-                )
+              request = Request.without_soft_destroyed.find_by(
+                delegate: @project.delegates.where(account: current_user),
+                request_schema: @request_schema,
+              )
 
+              request ||= Request.new(
+                delegate: @delegate,
+                request_schema: @request_schema,
+              )
+              
               request.status = params[:status]
               if request.status == 0
                 request.payload = params[:payload]
