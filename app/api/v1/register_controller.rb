@@ -23,7 +23,7 @@ class API::V1::RegisterController < Grape::API
         schema =  Formalizr::FormSchema.new(account_schema.value)
         payload = schema.normalize(params[:payload])
 
-        account = Account.create(
+        account = Account.new(
           name: payload['name'],
           email: payload['email'],
           password: payload['password'],
@@ -31,6 +31,23 @@ class API::V1::RegisterController < Grape::API
           payload: payload,
           confirmation_token: confirm_token
         )
+        unless account.valid?
+          _, validities = schema.validate(params[:payload])
+          invalid_columns = account.errors.to_h.keys
+          if invalid_columns.include? :password_confirmation
+            validities['password_confirmation']['validities'].push(
+              { 'validity'=> false, 'description' => '同じパスワードを入力してください'}
+            )
+          end
+          if invalid_columns.include? :email
+            validities['email']['validities'].push(
+              { 'validity'=> false, 'description' => 'このメールアドレスはすでに登録されています'}
+           )
+          end
+          raise Formalizr::InvalidInput.new('invalid email or password', validities)
+        end
+
+        account.save!
 
         AccountMailer.registration_confirmation(account).deliver
         authenticate!(account)

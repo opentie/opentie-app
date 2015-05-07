@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/opentie/formalizr.git
-  revision: 375bb3b1274da0f0629336002cc38243a95f2400
+  revision: e869047149813ff799e521affcd630931de81c7f
   specs:
     formalizr (0.1.0)
 

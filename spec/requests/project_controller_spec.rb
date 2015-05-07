@@ -50,6 +50,7 @@ RSpec.describe API do
         name: "test_project_name",
         payload: {
           confirm_requirement: 'yes',
+          project_member: 'yes',
           project_type: 'normal_indoor',
           attend_geisai: 'yes',
           name: 'ほげ',
@@ -61,7 +62,17 @@ RSpec.describe API do
           project_attendee_guest: '3',
           project_detail: 'ほげほげ',
           project_information: 'ほげほげ',
-          payment: 'no'
+          attend_eve: 'yes',
+          attend_first: 'yes',
+          attend_second: 'yes',
+          be_cook: 'yes',
+          money_transfer: 'no',
+          goods_payment: 'no',
+          project_notice: '',
+          large_power: 'no',
+          charcoal_fire: 'no',
+          megavolume: 'no',
+          electric_power: '1000'
         }
       }
       expect {

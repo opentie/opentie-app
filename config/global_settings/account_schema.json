@@ -13,12 +13,22 @@
     },
     {
       "type" : "text",
+      "name" : "name_kana",
+      "note" : "氏名のよみがなを入力してください",
+      "title" : "氏名 (かな)",
+      "validators": [
+        { "type": "required", "description": "必須" },
+        { "type": "pattern", "condition": "^(\\p{Hiragana}|ー)+$", "description": "ひらがなで書いてください" }
+      ]
+    },
+    {
+      "type" : "text",
       "name" : "email",
       "note" : "メールアドレスを入力してください",
       "title" : "メールアドレス",
       "validators": [
         { "type": "required", "description": "必須" },
-        { "type": "pattern", "condition": "@", "description": "" }
+        { "type": "pattern", "condition": "@", "description": "正しいメールアドレスを入力してください" }
       ]
     },
     {
@@ -43,12 +53,11 @@
     },
     {
       "type" : "text",
-      "name" : "name_kana",
-      "note" : "氏名のよみがなを入力してください",
-      "title" : "氏名 (かな)",
+      "name" : "student_number",
+      "note" : "学生の場合は学籍番号を入力してください (教員の場合は空欄にしてください)",
+      "title" : "学籍番号",
       "validators": [
-        { "type": "required", "description": "必須" },
-        { "type": "pattern", "condition": "^(\\p{Hiragana}|ー)+$", "description": "ひらがなで書いてください" }
+        { "type": "pattern", "condition": "^\\d{9}$", "description": "9文字の半角数字で入力してください" }
       ]
     },
     {

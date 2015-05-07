@@ -24,7 +24,7 @@ class Account < ActiveRecord::Base
   }
   validates :email, {
     presence: true,
-    uniqueness: true,
+    uniqueness: true
   }
   validates :password             , length: { minimum: 8 }, :if => :validate_password?
   validates :password_confirmation, presence: true        , :if => :validate_password?

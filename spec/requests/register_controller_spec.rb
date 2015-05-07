@@ -15,12 +15,9 @@ RSpec.describe API do
 
     it "POST /api/v1/regiser/" do
       params = {
-        name: "test_name",
-        email: "test@example.com",
-        password: "password",
-        password_confirmation: "password",
         payload: {
           name: "よみがな",
+          name_kana: "よみがな",
           email: "test@example.com",
           password: "password",
           password_confirmation: "password",
@@ -30,6 +27,7 @@ RSpec.describe API do
           phone: "00-00000-000"
         }
       }
+
       expect {
         post "/api/v1/register/", params
       }.to change(Account, :count).by(1), change { ActionMailer::Base.deliveries.count }.by(1)

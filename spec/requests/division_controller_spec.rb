@@ -120,7 +120,6 @@ RSpec.describe API do
 
       json['request_schemata'].each do |schema|
         expect(RequestSchema.find_by(id: schema['id'])).not_to eq(nil)
-        expect(RequestSchema.find_by(id: schema['id']).division_id).to eq(@division.id)
       end
 
       expect(json['division']['id']).to eq(@division.id)
