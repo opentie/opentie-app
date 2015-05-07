@@ -8,7 +8,7 @@
     "operator": "exists_equal",
     "left": {
       "type": "literal",
-      "literal": ["normal_indoor", "academic_indoor"]
+      "literal": ["normal_indoor", "academic_indoor", "miniature"]
     },
     "right":{
       "type": "field",

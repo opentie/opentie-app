@@ -4,6 +4,7 @@ class Request < ActiveRecord::Base
   include Formalizr::Querier
 
   STATUS_ROLE = {
+    -1 => :not_yet,
     0 => :requested,
     1 => :refused
   }
@@ -11,7 +12,7 @@ class Request < ActiveRecord::Base
   belongs_to :request_schema
   belongs_to :delegate
   delegate :project, to: :delegate
-  
+
   alias_method :orig_attributes, :attributes
   def attributes
     orig_attributes.merge({

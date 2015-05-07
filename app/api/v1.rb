@@ -25,6 +25,7 @@ class API::V1 < Grape::API
 
   rescue_from ActiveRecord::RecordNotFound do |e|
     Rails.logger.error("404 Not Found -> " + e.message)
+    Rails.logger.error(e.backtrace.join("\n"))
     Rails.logger.info("++++++++++++++++++++++++++++++++++++\n\n\n\n")
 
     error_response(message: "Not found", status: 404)
@@ -32,6 +33,7 @@ class API::V1 < Grape::API
 
   rescue_from Grape::Exceptions::ValidationErrors do |e|
     Rails.logger.error("400 Bad Request -> " + e.message)
+    Rails.logger.error(e.backtrace.join("\n"))
     Rails.logger.info("++++++++++++++++++++++++++++++++++++\n\n\n\n")
 
     error_response(message: "Bad Request", status: 400)
@@ -39,6 +41,7 @@ class API::V1 < Grape::API
 
   rescue_from :all do |e|
     Rails.logger.error("500 Internal Server Error -> " + e.message)
+    Rails.logger.error(e.backtrace.join("\n"))
     Rails.logger.info("++++++++++++++++++++++++++++++++++++\n\n\n\n")
     error_response(message: "Internal Server Error", status: 500)
   end

@@ -129,18 +129,6 @@
       ]
     },
     {
-      "name": "project_attendee_guest",
-      "type": "number",
-      "title": "企画参加人数 (ゲスト)",
-      "note": "企画に参加するゲストの人数を入力してください。ゲストの定義については、企画実施要項をご覧ください",
-      "default": 0,
-      "validators": [
-        { "type": "required", "description": "企画参加人数は必ず入力してください" },
-        { "type": "number", "description": "半角数字で入力してください" },
-        { "type": "min", "condition": "0", "description": "正数を入力してください" }
-      ]
-    },
-    {
       "name": "project_detail",
       "type": "paragraph",
       "title": "企画概要",

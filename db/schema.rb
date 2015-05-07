@@ -151,9 +151,9 @@ ActiveRecord::Schema.define(version: 20150506175605) do
     t.uuid     "request_schema_id"
     t.uuid     "delegate_id"
     t.json     "payload"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "status",            default: 0, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "status",            default: -1, null: false
     t.datetime "soft_destroyed_at"
   end
 
