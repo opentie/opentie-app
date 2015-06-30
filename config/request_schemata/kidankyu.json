@@ -1,0 +1,284 @@
+{
+  "division_name": "財務局",
+  "name": "企画団体物品支給申請",
+  "opened_at": "2015-07-01T00:00:00+09:00",
+  "deadline_at": "2015-10-06T23:00:00+09:00",
+  "payload": [
+    {
+      "name": "kakuzai",
+      "type": "number",
+      "title": "角材の個数",
+      "note": "支給を希望する角材の個数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "kakuzai_reason",
+      "type": "paragraph",
+      "title": "角材の支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "veneer",
+      "type": "number",
+      "title": "ベニヤ板の枚数",
+      "note": "支給を希望する枚数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "veneer_reason",
+      "type": "paragraph",
+      "title": "ベニヤ板の支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "mozoshi_white",
+      "type": "number",
+      "title": "模造紙(白色)4枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "mozoshi_white_reason",
+      "type": "paragraph",
+      "title": "模造紙(白色)4枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "mozoshi_cream",
+      "type": "number",
+      "title": "模造紙(クリーム色)3枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "mozoshi_cream_reason",
+      "type": "paragraph",
+      "title": "模造紙(クリーム色)3枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "mozoshi_pink",
+      "type": "number",
+      "title": "模造紙(桃色)3枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "mozoshi_pink_reason",
+      "type": "paragraph",
+      "title": "模造紙(桃色)3枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "mozoshi_lightblue",
+      "type": "number",
+      "title": "模造紙(水色)3枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "mozoshi_lightblue_reason",
+      "type": "paragraph",
+      "title": "模造紙(水色)3枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "mozoshi_green",
+      "type": "number",
+      "title": "模造紙(緑色)3枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "mozoshi_green_reason",
+      "type": "paragraph",
+      "title": "模造紙(緑色)3枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "ppc_a4",
+      "type": "number",
+      "title": "PPC用紙A4 500枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "ppc_a4_reason",
+      "type": "paragraph",
+      "title": "PPC用紙A4 500枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "ppc_b4",
+      "type": "number",
+      "title": "PPC用紙B4 500枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "ppc_b4_reason",
+      "type": "paragraph",
+      "title": "PPC用紙B4 500枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "ppc_b5",
+      "type": "number",
+      "title": "PPC用紙B5 500枚入りの数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "ppc_b5_reason",
+      "type": "paragraph",
+      "title": "PPC用紙B5 500枚入りの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "plastic_cardboard",
+      "type": "number",
+      "title": "プラスチックダンボール(白)の枚数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "ppc_b5_reason",
+      "type": "paragraph",
+      "title": "プラスチックダンボール(白)の支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    },
+    {
+      "name": "pp_rope",
+      "type": "number",
+      "title": "PPロープの玉数",
+      "note": "支給を希望する数を記入してください",
+      "default": 0,
+      "validators": [
+        {
+          "type": "required",
+          "description": "必ず入力してください"
+        },
+        {
+          "type": "number",
+          "description": "半角数字で入力してください"
+        }
+      ]
+    },
+    {
+      "name": "pp_rope_reason",
+      "type": "paragraph",
+      "title": "PPロープの支給を希望する理由",
+      "note": "支給を希望する場合は、その理由を記入してください"
+    }
+  ]
+}
