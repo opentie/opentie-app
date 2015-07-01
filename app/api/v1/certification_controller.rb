@@ -33,4 +33,55 @@ class API::V1::CertificationController < Grape::API
       }
     end
   end
+
+  resource :recovery_tokens do
+    desc 'POST /api/v1/recovery_tokens'
+    params do
+      requires :email, type: String
+    end
+    post do
+      unless authenticated?
+        account = Account.find_by(email: params[:email])
+        # return psuedo success page for missmatched mail addr,
+        #  and do not send mail for the wrong address
+        # error!({ message: "email doesn't match" }, 401) if account.nil?
+        unless account.nil?
+          token = RecoveryToken.create_new_token(account.id)
+          AccountMailer.recovery_token(params[:email], account, token).deliver
+        end
+        { message: 'sent URL with recovery token by mail' }
+      else
+        { message: 'already authenticated' }
+      end
+    end
+
+    desc 'POST /api/v1/recovery_tokens/:token'
+    params do
+      requires :token, type: String
+      requires :password, type: String
+      requires :password_confirmation, type: String
+    end
+    post '/:token' do
+      unless authenticated?
+        token = RecoveryToken.find_by(token: params[:token])
+        if token.try :is_valid?
+          account = token.account
+          account.update(
+            password: params[:password],
+            password_confirmation: params[:password_confirmation]
+          )
+          token.update(resetted_password: true)
+          if account.save && token.save
+            { message: 'new password has been saved successfully' }
+          else
+            error!({ message: "password doesn't match" }, 401)
+          end
+        else
+          error!({ message: 'token is invalid' }, 404)
+        end
+      else
+        { message: 'already authenticated' }
+      end
+    end
+  end
 end

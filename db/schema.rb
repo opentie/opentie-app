@@ -123,6 +123,16 @@ ActiveRecord::Schema.define(version: 20150506175605) do
 
   add_index "projects", ["frozen_at"], name: "index_projects_on_frozen_at", using: :btree
 
+  create_table "recovery_tokens", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.string   "token",                             null: false
+    t.uuid     "account_id",                        null: false
+    t.boolean  "resetted_password", default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "recovery_tokens", ["token"], name: "index_recovery_tokens_on_token", unique: true, using: :btree
+
   create_table "request_schemata", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.uuid     "division_id"
     t.json     "payload"
